@@ -1,0 +1,15 @@
+<lcgdict>
+  <class name="CIEvent"/>
+  <class name="CIElectron"/>
+  <class name="CIGenParticles"/>
+  <class name="CIPhoton"/>
+  <class name="CIPrimaryVertex"/>
+  <class name="CIGenJets"/>
+  <class name="CITau"/>
+  <class name="CIJet"/>
+  <class name="CIBtags"/>
+  <class name="CIHLTrigger"/>
+  <class name="CIHLTObj"/>
+  <class name="CIMuonVtx"/>
+  <class name="CIMuon"/>
+</lcgdict>

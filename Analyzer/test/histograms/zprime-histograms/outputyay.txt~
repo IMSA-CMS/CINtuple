@@ -1,0 +1,2746 @@
+9,10c9,10
+< #define ZprimeMuMuPatMiniAodNewMC_cxx
+< #include "ZprimeMuMuPatMiniAodNewMC.h"
+---
+> #define ZprimeMuMuPatMiniAodNewData_cxx
+> #include "ZprimeMuMuPatMiniAodNewData.h"
+19a20,22
+> #define PI 3.14159265358979
+> #define MUON_MASS 0.1056583
+> #define ELEC_MASS 0.000511
+24,159d26
+< float newweight = 1.;
+< float pu_weight=1.;
+< float pu_weightUp=1.;
+< float pu_weightDown=1.;
+< 
+< void ZprimeMuMuPatMiniAodNewMC::initMemberVariables()
+< {
+<   std::cout << "supermegaultrahyper early";
+<   rand = std::make_shared<TRandom3>();
+< 
+<   m_nbGen        = 0;
+<   m_nbReco       = 0;
+<   MassCutMin     = 0.0;
+<   MassCutMax     = 2000.0;
+<   EtaCut         = 2.4;
+<   MassResolution = 0.10;
+<   deltaRcut      = 0.15;
+<   RecoHLTMatchingDeltaRcut = 0.20;
+<   minMassCut  = 50.0;
+<   maxMassCut  = 4000.0;
+<   ptEffCut    = 3000.0;
+<   FR_Ptcut    = 53.0; //53.0;
+< 
+<   parEB1 = -99999.;
+<   parEB2 = -99999.;
+<   parEB3 = -99999.;
+<   parEB4 = -99999.;
+<   parEB5 = -99999.;
+<   parEB6 = -99999.;
+<   parEB7 = -99999.;
+<   parEB8 = -99999.;
+<   parEB9 = -99999.;
+<   parEB10 = -99999.;
+< 
+<   parEE1 = -99999.;
+<   parEE2 = -99999.;
+<   parEE3 = -99999.;
+<   parEE4 = -99999.;
+<   parEE5 = -99999.;
+<   parEE6 = -99999.;
+<   parEE7 = -99999.;
+<   parEE8 = -99999.;
+<   parEE9 = -99999.;
+<   parEE10 = -99999.;
+< 
+<   parEB11 = -99999.;
+<   parEB22 = -99999.;
+<   parEB33 = -99999.;
+<   parEE11 = -99999.;
+<   parEE22 = -99999.;
+<   parEE33 = -99999.;
+< 
+<   HLT_pt  = -99999.;
+<   HLT_eta = -99999.;
+<   HLT_phi = -99999.;
+< 
+<   PtDYTRecMu1       = -99999.;
+<   PtDYTRecMu2       = -99999.;
+<   PtRecTunePMu1     = -99999.;
+<   PtRecTunePMu2     = -99999.;
+<   PtRecMuBestTrack1 = -99999.;
+<   PtRecMuBestTrack2 = -99999.;
+< 
+<   m_vtxChi2Mu = -99999.;
+<   m_vtxMassMu = -99999.;
+<   m_vtxMassSmearedMu = -99999.;
+<   m_vtxMassScaledMu = -99999.;
+<   m_scaleUnc  = -99999.;
+<   m_csAngle   = -99999.;
+< 
+<   m_ptGen1   = -99999.;
+<   m_phiGen1  = -99999.;
+<   m_etaGen1  = -99999.;
+<   m_enGen1   = -99999.;
+<   m_genFlag1 = -1;
+< 
+<   m_ptGen2  = -99999.;
+<   m_phiGen2 = -99999.;
+<   m_etaGen2 = -99999.;
+<   m_enGen2  = -99999.;
+< 
+<   ChargeRecMu1 = 0;
+<   ChargeRecMu2 = 0;
+< 
+<   flagmu1 = -1;
+<   flag1   = -1;
+< 
+<   PtRecTunePMuBestTrack1 = -99999.;
+<   EnRecMu1  = -99999.;
+<   EtaRecMu1 = -99999.;
+<   PhiRecMu1 = -99999.;
+< 
+<   PtRecTunePMuBestTrack2 = -99999.;
+<   EnRecMu2  = -99999.;
+<   EtaRecMu2 = -99999.;
+<   PhiRecMu2 = -99999.;
+< 
+<   pxRecMu1 = -99999.;
+<   pyRecMu1 = -99999.;
+<   pzRecMu1 = -99999.;
+<   pRecMu1  = -99999.;
+<   dxyRecMu1 = -99999.;
+< 
+<   pxRecMu2 = -99999.;
+<   pyRecMu2 = -99999.;
+<   pzRecMu2 = -99999.;
+<   pRecMu2  = -99999.;
+<   dxyRecMu2 = -99999.;
+< 
+<   m_genET1  = -99999.;
+<   m_genPhi1 = -99999.;
+<   m_genEta1 = -99999.;
+<   m_genEn1  = -99999.;;
+< 
+<   m_genID1   = -1;
+<   m_genStat1 = -1;
+< 
+<   m_genET2 = -99999.;
+<   m_genPhi2 = -99999.;
+<   m_genEta2 = -99999.;
+<   m_genEn2 = -99999.;
+< 
+<   m_genID2 = -1;
+<   m_genStat2 = -1;
+< 
+<   m_genMass = -99999.;
+<   // seems not used...
+<   m_recoMass = -99999.;
+< 
+<   nbTP = 0;
+<   nbTT = 0;
+<   nbTF = 0;
+< 
+<   TagProbeEtaCut = -99999.;
+< 
+<   Eff = -99999.;
+161,164c28
+<   m_nbFireHLT = 0;
+< }
+< 
+< void ZprimeMuMuPatMiniAodNewMC::Loop(bool debug)
+---
+> void ZprimeMuMuPatMiniAodNewData::Loop(bool debug)
+166d29
+<   std::cout << "megaEarly";
+172d34
+<   std::cout << "super early ahhhhhhhhhh";
+174,175c36,37
+<   // m_nbGen = 0;
+<   // m_nbReco= 0;
+---
+>   NbGen = 0;
+>   NbReco= 0;
+179,186c41,48
+<   // MassCutMin = 0.0;
+<   // MassCutMax = 2000.0;
+<   // EtaCut = 2.4;
+<   // MassResolution = 0.10;
+<   // deltaRcut = 0.15;
+<   // RecoHLTMatchingDeltaRcut = 0.20;
+<   // minMassCut = 50.0;
+<   // maxMassCut = 4000.0;
+---
+>   MassCutMin = 0.0;
+>   MassCutMax = 2000.0;
+>   EtaCut = 2.4;
+>   MassResolution = 0.10;
+>   deltaRcut = 0.15;
+>   RecoHLTMatchingDeltaRcut = 0.20;
+>   minMassCut = 50.0;
+>   maxMassCut = 4000.0;
+190,191c52,53
+<   // ptEffCut = 3000.0;
+<   // FR_Ptcut = 53.0; //53.0;
+---
+>   ptEffCut = 3000.0;
+>   FR_Ptcut = 53.0; //53.0;
+193,194d54
+<   TFile *f = new TFile("muon_systematics.root","OPEN");
+<   m_muon_scale_ratio_hist = static_cast<TH2D *>(f->Get("h2_muo_scale"));
+200c60
+<   TH1::SetDefaultSumw2(true);
+---
+>   TH1::SetDefaultSumw2();
+234,235c94,95
+<   m_nbFireHLT = 0;
+<   int   NbBins = 10;
+---
+>   NbFireHLT = 0;
+>   int NbBins   = 10;
+238,240c98,100
+<   h1_ptPFjetsAll_        = std::make_shared<TH1D>("ptPFjetsAll","",100,0.0,2000.0);
+<   h1_NbPFjetsAll_        = std::make_shared<TH1D>("NbPFjetsAll","",5,0.0,5.0);
+<   h1_NbPFjets2_          = std::make_shared<TH1D>("NbPFjets2","",5,0.0,5.0);
+---
+>   h1_ptPFjetsAll_ = std::make_shared<TH1D>("ptPFjetsAll","",100,0.0,2000.0);
+>   h1_NbPFjetsAll_ = std::make_shared<TH1D>("NbPFjetsAll","",5,0.0,5.0);
+>   h1_NbPFjets2_   = std::make_shared<TH1D>("NbPFjets2","",5,0.0,5.0);
+243,274c103,128
+<   h1_nbBTagStep1_        = std::make_shared<TH1D>("nbBTagStep1","",5,0.0,5.0);
+<   h1_jetBTagStep1_       = std::make_shared<TH1D>("jetBTagStep1","",50,0.0,1.0);
+<   h1_nbBTagStep2_        = std::make_shared<TH1D>("nbBTagStep2","",5,0.0,5.0);
+<   h1_jetBTagStep2_       = std::make_shared<TH1D>("jetBTagStep2","",50,0.0,1.0);
+<   h1_nbBTagStep3_        = std::make_shared<TH1D>("nbBTagStep3","",5,0.0,5.0);
+<   h1_jetBTagStep3_       = std::make_shared<TH1D>("jetBTagStep3","",50,0.0,1.0);
+<   h1_MissingEt_          = std::make_shared<TH1D>("MissingEt","",100,0.0,2000.0);
+<   h1_Mt_                 = std::make_shared<TH1D>("Mt","",100,0.0,2000.0);
+<   h1_DeltaPtoverPt_      = std::make_shared<TH1D>("DeltaPtoverPt","",100,0.0,1.0);
+<   h1_DeltaPhi_           = std::make_shared<TH1D>("DeltaPhi","",50,-4.0,4.0);
+<   h1_BosPt_              = std::make_shared<TH1D>("BosPt","",40,0.0,200.0);
+<   h1_BosPhi_             = std::make_shared<TH1D>("BosPhi","",50,-4.0,4.0);
+<   // NOT FILLED h1_jetBTagB_           = std::make_shared<TH1D>("jetBTagB","",50,0.0,1.0);
+<   // NOT FILLED h1_jetBTagC_           = std::make_shared<TH1D>("jetBTagC","",50,0.0,1.0);
+<   // NOT FILLED h1_jetBTagUDSG_        = std::make_shared<TH1D>("jetBTagUDSG","",50,0.0,1.0);
+<   h1_PFMetCorr_          = std::make_shared<TH1D>("PFMetCorr","",100,0.0,2000.0);
+<   h1_CaloMet_            = std::make_shared<TH1D>("CaloMet","",100,0.0,2000.0);
+<   // NOT FILLED h1_NbFireHLT           = std::make_shared<TH1D>("NbFireHLT", "NbFireHLT", 30 , 0. , 30. );
+<   // NOT FILLED h1_ptBeforeTrigger_    = std::make_shared<TH1D>("ptBeforeTrigger","",50,0.0,2000.0);
+<   // NOT FILLED h1_ptAfterTrigger_     = std::make_shared<TH1D>("ptAfterTrigger","",50,0.0,2000.0);
+<   h1_CosAngleCollinSoperCorrect60Mass120_    = std::make_shared<TH1D>("CosAngleCollinSoperCorrect60Mass120",
+< 								      "",NbBins,MinBin,MaxBin);
+<   h1_CosAngleCollinSoperCorrect120Mass300_   = std::make_shared<TH1D>("CosAngleCollinSoperCorrect120Mass300",
+< 								      "",NbBins,MinBin,MaxBin);
+<   h1_CosAngleCollinSoperCorrect300Mass700_   = std::make_shared<TH1D>("CosAngleCollinSoperCorrect300Mass700",
+< 								      "",NbBins,MinBin,MaxBin);
+<   h1_CosAngleCollinSoperCorrect700Mass3000_  = std::make_shared<TH1D>("CosAngleCollinSoperCorrect700Mass3000",
+< 								      "",NbBins,MinBin,MaxBin);
+<   h1_CosAngleCollinSoperCorrect4900Mass5100_ = std::make_shared<TH1D>("CosAngleCollinSoperCorrect4900Mass5100",
+< 								      "",NbBins,MinBin,MaxBin);
+<   h1_absCosAngleCollinSoperCorrect4500Mass5500_ = std::make_shared<TH1D>("absCosAngleCollinSoperCorrect4500Mass5500",
+< 									 "",5,0.0,1.0);
+---
+>   h1_nbBTagStep1_   = std::make_shared<TH1D>("nbBTagStep1","",5,0.0,5.0);
+>   h1_jetBTagStep1_  = std::make_shared<TH1D>("jetBTagStep1","",50,0.0,1.0);
+>   h1_nbBTagStep2_   = std::make_shared<TH1D>("nbBTagStep2","",5,0.0,5.0);
+>   h1_jetBTagStep2_  = std::make_shared<TH1D>("jetBTagStep2","",50,0.0,1.0);
+>   h1_nbBTagStep3_   = std::make_shared<TH1D>("nbBTagStep3","",5,0.0,5.0);
+>   h1_jetBTagStep3_  = std::make_shared<TH1D>("jetBTagStep3","",50,0.0,1.0);
+>   h1_MissingEt_     = std::make_shared<TH1D>("MissingEt","",100,0.0,2000.0);
+>   h1_Mt_            = std::make_shared<TH1D>("Mt","",100,0.0,2000.0);
+>   h1_DeltaPtoverPt_ = std::make_shared<TH1D>("DeltaPtoverPt","",100,0.0,1.0);
+>   h1_DeltaPhi_      = std::make_shared<TH1D>("DeltaPhi","",50,-4.0,4.0);
+>   h1_BosPt_         = std::make_shared<TH1D>("BosPt","",40,0.0,200.0);
+>   h1_BosPhi_        = std::make_shared<TH1D>("BosPhi","",50,-4.0,4.0);
+>   h1_jetBTagB_      = std::make_shared<TH1D>("jetBTagB","",50,0.0,1.0);
+>   h1_jetBTagC_      = std::make_shared<TH1D>("jetBTagC","",50,0.0,1.0);
+>   h1_jetBTagUDSG_   = std::make_shared<TH1D>("jetBTagUDSG","",50,0.0,1.0);
+>   h1_PFMetCorr_ = std::make_shared<TH1D>("PFMetCorr","",100,0.0,2000.0);
+>   h1_CaloMet_   = std::make_shared<TH1D>("CaloMet","",100,0.0,2000.0);
+>   h_NbFireHLT   = std::make_shared<TH1D>("NbFireHLT", "NbFireHLT", 30 , 0. , 30. );
+>   h1_ptBeforeTrigger_  = std::make_shared<TH1D>("ptBeforeTrigger","",50,0.0,2000.0);
+>   h1_ptAfterTrigger_   = std::make_shared<TH1D>("ptAfterTrigger","",50,0.0,2000.0);
+>   h1_CosAngleCollinSoperCorrect60Mass120_    = std::make_shared<TH1D>("CosAngleCollinSoperCorrect60Mass120","",NbBins,MinBin,MaxBin);
+>   h1_CosAngleCollinSoperCorrect120Mass300_   = std::make_shared<TH1D>("CosAngleCollinSoperCorrect120Mass300","",NbBins,MinBin,MaxBin);
+>   h1_CosAngleCollinSoperCorrect300Mass700_   = std::make_shared<TH1D>("CosAngleCollinSoperCorrect300Mass700","",NbBins,MinBin,MaxBin);
+>   h1_CosAngleCollinSoperCorrect700Mass3000_  = std::make_shared<TH1D>("CosAngleCollinSoperCorrect700Mass3000","",NbBins,MinBin,MaxBin);
+>   h1_CosAngleCollinSoperCorrect4900Mass5100_ = std::make_shared<TH1D>("CosAngleCollinSoperCorrect4900Mass5100","",NbBins,MinBin,MaxBin);
+>   h1_absCosAngleCollinSoperCorrect4500Mass5500_ = std::make_shared<TH1D>("absCosAngleCollinSoperCorrect4500Mass5500","",5,0.0,1.0);
+289,292c143,146
+<   //     h1_SmearedMassBinned_[cb][eb] = std::make_shared<TH1D>(("CS"+c+"SmearedMass"+e,"", 20000,0,20000);
+<   //     h1_MassBinned_[cb][eb]        = std::make_shared<TH1D>(("CS"+c+"Mass"+e       ,"", 20000,0,20000);
+<   //     h1_MassUpBinned_[cb][eb]      = std::make_shared<TH1D>(("CS"+c+"MassUp"+e     ,"", 20000,0,20000);
+<   //     h1_MassDownBinned_[cb][eb]    = std::make_shared<TH1D>(("CS"+c+"MassDown"+e   ,"", 20000,0,20000);
+---
+>   //     h1_SmearedMassBinned_[cb][eb] = std::make_shared<TH1D>("CS"+c+"SmearedMass"+e,"", 20000,0,20000);
+>   //     h1_MassBinned_[cb][eb]        = std::make_shared<TH1D>("CS"+c+"Mass"+e       ,"", 20000,0,20000);
+>   //     h1_MassUpBinned_[cb][eb]      = std::make_shared<TH1D>("CS"+c+"MassUp"+e     ,"", 20000,0,20000);
+>   //     h1_MassDownBinned_[cb][eb]    = std::make_shared<TH1D>("CS"+c+"MassDown"+e   ,"", 20000,0,20000);
+297c151
+<   h2_CSSmearedMassBinned_ = std::make_shared<TH2D>("CSSmearedMassBinned","", 20000,0.,20000., 30,-0.5,29.5);
+---
+>   // h2_CSSmearedMassBinned_ = std::make_shared<TH2D>("CSSmearedMassBinned","", 20000,0.,20000., 30,-0.5,29.5);
+299,303c153,154
+<   h2_CSMassMuIDBinned_    = std::make_shared<TH2D>("CSMassMuIDBinned"   ,"", 20000,0.,20000., 30,-0.5,29.5);
+<   h2_CSMassUpBinned_      = std::make_shared<TH2D>("CSMassUpBinned"     ,"", 20000,0.,20000., 30,-0.5,29.5);
+<   h2_CSMassDownBinned_    = std::make_shared<TH2D>("CSMassDownBinned"   ,"", 20000,0.,20000., 30,-0.5,29.5);
+<   h2_CSMassPUUpBinned_    = std::make_shared<TH2D>("CSMassPUUpBinned"   ,"", 20000,0.,20000., 30,-0.5,29.5);
+<   h2_CSMassPUDownBinned_  = std::make_shared<TH2D>("CSMassPUDownBinned" ,"", 20000,0.,20000., 30,-0.5,29.5);
+---
+>   // h2_CSMassUpBinned_      = std::make_shared<TH2D>("CSMassUpBinned"     ,"", 20000,0.,20000., 30,-0.5,29.5);
+>   // h2_CSMassDownBinned_    = std::make_shared<TH2D>("CSMassDownBinned"   ,"", 20000,0.,20000., 30,-0.5,29.5);
+314c165
+<       h2_CSSmearedMassBinned_->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+---
+>       // h2_CSSmearedMassBinned_->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+316,320c167,168
+<       h2_CSMassMuIDBinned_   ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+<       h2_CSMassUpBinned_     ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+<       h2_CSMassDownBinned_   ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+<       h2_CSMassPUUpBinned_     ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+<       h2_CSMassPUDownBinned_   ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+---
+>       // h2_CSMassUpBinned_     ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+>       // h2_CSMassDownBinned_   ->GetYaxis()->SetBinLabel((eb*csBinLabels.size())+cb+1, (csBinLabels[cb]+etaBinLabels[eb]).c_str());
+332,339c180,187
+<   // NOT USED h1_ptHistoBefor_               = std::make_shared<TH1D>("ptHistoBefor","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_ptHistoPassingVtxChi2Mu_    = std::make_shared<TH1D>("ptHistoPassingVtxChi2Mu","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_ptHistoPassingCosmicRejec_  = std::make_shared<TH1D>("ptHistoPassingCosmicRejec","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_ptHistoPassingHLT_          = std::make_shared<TH1D>("ptHistoPassingHLT","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_etaHistoBefor_              = std::make_shared<TH1D>("etaHistoBefor","",30,0.0,3.0);
+<   // NOT USED h1_etaHistoPassingVtxChi2Mu_   = std::make_shared<TH1D>("etaHistoPassingVtxChi2Mu","",30,0.0,3.0);
+<   // NOT USED h1_etaHistoPassingCosmicRejec_ = std::make_shared<TH1D>("etaHistoPassingCosmicRejec","",30,0.0,3.0);
+<   // NOT USED h1_etaHistoPassingHLT_         = std::make_shared<TH1D>("etaHistoPassingHLT","",30,0.0,3.0);
+---
+>   h1_ptHistoBefor_              = std::make_shared<TH1D>("ptHistoBefor","",ptBins,ptMin,ptMax);
+>   h1_ptHistoPassingVtxChi2Mu_   = std::make_shared<TH1D>("ptHistoPassingVtxChi2Mu","",ptBins,ptMin,ptMax);
+>   h1_ptHistoPassingCosmicRejec_ = std::make_shared<TH1D>("ptHistoPassingCosmicRejec","",ptBins,ptMin,ptMax);
+>   h1_ptHistoPassingHLT_         = std::make_shared<TH1D>("ptHistoPassingHLT","",ptBins,ptMin,ptMax);
+>   h1_etaHistoBefor_              = std::make_shared<TH1D>("etaHistoBefor","",30,0.0,3.0);
+>   h1_etaHistoPassingVtxChi2Mu_   = std::make_shared<TH1D>("etaHistoPassingVtxChi2Mu","",30,0.0,3.0);
+>   h1_etaHistoPassingCosmicRejec_ = std::make_shared<TH1D>("etaHistoPassingCosmicRejec","",30,0.0,3.0);
+>   h1_etaHistoPassingHLT_         = std::make_shared<TH1D>("etaHistoPassingHLT","",30,0.0,3.0);
+352,354c200,202
+<   // NOT USED h1_MassResultionEBEB8_      = std::make_shared<TH1D>("MassResultionEBEB8","",100,-0.5,0.5);
+<   // NOT USED h1_MassResultionEBEB9_      = std::make_shared<TH1D>("MassResultionEBEB9","",100,-0.5,0.5);
+<   // NOT USED h1_MassResultionEBEB10_     = std::make_shared<TH1D>("MassResultionEBEB10","",100,-0.5,0.5);
+---
+>   h1_MassResultionEBEB8_      = std::make_shared<TH1D>("MassResultionEBEB8","",100,-0.5,0.5);
+>   h1_MassResultionEBEB9_      = std::make_shared<TH1D>("MassResultionEBEB9","",100,-0.5,0.5);
+>   h1_MassResultionEBEB10_     = std::make_shared<TH1D>("MassResultionEBEB10","",100,-0.5,0.5);
+361,384c209,232
+<   // NOT USED h2_ZprimeRecomassNewbin_       = std::make_shared<TH2D>("ZprimeRecomassNewbin","ZprimeRecomassNewbin",80,50.,1000.,500,0.001,1000.);
+<   h1_MassGenInAccep_   = std::make_shared<TH1D>("MassGenInAccep","",58,0.0,5000.0);
+<   h1_MassRecoInAccep_  = std::make_shared<TH1D>("MassRecoInAccep","",58,0.0,5000.0);
+<   h1_ZprimeRecomass_   = std::make_shared<TH1D>("ZprimeRecomass","",binMass,minMass,maxMass);
+<   h1_ZprimeRecomass20_ = std::make_shared<TH1D>("ZprimeRecomass20","",300,0.0,6000.0);
+<   h1_ZprimeRecomassBB_ = std::make_shared<TH1D>("ZprimeRecomassBB","",binMass,minMass,maxMass);
+<   h1_ZprimeRecomassEE_ = std::make_shared<TH1D>("ZprimeRecomassEE","",binMass,minMass,maxMass);
+<   h1_ZprimeRecomassBE_ = std::make_shared<TH1D>("ZprimeRecomassBE","",binMass,minMass,maxMass);
+<   h1_ZprimeRecomass50_ = std::make_shared<TH1D>("ZprimeRecomass50","",120,0.0,6000.0);
+<   // h1_ZprimeRecomass60to120_      = std::make_shared<TH1D>("ZprimeRecomass60to120","",binMass,minMass,maxMass);
+<   // NOT USED h1_ZprimeRecomassAbove1000GeV_ = std::make_shared<TH1D>("ZprimeRecomassAbove1000GeV","",binMass,minMass,maxMass);
+<   h1_ZprimeGenmass_ = std::make_shared<TH1D>("ZprimeGenmass","",binMass,minMass,maxMass);
+<   h1_ZprimeGenEta1_ = std::make_shared<TH1D>("ZprimeGenEta1","",100,-8.0,8.0);
+<   h1_ZprimeGenEta2_ = std::make_shared<TH1D>("ZprimeGenEta2","",100,-8.0,8.0);
+<   h1_ZprimeGenPt1_  = std::make_shared<TH1D>("ZprimeGenPt1","",100,0.0,2000.0);
+<   h1_ZprimeGenPt2_  = std::make_shared<TH1D>("ZprimeGenPt2","",100,0.0,2000.0);
+<   h1_ZprimeGenEn1_  = std::make_shared<TH1D>("ZprimeGenEn1","",100,0.0,2000.0);
+<   h1_ZprimeGenEn2_  = std::make_shared<TH1D>("ZprimeGenEn2","",100,0.0,2000.0);
+<   h1_3Dangle_       = std::make_shared<TH1D>("3Dangle","",100,-2.0,2.0);
+<   // NOT USED h1_DxyDiff_                    = std::make_shared<TH1D>("DxyDiff","",100,10.0,10.0);
+<   // NOT USED h1_MassRecoGenDif_             = std::make_shared<TH1D>("MassRecoGenDif","",100,-0.5,0.5);
+<   h1_PtResolutionTunePMBT_       = std::make_shared<TH1D>("PtResolutionTunePMBT","",100,-0.5,0.5);
+<   h1_PtResolutiontuneP_          = std::make_shared<TH1D>("PtResolutiontuneP","",100,-0.5,0.5);
+<   h1_PtResolutionMBT_            = std::make_shared<TH1D>("PtResolutionMBT","",100,-0.5,0.5);
+---
+>   h2_ZprimeRecomassNewbin_       = std::make_shared<TH2D>("ZprimeRecomassNewbin","ZprimeRecomassNewbin",80,50.,1000.,500,0.001,1000.);
+>   h1_MassGenInAccep_             = std::make_shared<TH1D>("MassGenInAccep","",58,0.0,5000.0);
+>   h1_MassRecoInAccep_            = std::make_shared<TH1D>("MassRecoInAccep","",58,0.0,5000.0);
+>   h1_ZprimeRecomass_             = std::make_shared<TH1D>("ZprimeRecomass","",binMass,minMass,maxMass);
+>   h1_ZprimeRecomass20_           = std::make_shared<TH1D>("ZprimeRecomass20","",300,0.0,6000.0);
+>   h1_ZprimeRecomassBB_           = std::make_shared<TH1D>("ZprimeRecomassBB","",binMass,minMass,maxMass);
+>   h1_ZprimeRecomassEE_           = std::make_shared<TH1D>("ZprimeRecomassEE","",binMass,minMass,maxMass);
+>   h1_ZprimeRecomassBE_           = std::make_shared<TH1D>("ZprimeRecomassBE","",binMass,minMass,maxMass);
+>   h1_ZprimeRecomass50_           = std::make_shared<TH1D>("ZprimeRecomass50","",120,0.0,6000.0);
+>   //h1_ZprimeRecomass60to120_    = std::make_shared<TH1D>("ZprimeRecomass60to120","",binMass,minMass,maxMass);
+>   h1_ZprimeRecomassAbove1000GeV_ = std::make_shared<TH1D>("ZprimeRecomassAbove1000GeV","",binMass,minMass,maxMass);
+>   h1_ZprimeGenmass_              = std::make_shared<TH1D>("ZprimeGenmass","",binMass,minMass,maxMass);
+>   h1_ZprimeGenEta1_              = std::make_shared<TH1D>("ZprimeGenEta1","",100,-8.0,8.0);
+>   h1_ZprimeGenEta2_              = std::make_shared<TH1D>("ZprimeGenEta2","",100,-8.0,8.0);
+>   h1_ZprimeGenPt1_               = std::make_shared<TH1D>("ZprimeGenPt1","",100,0.0,2000.0);
+>   h1_ZprimeGenPt2_               = std::make_shared<TH1D>("ZprimeGenPt2","",100,0.0,2000.0);
+>   h1_ZprimeGenEn1_               = std::make_shared<TH1D>("ZprimeGenEn1","",100,0.0,2000.0);
+>   h1_ZprimeGenEn2_               = std::make_shared<TH1D>("ZprimeGenEn2","",100,0.0,2000.0);
+>   h1_3Dangle_                    = std::make_shared<TH1D>("3Dangle","",100,-2.0,2.0);
+>   h1_DxyDiff_                    = std::make_shared<TH1D>("DxyDiff","",100,10.0,10.0);
+>   h1_MassRecoGenDif_             = std::make_shared<TH1D>("MassRecoGenDif","",100,-0.5,0.5);
+>   h1_PtResolutionTunePMBT_       =  std::make_shared<TH1D>("PtResolutionTunePMBT","",100,-0.5,0.5);
+>   h1_PtResolutiontuneP_          =  std::make_shared<TH1D>("PtResolutiontuneP","",100,-0.5,0.5);
+>   h1_PtResolutionMBT_            =  std::make_shared<TH1D>("PtResolutionMBT","",100,-0.5,0.5);
+391c239
+<   // NOT USED h1_normalizedChi2_                       = std::make_shared<TH1D>("normalizedChi2","",100,0.0,20.0);
+---
+>   h1_normalizedChi2_                       = std::make_shared<TH1D>("normalizedChi2","",100,0.0,20.0);
+405,407c253,255
+<   // NOT USED h1_PtEffpfSumChargedHadron_        = std::make_shared<TH1D>("PtEffpfSumChargedHadron","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_PtEffpfSumNeutralHadron_        = std::make_shared<TH1D>("PtEffpfSumNeutralHadron","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_PtEffpfPhotonIso_               = std::make_shared<TH1D>("PtEffpfPhotonIso","",ptBins,ptMin,ptMax);
+---
+>   h1_PtEffpfSumChargedHadron_        = std::make_shared<TH1D>("PtEffpfSumChargedHadron","",ptBins,ptMin,ptMax);
+>   h1_PtEffpfSumNeutralHadron_        = std::make_shared<TH1D>("PtEffpfSumNeutralHadron","",ptBins,ptMin,ptMax);
+>   h1_PtEffpfPhotonIso_               = std::make_shared<TH1D>("PtEffpfPhotonIso","",ptBins,ptMin,ptMax);
+424,430c272,278
+<   // h1_3DangleHisto1_        = std::make_shared<TH1D>("3DangleHisto1","",50,0.00001,0.1);
+<   // h1_3DangleHisto2_        = std::make_shared<TH1D>("3DangleHisto2","",100,0.00001,10.0);  //100,0.1,10.0);
+< 
+<   // NOT USED h1_3DangleHisto1_        = std::make_shared<TH1D>("3DangleHisto1","",1000,0.00001,1.0);
+<   // NOT USED h1_3DangleHisto2_        = std::make_shared<TH1D>("3DangleHisto2","",1000,0.00001,10.0);
+<   // NOT USED h1_Fail3DangleHistoMass_ = std::make_shared<TH1D>("Fail3DangleHistoMass","",100,100.0,12000.0);
+<   // NOT USED h1_Fail3DangleHistoPhi_  = std::make_shared<TH1D>("Fail3DangleHistoPhi","",100,-4.0,4.0);
+---
+>   //h1_3DangleHisto1_        = std::make_shared<TH1D>("3DangleHisto1","",50,0.00001,0.1);
+>   //h1_3DangleHisto2_        = std::make_shared<TH1D>("3DangleHisto2","",100,0.00001,10.0);  //100,0.1,10.0);
+>   //
+>   h1_3DangleHisto1_        = std::make_shared<TH1D>("3DangleHisto1","",1000,0.00001,1.0);
+>   h1_3DangleHisto2_        = std::make_shared<TH1D>("3DangleHisto2","",1000,0.00001,10.0);
+>   h1_Fail3DangleHistoMass_ = std::make_shared<TH1D>("Fail3DangleHistoMass","",100,100.0,12000.0);
+>   h1_Fail3DangleHistoPhi_  = std::make_shared<TH1D>("Fail3DangleHistoPhi","",100,-4.0,4.0);
+432,434c280,282
+<   // NOT USED h1_ptHistoFRDum_ = std::make_shared<TH1D>("ptHistoFRDum","",ptBins,ptMin,ptMax);
+<   // NOT USED h1_ptHistoFRNum_ = std::make_shared<TH1D>("ptHistoFRNum","",ptBins,ptMin,ptMax);
+<   h1_PtTuneP_      = std::make_shared<TH1D>("PtTuneP","",200,0.0,10000.0);
+---
+>   h_ptHistoFRDum_ = std::make_shared<TH1D>("ptHistoFRDum","",ptBins,ptMin,ptMax);
+>   h_ptHistoFRNum_ = std::make_shared<TH1D>("ptHistoFRNum","",ptBins,ptMin,ptMax);
+>   h1_PtTuneP_     = std::make_shared<TH1D>("PtTuneP","",200,0.0,10000.0);
+445c293
+<     //std::cout << logMbins[ibin] << std::endl;
+---
+>     //cout << logMbins[ibin] << std::endl;
+447,456c295,300
+<   h1_ZprimeRecomassBinWidthAll_     = std::make_shared<TH1D>("ZprimeRecomassBinWidthAll",
+< 							     "ZprimeRecomassBinWidthAll",NMBINS, logMbins);
+<   h1_ZprimeRecomassBinWidth_        = std::make_shared<TH1D>("ZprimeRecomassBinWidth",
+< 							     "ZprimeRecomassBinWidth",NMBINS, logMbins);
+<   h1_ZprimeRecomassBinWidthAllBE_   = std::make_shared<TH1D>("ZprimeRecomassBinWidthAllBE",
+< 							     "ZprimeRecomassBinWidthAllBE",NMBINS, logMbins);
+<   h1_ZprimeRecomassBinWidthAllEE_   = std::make_shared<TH1D>("ZprimeRecomassBinWidthAllEE",
+< 							     "ZprimeRecomassBinWidthAllEE",NMBINS, logMbins);
+<   h1_ZprimeRecomassBinWidthEE_      = std::make_shared<TH1D>("ZprimeRecomassBinWidthEE",   "",NMBINS, logMbins);
+<   h1_ZprimeRecomassBinWidthBB_      = std::make_shared<TH1D>("ZprimeRecomassBinWidthBB",   "",NMBINS, logMbins);
+---
+>   h1_ZprimeRecomassBinWidthAll_     = std::make_shared<TH1D>("ZprimeRecomassBinWidthAll","ZprimeRecomassBinWidthAll",NMBINS, logMbins);
+>   h1_ZprimeRecomassBinWidth_        = std::make_shared<TH1D>("ZprimeRecomassBinWidth","ZprimeRecomassBinWidth",NMBINS, logMbins);
+>   h1_ZprimeRecomassBinWidthAllBE_   = std::make_shared<TH1D>("ZprimeRecomassBinWidthAllBE","ZprimeRecomassBinWidthAllBE",NMBINS, logMbins);
+>   h1_ZprimeRecomassBinWidthAllEE_   = std::make_shared<TH1D>("ZprimeRecomassBinWidthAllEE","ZprimeRecomassBinWidthAllEE",NMBINS, logMbins);
+>   h1_ZprimeRecomassBinWidthEE_      = std::make_shared<TH1D>("ZprimeRecomassBinWidthEE","",NMBINS, logMbins);
+>   h1_ZprimeRecomassBinWidthBB_      = std::make_shared<TH1D>("ZprimeRecomassBinWidthBB","",NMBINS, logMbins);
+459,477c303,320
+<   h1_ZprimeRecomass60to120BEpos_    = std::make_shared<TH1D>("ZprimeRecomass60to120BEpos", "",60,60.0,120.0);
+<   h1_ZprimeRecomass60to120BEnev_    = std::make_shared<TH1D>("ZprimeRecomass60to120BEnev", "",60,60.0,120.0);
+<   h1_ZprimeRecomass60to120EE_       = std::make_shared<TH1D>("ZprimeRecomass60to120EE",    "",60,60.0,120.0);
+<   h1_ZprimeRecomass60to120BB_       = std::make_shared<TH1D>("ZprimeRecomass60to120BB",    "",60,60.0,120.0);
+<   h1_ZprimeRecomass60to120_         = std::make_shared<TH1D>("ZprimeRecomass60to120",      "",60,60.0,120.0);
+<   h1_ZprimeRecomassBinWidthAfterBtaging_ = std::make_shared<TH1D>("ZprimeRecomassBinWidthAfterBtaging",
+< 								  "ZprimeRecomassBinWidthAfterBtaging",NMBINS, logMbins);
+<   h1_DijetBinWidthBB_   = std::make_shared<TH1D>("DijetBinWidthBB",  "",NMBINS, logMbins);
+<   h1_DijetBinWidthBE_   = std::make_shared<TH1D>("DijetBinWidthBE",  "",NMBINS, logMbins);
+<   h1_DijetBinWidthEE_   = std::make_shared<TH1D>("DijetBinWidthEE",  "",NMBINS, logMbins);
+<   h1_DijetBinWidthBBBE_ = std::make_shared<TH1D>("DijetBinWidthBBBE","",NMBINS, logMbins);
+<   h1_WjetsBinWidthBB_   = std::make_shared<TH1D>("WjetsBinWidthBB",  "",NMBINS, logMbins);
+<   h1_WjetsBinWidthBE_   = std::make_shared<TH1D>("WjetsBinWidthBE",  "",NMBINS, logMbins);
+<   h1_WjetsBinWidthEE_   = std::make_shared<TH1D>("WjetsBinWidthEE",  "",NMBINS, logMbins);
+<   h1_WjetsBinWidthBBBE_ = std::make_shared<TH1D>("WjetsBinWidthBBBE","",NMBINS, logMbins);
+< 
+<   h1_Dijet1GeVBB_     = std::make_shared<TH1D>("Dijet1GeVBB",    "",3000,0.0,3000.0);
+<   h1_Dijet1GeVBEEE_   = std::make_shared<TH1D>("Dijet1GeVBEEE",  "",3000,0.0,3000.0);
+<   h1_Dijet1GeVEE_     = std::make_shared<TH1D>("Dijet1GeVEE",    "",3000,0.0,3000.0);
+---
+>   h1_ZprimeRecomass60to120BEpos_    = std::make_shared<TH1D>("ZprimeRecomass60to120BEpos","",60,60.0,120.0);
+>   h1_ZprimeRecomass60to120BEnev_    = std::make_shared<TH1D>("ZprimeRecomass60to120BEnev","",60,60.0,120.0);
+>   h1_ZprimeRecomass60to120EE_       = std::make_shared<TH1D>("ZprimeRecomass60to120EE","",60,60.0,120.0);
+>   h1_ZprimeRecomass60to120BB_       = std::make_shared<TH1D>("ZprimeRecomass60to120BB","",60,60.0,120.0);
+>   h1_ZprimeRecomass60to120_         = std::make_shared<TH1D>("ZprimeRecomass60to120","",60,60.0,120.0);
+>   h1_ZprimeRecomassBinWidthAfterBtaging_ = std::make_shared<TH1D>("ZprimeRecomassBinWidthAfterBtaging","ZprimeRecomassBinWidthAfterBtaging",NMBINS, logMbins);
+>   h1_DijetBinWidthBB_         = std::make_shared<TH1D>("DijetBinWidthBB","",NMBINS, logMbins);
+>   h1_DijetBinWidthBE_         = std::make_shared<TH1D>("DijetBinWidthBE","",NMBINS, logMbins);
+>   h1_DijetBinWidthEE_         = std::make_shared<TH1D>("DijetBinWidthEE","",NMBINS, logMbins);
+>   h1_DijetBinWidthBBBE_       = std::make_shared<TH1D>("DijetBinWidthBBBE","",NMBINS, logMbins);
+>   h1_WjetsBinWidthBB_         = std::make_shared<TH1D>("WjetsBinWidthBB","",NMBINS, logMbins);
+>   h1_WjetsBinWidthBE_         = std::make_shared<TH1D>("WjetsBinWidthBE","",NMBINS, logMbins);
+>   h1_WjetsBinWidthEE_         = std::make_shared<TH1D>("WjetsBinWidthEE","",NMBINS, logMbins);
+>   h1_WjetsBinWidthBBBE_       = std::make_shared<TH1D>("WjetsBinWidthBBBE","",NMBINS, logMbins);
+> 
+>   h1_Dijet1GeVBB_     = std::make_shared<TH1D>("Dijet1GeVBB","",3000,0.0,3000.0);
+>   h1_Dijet1GeVBEEE_   = std::make_shared<TH1D>("Dijet1GeVBEEE","",3000,0.0,3000.0);
+>   h1_Dijet1GeVEE_     = std::make_shared<TH1D>("Dijet1GeVEE","",3000,0.0,3000.0);
+479,481c322,324
+<   h1_Wjets1GeVBB_     = std::make_shared<TH1D>("Wjets1GeVBB",    "",3000,0.0,3000.0);
+<   h1_Wjets1GeVBEEE_   = std::make_shared<TH1D>("Wjets1GeVBEEE",  "",3000,0.0,3000.0);
+<   h1_Wjets1GeVEE_     = std::make_shared<TH1D>("Wjets1GeVEE",    "",3000,0.0,3000.0);
+---
+>   h1_Wjets1GeVBB_     = std::make_shared<TH1D>("Wjets1GeVBB","",3000,0.0,3000.0);
+>   h1_Wjets1GeVBEEE_   = std::make_shared<TH1D>("Wjets1GeVBEEE","",3000,0.0,3000.0);
+>   h1_Wjets1GeVEE_     = std::make_shared<TH1D>("Wjets1GeVEE","",3000,0.0,3000.0);
+484,485c327,328
+<   h1_Dijet20GeVBB_     = std::make_shared<TH1D>("Dijet20GeVBB",    "",300,0.0,6000.0);
+<   h1_Dijet20GeVBEEE_   = std::make_shared<TH1D>("Dijet20GeVBEEE",  "",300,0.0,6000.0);
+---
+>   h1_Dijet20GeVBB_     = std::make_shared<TH1D>("Dijet20GeVBB","",300,0.0,6000.0);
+>   h1_Dijet20GeVBEEE_   = std::make_shared<TH1D>("Dijet20GeVBEEE","",300,0.0,6000.0);
+487,488c330,331
+<   h1_Wjets20GeVBB_     = std::make_shared<TH1D>("Wjet20GeVBB",     "",300,0.0,6000.0);
+<   h1_Wjets20GeVBEEE_   = std::make_shared<TH1D>("Wjets20GeVBEEE",  "",300,0.0,6000.0);
+---
+>   h1_Wjets20GeVBB_     = std::make_shared<TH1D>("Wjet20GeVBB","",300,0.0,6000.0);
+>   h1_Wjets20GeVBEEE_   = std::make_shared<TH1D>("Wjets20GeVBEEE","",300,0.0,6000.0);
+491,496d333
+<    // Pileup reweighting 2016 data vs Spring16 MC in 80x
+<   TFile *filePU= TFile::Open("puWeightsMoriond17_v2.root");
+<   TH1F *puweight = (TH1F*)filePU->Get("weights");
+<   TH1F *puweightUp = (TH1F*)filePU->Get("weights_varUp");
+<   TH1F *puweightDown = (TH1F*)filePU->Get("weights_varDn");
+< 
+509c346
+<   std::cout << "Weight of the sample is= "   << m_weight << std::endl;
+---
+>   std::cout << "Weight of the sample is= " << m_weight << std::endl;
+526,528d362
+<   int wwto2l2nu_input(0),wwto2l2nu_fail_gen_mass(0),wwto2l2nu_fail_reco_mass(0);
+<   int ttto2l2nu_input(0),ttto2l2nu_fail_gen_mass(0),ttto2l2nu_fail_reco_mass(0);
+< 
+566,592c400
+<     nb = fChain->GetEntry(jentry);
+<     nbytes += nb;
+<     newweight = m_weight;
+< 
+<     // Pileup Reweighting
+<     Int_t binx = puweight->GetXaxis()->FindBin(num_PU_vertices);
+<     pu_weight=double(puweight->GetBinContent(binx));
+<     pu_weightUp=double(puweightUp->GetBinContent(binx));
+<     pu_weightDown=double(puweightDown->GetBinContent(binx));
+<     // Changing the weight for pileup
+<     newweight = m_weight*pu_weight;
+<     if (debug)
+<       std::cout << "Starting weight + pileup, old weight and new = " << m_weight << " * " << newweight << std::endl;
+< 
+<     if (isCISample) {
+<       // have to choose which cut to use
+<       // if (!passMInvCut)
+<       // if (!passPreFSRMInvCut) {
+<       // if (!passST1MInvCut) {
+<       // if (!passST23MInvCut) {
+<       if (!passHSMInvCut) {
+< 	if (debug)
+< 	  std::cout << "failed CI gen cut" << std::endl;
+< 	continue;
+<       }
+<     }
+< 
+---
+>     nb = fChain->GetEntry(jentry);   nbytes += nb;
+598,604c406,410
+<     /*std<<cout << "=======> jentry = " << jentry
+<                 << "=======> Evt = "    << event_evtNo
+<                 << "=======> Run = "    << event_runNo
+<                 << "=======> Lumi = "   << event_lumi
+<                 << "=======> bunch = "  << event_bunch
+< 	        << std::endl;
+<     */
+---
+>     /*std::cout << "=======> jentry = "<<jentry<<
+>       "=======> Evt = "<<event_evtNo<<
+>       "=======> Run = "<<event_runNo<<
+>       "=======> Lumi = "<<event_lumi<<
+>       "=======> bunch = "<<event_bunch << std::endl; */
+630c436
+< 					 m_genET1, m_genEta1, m_genPhi1, m_genEn1);
+---
+> 					 genET1, genEta1, genPhi1, genEn1);
+636c442
+< 					  m_genET2, m_genEta2, m_genPhi2, m_genEn2);
+---
+> 					  genET2, genEta2, genPhi2, genEn2);
+640,646d445
+<     m_genMass = GenMass(m_genET1, m_genEta1, m_genPhi1, m_genEn1,
+< 			m_genET2, m_genEta2, m_genPhi2, m_genEn2);
+<     m_vtxMassSmearedMu = smearedMass(EtaRecMu1, PhiRecMu1, PtRecTunePMuBestTrack1,
+< 				     EtaRecMu2, PhiRecMu2, PtRecTunePMuBestTrack2, m_vtxMassMu);
+<     m_vtxMassScaledMu  = scaledMass(EtaRecMu1, PhiRecMu1, PtRecTunePMuBestTrack1, ChargeRecMu1,
+< 				    EtaRecMu2, PhiRecMu2, PtRecTunePMuBestTrack2, ChargeRecMu2, m_vtxMassMu);
+< 
+653c452
+<     //std::cout << "firstMu= " << firstMuFinal << " " << "secondMu= " << secondMuFinal << std::endl;
+---
+>     //cout << "firstMu= " << firstMuFinal << " " << "secondMu= " << secondMuFinal << std::endl;
+655,656c454
+< 
+<     //std::cout << "Vertex mass mu= " << m_vtxMassMu << std::endl;
+---
+>     //cout << "Vertex mass mu= " << m_vtxMassMu << std::endl;
+659d456
+< 
+664,665c461,462
+<     bool fireHLT = isPassHLT();
+<     if (fireHLT == 0) {
+---
+>     bool fireHLT2 = isPassHLT();
+>     if (fireHLT2 == 0) {
+667c464
+<     	std::cout << "failed HLT" << std::endl;
+---
+> 	std::cout << "failed HLT" << std::endl;
+673d469
+<     std::cout << "ahhhhhhhhhhhhhhhhhhh";
+678,707c474,485
+<         DrawBTaggingDiscriminator(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (PFMet_et_cor > 50.0) {
+<           h1_PFMetCorr_->Fill(PFMet_et_cor,m_weight);
+<           h1_CaloMet_->Fill(CaloMet_pt,m_weight);
+<           h1_MassMuMuBinWidthMET_->Fill(m_vtxMassMu,m_weight);
+<           h1_MassMuMu1GeVbinMET_->Fill(m_vtxMassMu,m_weight);
+<         }
+<         bool passDijet = DiPFJet(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (passDijet==1) {
+<           h1_MassMuMuDijetBinWidth_->Fill(m_vtxMassMu,m_weight);
+<           h1_MassMuMuDijet1GeVbin_->Fill(m_vtxMassMu,m_weight);
+<         }
+< 
+<         bool passDijetcuts = DiPFJetCut(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (passDijetcuts==1 && PFMet_et_cor > 50.0) {
+<           h1_MassMuMuDijetBinWidthMET_->Fill(m_vtxMassMu,m_weight);
+<           h1_MassMuMuDijet1GeVbinMET_->Fill(m_vtxMassMu,m_weight);
+<         }
+<         if (passDijetcuts==1 && PFMet_et_cor > 100.0) {
+<           h1_MassMuMuDijetBinWidthMET100_->Fill(m_vtxMassMu,m_weight);
+<           h1_MassMuMuDijet1GeVbinMET100_->Fill(m_vtxMassMu,m_weight);
+<         }
+<         bool passBTaggingDiscriminator2 = BTaggingDiscriminator2(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (passBTaggingDiscriminator2==1) {
+<           h1_BTagMassMuMu_->Fill(m_vtxMassMu,m_weight);
+<         }
+<         bool passBTaggingDiscriminator3 = BTaggingDiscriminator3(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (passBTaggingDiscriminator3==1) {
+<           h1_BTagMassMuMu_->Fill(m_vtxMassMu,m_weight);
+<         }
+---
+> 	DrawBTaggingDiscriminator(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (PFMet_et_cor > 50.0) {
+> 	  h1_PFMetCorr_->Fill(PFMet_et_cor);
+> 	  h1_CaloMet_->Fill(CaloMet_pt);
+> 	  h1_MassMuMuBinWidthMET_->Fill(m_vtxMassMu);
+> 	  h1_MassMuMu1GeVbinMET_->Fill(m_vtxMassMu);
+> 	}
+> 	bool passDijet = DiPFJet(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (passDijet==1) {
+> 	  h1_MassMuMuDijetBinWidth_->Fill(m_vtxMassMu);
+> 	  h1_MassMuMuDijet1GeVbin_->Fill(m_vtxMassMu);
+> 	}
+709,794c487,503
+<         // Special inclusively binned samples, used only in the low mass region?
+<         //  - Scaling is off...
+<         // WW sample
+<         // need to keep a running track of how many events are rejcted, and adjust the weight appropriately
+<         if (inputfile.Contains("WWTo2L2Nu_13TeV")) {
+<           wwto2l2nu_input++;
+<           if (m_genMass > 600.) {
+<             if (debug)
+<               std::cout << "Reweighting sample of WWTo2L2Nu with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             // newweight = 0;
+<             wwto2l2nu_fail_gen_mass++;
+<           }
+<           if (m_vtxMassMu > 600.) {  // WHY CUT ON THE RECO MASS???
+<             if (debug)
+<               std::cout << "Reweighting sample of WWTo2L2Nu with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             newweight = 0;
+<             wwto2l2nu_fail_reco_mass++;
+<           }
+<         } else if (inputfile.Contains("WWTo2L2Nu_Mll")) {
+<           wwto2l2nu_input++;
+<           if (m_genMass < 600.) {
+<             if (debug)
+<               std::cout << "Reweighting sample of WWTo2L2Nu_Mll with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             // newweight = 0;
+<             wwto2l2nu_fail_gen_mass++;
+<           }
+<           if (m_vtxMassMu < 600.) {  // WHY CUT ON THE RECO MASS???
+<             if (debug)
+<               std::cout << "Reweighting sample of WWTo2L2Nu_Mll with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             newweight = 0;
+<             wwto2l2nu_fail_reco_mass++;
+<           }
+<         } else if (inputfile.Contains("TTTo2L2Nu_Tune")) {
+<           // TTTo2L2Nu sample
+< 	  if (debug)
+< 	    std::cout << "Checking reweighting of inclusive TTTo2L2Nu sample: gen("
+< 		      << m_genMass << ") reco("
+< 		      << m_vtxMassMu << ")" << std::endl;
+<           ttto2l2nu_input++;
+<           if (m_genMass > 500.) {
+<             if (debug)
+< 	      std::cout << "Reweighting inclusive TTTo2L2Nu sample with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             // newweight = 0;
+<             ttto2l2nu_fail_gen_mass++;
+<           }
+<           if (m_vtxMassMu > 500.) {  // WHY CUT ON THE RECO MASS???
+<             if (debug)
+< 	      std::cout << "Reweighting inclusive TTTo2L2Nu sample with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             newweight = 0;
+<             ttto2l2nu_fail_reco_mass++;
+<           }
+< 	} else if (inputfile.Contains("TTTo2L2Nu_M") || inputfile.Contains("TTToLL_MLL_")) {
+< 	  if (debug)
+< 	    std::cout << "Checking reweighting of mass binned TTTo2L2Nu sample: gen("
+< 		      << m_genMass << ") reco("
+< 		      << m_vtxMassMu << ")" << std::endl;
+<           ttto2l2nu_input++;
+<           if (m_genMass > 500.) {
+<             if (debug)
+< 	      std::cout << "Reweighting mass binned TTTo2L2Nu sample with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             // newweight = 0;
+<             ttto2l2nu_fail_gen_mass++;
+<           }
+<           if (m_vtxMassMu<500.) {
+<             if (debug)
+< 	      std::cout << "Reweighting mass binned TTTo2L2Nu sample with weight=0: gen("
+<                         << m_genMass << ") reco("
+<                         << m_vtxMassMu << ")" << std::endl;
+<             newweight = 0;
+<             ttto2l2nu_fail_reco_mass++;
+<           }
+<         }
+---
+> 	bool passDijetcuts = DiPFJetCut(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (passDijetcuts==1 && PFMet_et_cor > 50.0) {
+> 	  h1_MassMuMuDijetBinWidthMET_->Fill(m_vtxMassMu);
+> 	  h1_MassMuMuDijet1GeVbinMET_->Fill(m_vtxMassMu);
+> 	}
+> 	if (passDijetcuts==1 && PFMet_et_cor > 100.0) {
+> 	  h1_MassMuMuDijetBinWidthMET100_->Fill(m_vtxMassMu);
+> 	  h1_MassMuMuDijet1GeVbinMET100_->Fill(m_vtxMassMu);
+> 	}
+> 	bool passBTaggingDiscriminator2 = BTaggingDiscriminator2(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (passBTaggingDiscriminator2==1) {
+> 	  h1_BTagMassMuMu_->Fill(m_vtxMassMu);
+> 	}
+> 	bool passBTaggingDiscriminator3 = BTaggingDiscriminator3(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (passBTaggingDiscriminator3==1) {
+> 	  h1_BTagMassMuMu_->Fill(m_vtxMassMu);
+> 	}
+796,812c505,520
+<         Boson(pxRecMu1,pyRecMu1,pzRecMu1,EnRecMu1,pxRecMu2,pyRecMu2,pzRecMu2,EnRecMu2,
+<               ChargeRecMu1,PFMet_et_cor,PFMet_px_cor,PFMet_py_cor,PFMet_pz_cor,PFMet_en_cor, m_bosonPt);
+<         PlotRecoInfo(CosmicRejec,m_vtxMassMu,m_genMass,
+<                      PtRecTunePMuBestTrack1,PtRecTunePMu1,PtRecMuBestTrack1,m_ptGen1,EtaRecMu1, pRecMu1,
+<                      PtRecTunePMuBestTrack2,PtRecTunePMu2,PtRecMuBestTrack2,m_ptGen2,EtaRecMu2, pRecMu2, m_bosonPt);
+<         PlotGenInfo(m_genMass,m_genEta1,m_genEta2,m_genET1,m_genET2,m_genEn1,m_genEn2);
+<         m_csAngle = CosThetaCollinSoper(PtRecTunePMuBestTrack1,EtaRecMu1,PhiRecMu1,EnRecMu1,
+<                                         PtRecTunePMuBestTrack2,EtaRecMu2,PhiRecMu2,EnRecMu2,
+<                                         ChargeRecMu1,m_vtxMassMu);
+<         bool passBTaggingDiscriminator = BTaggingDiscriminator(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+<         if (passBTaggingDiscriminator==1) {
+<           h1_BTagMassMuMuBinWidth_->Fill(m_vtxMassMu,m_weight);
+<           h1_BTagMassMuMu1GeVbin_->Fill(m_vtxMassMu,m_weight);
+<         }
+<         if (passBTaggingDiscriminator==0) {
+<           h1_ZprimeRecomassBinWidthAfterBtaging_->Fill(m_vtxMassMu,m_weight);
+<         }
+---
+> 	PlotRecoInfo(CosmicRejec,m_vtxMassMu,m_genMass,
+> 		     PtRecTunePMuBestTrack1,PtRecTunePMu1,PtRecMuBestTrack1,mPtGen1,EtaRecMu1,
+> 		     PtRecTunePMuBestTrack2,PtRecTunePMu2,PtRecMuBestTrack2,mPtGen2,EtaRecMu2);
+> 	m_csAngle = CosThetaCollinSoper(PtRecTunePMuBestTrack1,EtaRecMu1,PhiRecMu1,EnRecMu1,
+> 					PtRecTunePMuBestTrack2,EtaRecMu2,PhiRecMu2,EnRecMu2,
+> 					ChargeRecMu1,m_vtxMassMu);
+> 	Boson(pxRecMu1,pyRecMu1,pzRecMu1,EnRecMu1,pxRecMu2,pyRecMu2,pzRecMu2,EnRecMu2,
+> 	      ChargeRecMu1,PFMet_et_cor,PFMet_px_cor,PFMet_py_cor,PFMet_pz_cor,PFMet_en_cor);
+> 	bool passBTaggingDiscriminator = BTaggingDiscriminator(EtaRecMu1,PhiRecMu1,EtaRecMu2,PhiRecMu2);
+> 	if (passBTaggingDiscriminator==1) {
+> 	  h1_BTagMassMuMuBinWidth_->Fill(m_vtxMassMu);
+> 	  h1_BTagMassMuMu1GeVbin_->Fill(m_vtxMassMu);
+> 	}
+> 	if (passBTaggingDiscriminator==0) {
+> 	  h1_ZprimeRecomassBinWidthAfterBtaging_->Fill(m_vtxMassMu);
+> 	}
+820,830d527
+<   if (inputfile.Contains("TTToLL") || inputfile.Contains("TTTo2L2Nu"))
+<     std::cout << "===Low mass TTTo2L2Nu sample info===="   << std::endl
+< 	      << "Total:     " << ttto2l2nu_input          << std::endl
+< 	      << "Fail GEN:  " << ttto2l2nu_fail_gen_mass  << std::endl
+< 	      << "Fail RECO: " << ttto2l2nu_fail_reco_mass << std::endl;
+<   if (inputfile.Contains("WWTo2L2Nu"))
+<     std::cout << "===Low mass WWTo2L2Nu sample info===="   << std::endl
+< 	      << "Total:     " << wwto2l2nu_input          << std::endl
+< 	      << "Fail GEN:  " << wwto2l2nu_fail_gen_mass  << std::endl
+< 	      << "Fail RECO: " << wwto2l2nu_fail_reco_mass << std::endl;
+< 
+854d550
+< 
+860,912c556
+< //
+< //
+< //
+< 
+< float ZprimeMuMuPatMiniAodNewMC::GetScaleBias(float eta, float phi, float pt, float charge)
+< {
+<   double shift = m_muon_scale_ratio_hist->GetBinContent(
+< 							m_muon_scale_ratio_hist->FindBin(eta, phi));
+<   double uncertainty = m_muon_scale_ratio_hist->GetBinError(
+< 							    m_muon_scale_ratio_hist->FindBin(eta, phi));
+< 
+< 
+<   //rand = new TRandom3();
+<   // Central value correction + gaussian uncertainty
+<   if (std::abs(eta) < 1.2) {
+<     shift = 0.0;
+<     uncertainty = 0.025;
+<   }
+<   double ratio   = 1. + (rand->Gaus(shift, uncertainty) * pt / 1000./ charge);
+<   return 1./ratio;
+< }
+< 
+< float ZprimeMuMuPatMiniAodNewMC::GetResultionUncert(float pt,float eta)
+< {
+<   //rand = new TRandom3();
+<   double smearing = 0.0;
+<   if (pt < 200.) {
+<     smearing = 0.003;
+<   } else if (pt < 500.) {
+<     smearing = 0.005;
+<   } else {
+<     smearing = 0.01;
+<   }
+<   // Double smearing for muons in the endcaps
+<   if (std::abs(eta) > 1.2) smearing *= 2;
+<   // Return Gaussian smearing
+<   double ratio = rand->Gaus(1, smearing);
+<   return ratio;
+< }
+< 
+< TLorentzVector ZprimeMuMuPatMiniAodNewMC::GetShiftedMuon(float px, float py, float pz, float E, float ratio)
+< {
+<   // TLorentzVector * result = new TLorentzVector();
+<   std::shared_ptr<TLorentzVector> result = std::make_shared<TLorentzVector>();
+<   result->SetPxPyPzE(ratio*px,
+< 		     ratio*py,
+< 		     ratio*pz,
+< 		     ratio*E);
+<   return *result;
+< }
+< 
+< 
+< float ZprimeMuMuPatMiniAodNewMC::delR(float eta1,float phi1,float eta2,float phi2)
+---
+> float ZprimeMuMuPatMiniAodNewData::delR(float eta1,float phi1,float eta2,float phi2)
+920c564
+< bool ZprimeMuMuPatMiniAodNewMC::GenRecoMatchMu(float RecoEta1,float RecoPhi1,
+---
+> bool ZprimeMuMuPatMiniAodNewData::GenRecoMatchMu(float RecoEta1,float RecoPhi1,
+929a574
+>     float deltaR1   = delR(RecoEta1,RecoPhi1,etaGen->at(i),phiGen->at(i));
+932d576
+<     float deltaR1   = delR(RecoEta1,RecoPhi1,etaGen->at(i),phiGen->at(i));
+941c585
+<   if (NbHighPtmu > 0) {
+---
+>   if (NbHighPtmu > 0)
+943c587
+<   } else {
+---
+>   else
+945d588
+<   }
+949,954c592,597
+< bool ZprimeMuMuPatMiniAodNewMC::SelectFirstMuon(float &pTmuon1,float &Enmuon1,float &Etamuon1,
+< 						float &Phimuon1,int &ChargeMu1,unsigned &FlagMu1,
+< 						float &pxmuon1,float &pymuon1,float &pzmuon1,
+< 						float &pmuon1,float &dxymuon1,float &pTmuon1tuneP,
+< 						float &pTmuonBestTrack1,
+< 						float &genMu1Pt, float &genMu1Eta, float &genMu1Phi, float &genMu1En)
+---
+> bool ZprimeMuMuPatMiniAodNewData::SelectFirstMuon(float &pTmuon1,float &Enmuon1,float &Etamuon1,
+> 						  float &Phimuon1,int &ChargeMu1,unsigned &FlagMu1,
+> 						  float &pxmuon1,float &pymuon1,float &pzmuon1,
+> 						  float &pmuon1,float &dxymuon1,float &pTmuon1tuneP,
+> 						  float &pTmuonBestTrack1,
+> 						  float &genMu1Pt, float &genMu1Eta, float &genMu1Phi, float &genMu1En)
+962c605,615
+<     if (CutJets(i)) {
+---
+>     if (Mu_isTrackerMuon->at(i) == 1 &&
+>        	Mu_isGlobalMuon->at(i) == 1 &&
+> 	fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+> 	Mu_ptTunePMuonBestTrack->at(i) > 53.0 &&
+> 	Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+> 	(Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+> 	Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+> 	Mu_numberOfValidPixelHits->at(i) > 0 &&
+> 	Mu_numberOfValidMuonHits->at(i) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(i) == 1 &&
+> 	Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3 ) {
+964a618
+> 	/* MAKE ME SWITCHABLE WITH A FLAG SO WE DONT WRITE THE SAME CODE TWICE
+967a622
+> 	*/
+970c625
+< 	NbHighPtmu++;
+---
+> 	NbHighPtmu ++;
+999,1004c654,659
+< bool ZprimeMuMuPatMiniAodNewMC::SelectSecondMuon(int ChargeMu1,unsigned FlagMu1,float pTmuon1,float Etamuon1,float Phimuon1,
+< 						 float &pTmuon2,float &Enmuon2,
+< 						 float &Etamuon2,float &Phimuon2,int &ChargeMu2,float &pxmuon2,
+< 						 float &pymuon2,float &pzmuon2,float &pmuon2,float &dxymuon2,
+< 						 float &pTmuon2tuneP,float &pTmuonBestTrack2,
+< 						 float &genMu2Pt, float &genMu2Eta, float &genMu2Phi, float &genMu2En)
+---
+> bool ZprimeMuMuPatMiniAodNewData::SelectSecondMuon(int ChargeMu1,unsigned FlagMu1,float pTmuon1,float Etamuon1,float Phimuon1,
+> 						   float &pTmuon2,float &Enmuon2,
+> 						   float &Etamuon2,float &Phimuon2,int &ChargeMu2,float &pxmuon2,
+> 						   float &pymuon2,float &pzmuon2,float &pmuon2,float &dxymuon2,
+> 						   float &pTmuon2tuneP,float &pTmuonBestTrack2,
+> 						   float &genMu2Pt, float &genMu2Eta, float &genMu2Phi, float &genMu2En)
+1018c673,683
+<     if (CutJets(i)) {
+---
+>     if (Mu_isTrackerMuon->at(i) == 1 &&
+> 	Mu_isGlobalMuon->at(i) == 1 &&
+> 	fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+> 	Mu_ptTunePMuonBestTrack->at(i) > 53.0 &&
+> 	Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+> 	(Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+> 	Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+> 	Mu_numberOfValidPixelHits->at(i) > 0 &&
+> 	Mu_numberOfValidMuonHits->at(i) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(i) == 1 &&
+> 	Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3 ) {
+1019a685
+> 	/* MAKE ME SWITCHABLE WITH A FLAG SO WE DONT WRITE THE SAME CODE TWICE
+1022a689
+> 	*/
+1026c693
+< 	NbHighPtmu++;
+---
+> 	NbHighPtmu ++;
+1052,1080c719,723
+< void ZprimeMuMuPatMiniAodNewMC::RepeatedFillHistograms(bool isPri, int additive, int priEtaBin, int secEtaBin)
+< {
+<   if (isPri)
+<     {
+<       h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (priEtaBin*3)+additive,newweight);
+<       h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (priEtaBin*3)+additive,newweight);
+<       h2_CSMassMuIDBinned_   ->Fill(m_vtxMassMu,               (priEtaBin*3)+additive,newweight*SF1*SF2);
+<       h2_CSMassUpBinned_     ->Fill(m_vtxMassScaledMu,         (priEtaBin*3)+additive,newweight);
+<       h2_CSMassDownBinned_   ->Fill(m_vtxMassScaledMu,         (priEtaBin*3)+additive,newweight);
+<       h2_CSMassPUUpBinned_   ->Fill(m_vtxMassMu,               (priEtaBin*3)+additive,newweight/pu_weight*pu_weightUp);
+<       h2_CSMassPUDownBinned_ ->Fill(m_vtxMassMu,               (priEtaBin*3)+additive,newweight/pu_weight*pu_weightDown);
+<     }
+<   else
+<     {
+<       h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (secEtaBin*3)+additive,newweight);
+<       h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (secEtaBin*3)+additive,newweight);
+<       h2_CSMassMuIDBinned_   ->Fill(m_vtxMassMu,               (secEtaBin*3)+additive,newweight*SF1*SF2);
+<       h2_CSMassUpBinned_     ->Fill(m_vtxMassScaledMu,         (secEtaBin*3)+additive,newweight);
+<       h2_CSMassDownBinned_   ->Fill(m_vtxMassScaledMu,         (secEtaBin*3)+additive,newweight);
+<       h2_CSMassPUUpBinned_   ->Fill(m_vtxMassMu,               (secEtaBin*3)+additive,newweight/pu_weight*pu_weightUp);
+<       h2_CSMassPUDownBinned_ ->Fill(m_vtxMassMu,               (secEtaBin*3)+additive,newweight/pu_weight*pu_weightDown);
+<     }
+< }
+< 
+< void ZprimeMuMuPatMiniAodNewMC::PlotRecoInfo(float CosmicMuonRejec, float vertexMassMu,float MassGenerated,
+< 					     float PtTunePMuBestTrack,float PtTunePMu,float PtMuBestTrack,
+< 					     float PtGenerated, float etaMu1, float pMu1,
+< 					     float PtTunePMuBestTrack2,float PtTunePMu2,float PtMuBestTrack2,
+< 					     float PtGenerated2,float etaMu2, float pMu2, float bosonPt)
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotRecoInfo(float CosmicMuonRejec, float vertexMassMu,float MassGenerated,
+> 				 float PtTunePMuBestTrack,float PtTunePMu,float PtMuBestTrack,
+> 				 float PtGenerated, float etaMu1,
+> 				 float PtTunePMuBestTrack2,float PtTunePMu2,float PtMuBestTrack2,
+> 				 float PtGenerated2,float etaMu2)
+1085,1086c728,729
+< 	       << "   "      << event_lumi
+< 	       << "       "  << event_evtNo
+---
+> 	       << "   " << event_lumi
+> 	       << "       " << event_evtNo
+1096,1099c739
+<   // only for DY POWHEG??
+<   float weight10 = 1.;
+<   if (inputfile.Contains("NNPDF30"))
+<     weight10 = MassCorrection(MassGenerated, bosonPt, etaMu1, etaMu2);
+---
+>   float weight10 = MassCorrection(vertexMassMu);
+1101d740
+<   newweight = newweight*weight10;
+1106,1127c745,753
+<   h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,newweight);
+<   h1_ZprimeRecomasslogscale_->Fill(log10(vertexMassMu),newweight);
+<   h1_ZprimeRecomass_->Fill(vertexMassMu,newweight);
+<   h1_MassRecoInAccep_->Fill(MassGenerated,newweight);
+< 
+< 
+<   if (fabs(etaMu1) <= 1.6 && pMu1 > 100)
+<     SF1 = (0.994 - 4.08e-6 * pMu1)/(0.994 - 4.08e-6 * 100);
+<   else if (fabs(etaMu1) > 1.6 && pMu1 > 200)
+<     SF1 = ((0.9784 - 4.73e-5 * pMu1)/(0.9908 - 1.26e-5 * pMu1)) / ((0.9784 - 4.73e-5 * 200)/(0.9908 - 1.26e-5 * 200)) ;
+<   if (fabs(etaMu2) <= 1.6 && pMu2 > 100)
+<     SF2 = (0.994 - 4.08e-6 * pMu2)/(0.994 - 4.08e-6 * 100);
+<   else if (fabs(etaMu2) > 1.6 && pMu2 > 200)
+<     SF2 = ((0.9784 - 4.73e-5 * pMu2)/(0.9908 - 1.26e-5 * pMu2)) / ((0.9784 - 4.73e-5 * 200)/(0.9908 - 1.26e-5 * 200) ) ;
+< 
+<   h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        0.,newweight);
+<   h2_CSMassBinned_       ->Fill(m_vtxMassMu,               0.,newweight);
+<   h2_CSMassPUUpBinned_   ->Fill(m_vtxMassMu,               0.,newweight/pu_weight*pu_weightUp);
+<   h2_CSMassPUDownBinned_ ->Fill(m_vtxMassMu,               0.,newweight/pu_weight*pu_weightDown);
+<   h2_CSMassMuIDBinned_   ->Fill(m_vtxMassMu,               0.,newweight*SF1*SF2);
+<   h2_CSMassUpBinned_     ->Fill(m_vtxMassScaledMu,         0.,newweight);
+<   h2_CSMassDownBinned_   ->Fill(m_vtxMassScaledMu,         0.,newweight);
+---
+>   h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,m_weight);
+>   h1_ZprimeRecomasslogscale_->Fill(log10(vertexMassMu),m_weight);
+>   h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight);
+>   h1_MassRecoInAccep_->Fill(MassGenerated,m_weight);
+> 
+>   // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        0.,m_weight);
+>   h2_CSMassBinned_       ->Fill(m_vtxMassMu,               0.,m_weight);
+>   // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),0.,m_weight);
+>   // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),0.,m_weight);
+1129,1135c755,758
+<     h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        2.,newweight);
+<     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               2.,newweight);
+<     h2_CSMassPUUpBinned_   ->Fill(m_vtxMassMu,               2.,newweight/pu_weight*pu_weightUp);
+<     h2_CSMassPUDownBinned_ ->Fill(m_vtxMassMu,               2.,newweight/pu_weight*pu_weightDown);
+<     h2_CSMassMuIDBinned_   ->Fill(m_vtxMassMu,               2.,newweight*SF1*SF2);
+<     h2_CSMassUpBinned_     ->Fill(m_vtxMassScaledMu,               2.,newweight);
+<     h2_CSMassDownBinned_   ->Fill(m_vtxMassScaledMu,               2.,newweight);
+---
+>     // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        2.,m_weight);
+>     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               2.,m_weight);
+>     // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),2.,m_weight);
+>     // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),2.,m_weight);
+1137,1143c760,763
+<     h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        1.,newweight);
+<     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               1.,newweight);
+<     h2_CSMassPUUpBinned_   ->Fill(m_vtxMassMu,               1.,newweight/pu_weight*pu_weightUp);
+<     h2_CSMassPUDownBinned_ ->Fill(m_vtxMassMu,               1.,newweight/pu_weight*pu_weightDown);
+<     h2_CSMassMuIDBinned_   ->Fill(m_vtxMassMu,               1.,newweight*SF1*SF2);
+<     h2_CSMassUpBinned_     ->Fill(m_vtxMassScaledMu,         1.,newweight);
+<     h2_CSMassDownBinned_   ->Fill(m_vtxMassScaledMu,         1.,newweight);
+---
+>     // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        1.,m_weight);
+>     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               1.,m_weight);
+>     // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),1.,m_weight);
+>     // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),1.,m_weight);
+1174,1175c794,795
+<     h1_ZprimeRecomassBinWidthBB_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120BB_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomassBinWidthBB_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120BB_->Fill(vertexMassMu,m_weight);
+1177,1178c797,798
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+1182,1184c802,804
+<     h1_ZprimeRecomassBinWidthAllBE_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomassBinWidthAllBE_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1190,1193c810,813
+<       h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,newweight);
+<       h1_ZprimeRecomass60to120BEpos_->Fill(vertexMassMu,newweight);
+<       // h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<       // h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>       h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,m_weight);
+>       h1_ZprimeRecomass60to120BEpos_->Fill(vertexMassMu,m_weight);
+>       // h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>       // h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1197,1198c817,818
+<       h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,newweight);
+<       h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,newweight);
+---
+>       h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,m_weight);
+>       h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,m_weight);
+1200,1202c820,822
+<       // h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<       // h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<       // h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>       // h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>       // h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>       // h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1207c827
+<     h1_ZprimeRecomassBinWidthAllEE_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomassBinWidthAllEE_->Fill(vertexMassMu,m_weight);
+1212,1216c832,836
+<       h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,newweight);
+<       h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,newweight);
+<       //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<       //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<       h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>       h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,m_weight);
+>       h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,m_weight);
+>       //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>       //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>       h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1229,1234c849,854
+<   if (fabs(etaMu1) < 1.2 && (etaMu2 > 1.2 && etaMu2 < 2.4)) {
+<     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120BEpos_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>   if (fabs(etaMu1) < 1.2 && etaMu2 > 1.2 && etaMu2 < 2.4)) {
+>     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120BEpos_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1238,1243c858,863
+<   if (fabs(etaMu2) < 1.2 && (etaMu1 > 1.2 && etaMu1 < 2.4)) {
+<     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>   if (fabs(etaMu2) < 1.2 && etaMu1 > 1.2 && etaMu1 < 2.4)) {
+>     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomassBinWidthBEpos_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1245c865
+<     }
+---
+>   }
+1248,1253c868,873
+<   if (fabs(etaMu1) < 1.2 && (etaMu2 > -2.4 && etaMu2 < -1.2)) {
+<     h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     //h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>   if (fabs(etaMu1) < 1.2 && etaMu2 > -2.4 && etaMu2 < -1.2)) {
+>     h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     //h1_ZprimeRecomassBinWidthAll_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1257,1262c877,882
+<   if (fabs(etaMu2) < 1.2 && (etaMu1 > -2.4 && etaMu1 < -1.2)) {
+<     h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>   if (fabs(etaMu2) < 1.2 && etaMu1 > -2.4 && etaMu1 < -1.2)) {
+>     h1_ZprimeRecomassBinWidthBEnev_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120BEnev_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1264c884
+<     }
+---
+>   }
+1267,1272c887,892
+<   if ((etaMu1 > 1.2 && etaMu1 < 2.4) && (etaMu2 > -2.4 && etaMu2 < -1.2)) {
+<     h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>   if ((etaMu1 > 1.2 && etaMu1 < 2.4) && etaMu2 > -2.4 && etaMu2 < -1.2)) {
+>     h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1276,1280c896,900
+<     h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,newweight);
+<     h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,newweight);
+<     //h1_ZprimeRecomass_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,newweight); // DUPLICATE!!!!!
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomassBinWidthEE_->Fill(vertexMassMu,m_weight);
+>     h1_ZprimeRecomass60to120EE_->Fill(vertexMassMu,m_weight);
+>     //h1_ZprimeRecomass_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     //h1_ZprimeRecomassBinWidth_->Fill(vertexMassMu,m_weight); // DUPLICATE!!!!!
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,m_weight);
+1294c914
+<   */
+---
+>   //}
+1304,1305c924,927
+<   RepeatedFillHistograms(true, 0, priEtaBin, secEtaBin);
+< 
+---
+>   // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (priEtaBin*3)+0,m_weight);
+>   h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (priEtaBin*3)+0,m_weight);
+>   // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(priEtaBin*3)+0,m_weight);
+>   // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(priEtaBin*3)+0,m_weight);
+1308c930,933
+<     RepeatedFillHistograms(false, 0, priEtaBin, secEtaBin);
+---
+>     // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (secEtaBin*3)+0,m_weight);
+>     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (secEtaBin*3)+0,m_weight);
+>     // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(secEtaBin*3)+0,m_weight);
+>     // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(secEtaBin*3)+0,m_weight);
+1312c937,940
+<     RepeatedFillHistograms(true, 2, priEtaBin, secEtaBin);
+---
+>     // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (priEtaBin*3)+2,m_weight);
+>     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (priEtaBin*3)+2,m_weight);
+>     // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(priEtaBin*3)+2,m_weight);
+>     // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(priEtaBin*3)+2,m_weight);
+1315c943,946
+<       RepeatedFillHistograms(false, 2, priEtaBin, secEtaBin);
+---
+>       // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (secEtaBin*3)+2,m_weight);
+>       h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (secEtaBin*3)+2,m_weight);
+>       // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(secEtaBin*3)+2,m_weight);
+>       // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(secEtaBin*3)+2,m_weight);
+1319c950,953
+<     RepeatedFillHistograms(true, 1, priEtaBin, secEtaBin);
+---
+>     // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (priEtaBin*3)+1,m_weight);
+>     h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (priEtaBin*3)+1,m_weight);
+>     // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(priEtaBin*3)+1,m_weight);
+>     // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(priEtaBin*3)+1,m_weight);
+1322c956,959
+<       RepeatedFillHistograms(false, 1, priEtaBin, secEtaBin);
+---
+>       // h2_CSSmearedMassBinned_->Fill(m_vtxMassSmearedMu,        (secEtaBin*3)+1,m_weight);
+>       h2_CSMassBinned_       ->Fill(m_vtxMassMu,               (secEtaBin*3)+1,m_weight);
+>       // h2_CSMassUpBinned_     ->Fill(m_vtxMassMu*(1+m_scaleUnc),(secEtaBin*3)+1,m_weight);
+>       // h2_CSMassDownBinned_   ->Fill(m_vtxMassMu*(1-m_scaleUnc),(secEtaBin*3)+1,m_weight);
+1326,1327c963,964
+<   h1_ZprimeRecomass50_->Fill(vertexMassMu,newweight);
+<   h1_ZprimeRecomass20_->Fill(vertexMassMu,newweight);
+---
+>   h1_ZprimeRecomass50_->Fill(vertexMassMu);
+>   h1_ZprimeRecomass20_->Fill(vertexMassMu);
+1329,1334c966,975
+<     h1_ZprimeRecomassBB_->Fill(vertexMassMu,newweight);
+<   } else if (fabs(etaMu1) > 1.2 && fabs(etaMu2) > 1.2) {
+<     h1_ZprimeRecomassEE_->Fill(vertexMassMu,newweight);
+<   } else if ((fabs(etaMu1) < 1.2 && fabs(etaMu2) > 1.2) ||
+< 	     (fabs(etaMu1) > 1.2 && fabs(etaMu2) < 1.2)) {
+<     h1_ZprimeRecomassBE_->Fill(vertexMassMu,newweight);
+---
+>     h1_ZprimeRecomassBB_->Fill(vertexMassMu);
+>   }
+>   if (fabs(etaMu1) > 1.2 && fabs(etaMu2) > 1.2) {
+>     h1_ZprimeRecomassEE_->Fill(vertexMassMu);
+>   }
+>   if (fabs(etaMu1) < 1.2 && fabs(etaMu2) > 1.2) {
+>     h1_ZprimeRecomassBE_->Fill(vertexMassMu);
+>   }
+>   if (fabs(etaMu1) > 1.2 && fabs(etaMu2) < 1.2) {
+>     h1_ZprimeRecomassBE_->Fill(vertexMassMu);
+1338,1339c979,980
+<     h1_ZprimeRecomass60to120_->Fill(vertexMassMu,newweight);*/
+<   h1_3Dangle_->Fill(CosmicMuonRejec,newweight);
+---
+>     h1_ZprimeRecomass60to120_->Fill(vertexMassMu);*/
+>   h1_3Dangle_->Fill(CosmicMuonRejec,m_weight);
+1341,1344c982,985
+<   // part for Pt resolution
+<   h1_PtResolutionTunePMBT_->Fill((PtTunePMuBestTrack-PtGenerated)/PtGenerated,newweight);
+<   h1_PtResolutiontuneP_->Fill((PtTunePMu-PtGenerated)/PtGenerated,newweight);
+<   h1_PtResolutionMBT_->Fill((PtMuBestTrack-PtGenerated)/PtGenerated,newweight);
+---
+>   //part for Pt resolution
+>   h1_PtResolutionTunePMBT_->Fill((PtTunePMuBestTrack-PtGenerated)/PtGenerated,m_weight);
+>   h1_PtResolutiontuneP_->Fill((PtTunePMu-PtGenerated)/PtGenerated,m_weight);
+>   h1_PtResolutionMBT_->Fill((PtMuBestTrack-PtGenerated)/PtGenerated,m_weight);
+1347,1360c988,1007
+<   if (vertexMassMu > 0.0 && vertexMassMu < 250.0 ) {
+<     h1_MassResultionEBEB1_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 250 && vertexMassMu < 750.0 ) {
+<     h1_MassResultionEBEB2_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 750 && vertexMassMu < 1250.0 ) {
+<     h1_MassResultionEBEB3_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 1250 && vertexMassMu < 1750.0 ) {
+<     h1_MassResultionEBEB4_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 1750 && vertexMassMu < 2250.0 ) {
+<     h1_MassResultionEBEB5_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 2000 && vertexMassMu < 4000.0 ) {
+<     h1_MassResultionEBEB6_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+<   } else if (vertexMassMu > 4000 && vertexMassMu < 6000.0) {
+<     h1_MassResultionEBEB7_->Fill((vertexMassMu-MassGenerated)/MassGenerated,newweight);
+---
+>   if (vertexMassMu > 0.0 && vertexMassMu < 250.0) {
+>     h1_MassResultionEBEB1_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 250 && vertexMassMu < 750.0) {
+>     h1_MassResultionEBEB2_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 750 && vertexMassMu < 1250.0) {
+>     h1_MassResultionEBEB3_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 1250 && vertexMassMu < 1750.0) {
+>     h1_MassResultionEBEB4_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 1750 && vertexMassMu < 2250.0) {
+>     h1_MassResultionEBEB5_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 2000 && vertexMassMu < 4000.0) {
+>     h1_MassResultionEBEB6_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+>   }
+>   if (vertexMassMu > 4000 && vertexMassMu < 6000.0) {
+>     h1_MassResultionEBEB7_->Fill((vertexMassMu-MassGenerated)/MassGenerated,m_weight);
+1365,1366c1012,1013
+< float ZprimeMuMuPatMiniAodNewMC::Mass(float Pt1,float Eta1,float Phi1,float En1,
+< 				      float Pt2,float Eta2,float Phi2,float En2)
+---
+> float ZprimeMuMuPatMiniAodNewData::Mass(float Pt1,float Eta1,float Phi1,float En1,
+>               		                float Pt2,float Eta2,float Phi2,float En2)
+1373c1020
+<   MuMuMass = sqrt((Mu1+Mu2).M2());
+---
+>   MuMuMass = (Mu1 + Mu2).M();
+1377,1425c1024
+< //===================== Method to calculate the smeared mass ========================
+< float ZprimeMuMuPatMiniAodNewMC::smearedMass(float Eta1, float Phi1, float Pt1, float Eta2, float Phi2, float Pt2,
+< 					     float vtxMass)
+< {
+< 
+<   double ratio1 = GetResultionUncert(Pt1,Eta1);
+<   double ratio2 = GetResultionUncert(Pt2,Eta2);
+< 
+<   // TLorentzVector * muon1 = new TLorentzVector();
+<   std::shared_ptr<TLorentzVector> muon1 = std::make_shared<TLorentzVector>();
+<   muon1->SetPtEtaPhiM(Pt1,Eta1,Phi1,MUON_MASS);
+<   TLorentzVector shiftedMuon1 = GetShiftedMuon(muon1->Px(),muon1->Py(),muon1->Pz(),muon1->E(), ratio1);
+< 
+<   // TLorentzVector * muon2 = new TLorentzVector();
+<   std::shared_ptr<TLorentzVector> muon2 = std::make_shared<TLorentzVector>();
+<   muon2->SetPtEtaPhiM(Pt2,Eta2,Phi2,MUON_MASS);
+<   TLorentzVector shiftedMuon2 = GetShiftedMuon(muon2->Px(),muon2->Py(),muon2->Pz(),muon2->E(), ratio2);
+< 
+<   double mass = (*muon1 + *muon2).M();
+<   double massShifted = (shiftedMuon1 + shiftedMuon2).M();
+< 
+<   return vtxMass*massShifted/mass;
+< 
+< }
+< float ZprimeMuMuPatMiniAodNewMC::scaledMass(float Eta1, float Phi1, float Pt1, float Charge1, float Eta2, float Phi2, float Pt2, float Charge2,
+< 					     float vtxMass)
+< {
+< 
+<   double ratio1 = GetScaleBias(Eta1,Phi1, Pt1, Charge1);
+<   double ratio2 = GetScaleBias(Eta2,Phi2, Pt2, Charge2);
+< 
+<   // TLorentzVector * muon1 = new TLorentzVector();
+<   std::shared_ptr<TLorentzVector> muon1 = std::make_shared<TLorentzVector>();
+<   muon1->SetPtEtaPhiM(Pt1,Eta1,Phi1,MUON_MASS);
+<   TLorentzVector shiftedMuon1 = GetShiftedMuon(muon1->Px(),muon1->Py(),muon1->Pz(),muon1->E(), ratio1);
+< 
+<   // TLorentzVector * muon2 = new TLorentzVector();
+<   std::shared_ptr<TLorentzVector> muon2 = std::make_shared<TLorentzVector>();
+<   muon2->SetPtEtaPhiM(Pt2,Eta2,Phi2,MUON_MASS);
+<   TLorentzVector shiftedMuon2 = GetShiftedMuon(muon2->Px(),muon2->Py(),muon2->Pz(),muon2->E(), ratio2);
+< 
+<   double mass = (*muon1 + *muon2).M();
+<   double massShifted = (shiftedMuon1 + shiftedMuon2).M();
+< 
+<   return vtxMass*massShifted/mass;
+< 
+< }
+< 
+< void ZprimeMuMuPatMiniAodNewMC::PickThehighestMass(float &vtxHighestMass,float &vtxHighestChi2,int EvtNb)
+---
+> void ZprimeMuMuPatMiniAodNewData::PickThehighestMass(float &vtxHighestMass,float &vtxHighestChi2,int EvtNb)
+1434,1465c1033,1062
+<   for (unsigned i=0; i<Mu_vtxMass->size(); i++) {
+<     Nb++;
+<     countlept=2*i;
+<     //std::cout << "vtx mass" << Mu_vtxMass->at(i) << " Chi2= " << Mu_vtxNormChi2->at(i)<< std::endl;
+<     //std::cout << "vtx Mass lepton= " << Mu_vtxMassLept->at(countlept) << " " <<  Mu_vtxMassLept->at(countlept+1)<< std::endl;
+<     float chargepair=0;
+<     for (unsigned j=0; j<Mu_nbMuon->size(); j++) {
+<       if (Mu_ptTunePMuonBestTrack->at(j)==Mu_vtxMassLept->at(countlept)) chargepair=Mu_chargeTunePMuonBestTrack->at(j);
+<       if (Mu_ptTunePMuonBestTrack->at(j)==Mu_vtxMassLept->at(countlept+1)) chargepair=chargepair*Mu_chargeTunePMuonBestTrack->at(j);
+<     }
+< 
+<     //std::cout << "Chargepair for vtxmass= " <<  Mu_vtxMass->at(i) << "   is " << chargepair << std::endl;
+<     if (chargepair!=-1) continue;
+<     //std::cout << "Chargepair for vtxmass= " <<  Mu_vtxMass->at(i) << "   is " << chargepair << std::endl;
+< 
+< 
+<     int leptmatchBest=0;
+<     if (Mu_vtxMassLept->at(countlept)==PtRecTunePMu1 && Mu_vtxMassLept->at(countlept+1)==PtRecTunePMu2)
+<       leptmatchBest=2;
+<     if (Mu_vtxMassLept->at(countlept)==PtRecTunePMu2 && Mu_vtxMassLept->at(countlept+1)==PtRecTunePMu1)
+<       leptmatchBest=2;
+< 
+<     if (leptmatchBest!=2)
+<       continue;
+<     //std::cout << "Chargepair surviving matching for vtxmass= " <<  Mu_vtxMass->at(i) << "   with " << leptmatchBest << " leptons" << std::endl;
+< 
+<     if (Mu_vtxNormChi2->at(i)> 20)
+<       continue;
+<     if (Mu_vtxMass->at(i)>Massinv) {
+<       Massinv = Mu_vtxMass->at(i);
+<       iflag  = i;
+<       NbMu++;
+---
+>   for (unsigned i=0; i<Mu_vtxMass->size(); i++)
+>     {
+>       Nb++;
+>       countlept=2*i;
+>       //cout << "vtx mass" << Mu_vtxMass->at(i) << " Chi2= " << Mu_vtxNormChi2->at(i)<< std::endl;
+>       //cout << "vtx Mass lepton= " << Mu_vtxMassLept->at(countlept) << " " <<  Mu_vtxMassLept->at(countlept+1)<< std::endl;
+>       float chargepair=0;
+>       for (unsigned j=0; j<Mu_nbMuon->size(); j++) {
+> 	if (Mu_ptTunePMuonBestTrack->at(j)==Mu_vtxMassLept->at(countlept)) chargepair=Mu_chargeTunePMuonBestTrack->at(j);
+> 	if (Mu_ptTunePMuonBestTrack->at(j)==Mu_vtxMassLept->at(countlept+1)) chargepair=chargepair*Mu_chargeTunePMuonBestTrack->at(j);
+>       }
+> 
+>       //cout << "Chargepair for vtxmass= " <<  Mu_vtxMass->at(i) << "   is " << chargepair << std::endl;
+>       if (chargepair!=-1) continue;
+>       //cout << "Chargepair for vtxmass= " <<  Mu_vtxMass->at(i) << "   is " << chargepair << std::endl;
+> 
+> 
+>       int leptmatchBest=0;
+>       if (Mu_vtxMassLept->at(countlept)==PtRecTunePMu1 && Mu_vtxMassLept->at(countlept+1)==PtRecTunePMu2) leptmatchBest=2;
+>       if (Mu_vtxMassLept->at(countlept)==PtRecTunePMu2 && Mu_vtxMassLept->at(countlept+1)==PtRecTunePMu1) leptmatchBest=2;
+> 
+>       if (leptmatchBest!=2) continue;
+>       //cout << "Chargepair surviving matching for vtxmass= " <<  Mu_vtxMass->at(i) << "   with " << leptmatchBest << " leptons" << std::endl;
+> 
+>       if (Mu_vtxNormChi2->at(i)> 20) continue;
+>       if (Mu_vtxMass->at(i)>Massinv) {
+> 	Massinv = Mu_vtxMass->at(i);
+> 	iflag  = i;
+> 	NbMu++;
+>       }
+1467,1468c1064
+<   }
+<   if ( NbMu > 0 ) {
+---
+>   if (NbMu > 0) {
+1473,1475c1069,1070
+< 
+< double ZprimeMuMuPatMiniAodNewMC::ThreeDangle(float pxMu1,float pyMu1,float pzMu1,float pMu1,
+< 					      float pxMu2,float pyMu2,float pzMu2,float pMu2)
+---
+> double ZprimeMuMuPatMiniAodNewData::ThreeDangle(float pxMu1,float pyMu1,float pzMu1,float pMu1,
+>        			          float pxMu2,float pyMu2,float pzMu2,float pMu2)
+1489,1492c1084,1087
+< bool ZprimeMuMuPatMiniAodNewMC::SelectFirstGenMu(float &ETMu1,float &PhiMu1,
+< 						 float &EtaMu1,float &EnMu1,
+< 						 int &IDmu1,int &Statele1,
+< 						 unsigned &GenFlag1)
+---
+> bool ZprimeMuMuPatMiniAodNewData::SelectFirstGenMu(float &ETMu1,float &PhiSCMu1,
+> 					    float &EtaSCMu1,float &EnMu1,
+> 					    int &IDele1,int &Statele1,
+> 					    unsigned &GenFlag1)
+1494c1089
+<   int NbHighPtmu = 0;
+---
+>   int NbHEEPele = 0;
+1502,1505c1097,1098
+<       iflag = i;
+<       NbHighPtmu++;
+<     } else {
+<       continue;
+---
+>       iflag  = i;
+>       NbHEEPele ++;
+1506a1100
+>     else continue;
+1508,1515c1102,1109
+<   if (NbHighPtmu>0) {
+<     GenFlag1 = iflag;
+<     ETMu1    = ptGen->at(iflag);
+<     PhiMu1   = phiGen->at(iflag);
+<     EtaMu1   = etaGen->at(iflag);
+<     EnMu1    = EnergyGen->at(iflag);
+<     IDmu1    = idGen->at(iflag);
+<     Statele1 = statusGen->at(iflag);
+---
+>   if (NbHEEPele>0) {
+>     GenFlag1       = iflag;
+>     ETMu1          = ptGen->at(iflag);
+>     PhiSCMu1       = phiGen->at(iflag);
+>     EtaSCMu1       = etaGen->at(iflag);
+>     EnMu1          = EnergyGen->at(iflag);
+>     IDele1         = idGen->at(iflag);
+>     Statele1       = statusGen->at(iflag);
+1517,1518d1110
+<   } else {
+<     return false;
+1519a1112
+>   else return false;
+1522,1524c1115,1116
+< bool ZprimeMuMuPatMiniAodNewMC::SelectSecondGenMu(unsigned GenFlag1, float ETMu1,
+< 						  float &ETMu2, float &PhiMu2, float &EtaMu2,
+< 						  float &EnMu2,int &IDmu2,int &Statele2)
+---
+> bool ZprimeMuMuPatMiniAodNewData::SelectSecondGenMu(unsigned GenFlag1,float ETMu1,float &ETMu2,float &PhiSCMu2,
+> 					     float &EtaSCMu2,float &EnMu2,int &IDele2,int &Statele2)
+1526c1118
+<   int NbHighPtmu = 0;
+---
+>   int NbHEEPele = 0;
+1536,1539c1128,1129
+<       iflag = i;
+<       NbHighPtmu++;
+<     } else {
+<       continue;
+---
+>       iflag  = i;
+>       NbHEEPele ++;
+1540a1131
+>     else continue;
+1542,1548c1133,1139
+<   if (NbHighPtmu>0) {
+<     ETMu2    = ptGen->at(iflag);
+<     PhiMu2   = phiGen->at(iflag);
+<     EtaMu2   = etaGen->at(iflag);
+<     EnMu2    = EnergyGen->at(iflag);
+<     IDmu2    = idGen->at(iflag);
+<     Statele2 = statusGen->at(iflag);
+---
+>   if (NbHEEPele>0) {
+>     ETMu2      = ptGen->at(iflag);
+>     PhiSCMu2   = phiGen->at(iflag);
+>     EtaSCMu2   = etaGen->at(iflag);
+>     EnMu2      = EnergyGen->at(iflag);
+>     IDele2     = idGen->at(iflag);
+>     Statele2   = statusGen->at(iflag);
+1550,1551d1140
+<   } else {
+<     return false;
+1552a1142
+>   else return false;
+1555,1565d1144
+< //============================ Method to compute gen level invariant mass ========================
+< float ZprimeMuMuPatMiniAodNewMC::GenMass(float ETMu1, float EtaMu1, float PhiMu1,float EnMu1,
+< 					 float ETMu2, float EtaMu2, float PhiMu2,float EnMu2)
+< {
+<   TLorentzVector mu1, mu2;
+<   // mu1.SetPtEtaPhiE(ETMu1,EtaMu1,PhiMu1,EnMu1);
+<   // mu2.SetPtEtaPhiE(ETMu2,EtaMu2,PhiMu2,EnMu2);
+<   mu1.SetPtEtaPhiM(ETMu1,EtaMu1,PhiMu1,MUON_MASS);
+<   mu2.SetPtEtaPhiM(ETMu2,EtaMu2,PhiMu2,MUON_MASS);
+<   return (mu1+mu2).M();
+< }
+1568,1569c1147,1148
+< void ZprimeMuMuPatMiniAodNewMC::PlotGenInfo(float ZprimeGenMass,float EtaGenMu1,float EtaGenMu2,float PtGenMu1,
+< 					    float PtGenMu2,float EnGenMu1,float EnGenMu2)
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotGenInfo(float ZprimeGenMass,float EtaGenMu1,float EtaGenMu2,float PtGenMu1,
+> 				       float PtGenMu2,float EnGenMu1,float EnGenMu2)
+1571,1578c1150,1157
+<   h1_MassGenInAccep_->Fill(ZprimeGenMass,newweight);
+<   h1_ZprimeGenmass_->Fill(ZprimeGenMass,newweight);
+<   h1_ZprimeGenEta1_->Fill(EtaGenMu1,newweight);
+<   h1_ZprimeGenEta2_->Fill(EtaGenMu2,newweight);
+<   h1_ZprimeGenPt1_->Fill(PtGenMu1,newweight);
+<   h1_ZprimeGenPt2_->Fill(PtGenMu2,newweight);
+<   h1_ZprimeGenEn1_->Fill(EnGenMu1,newweight);
+<   h1_ZprimeGenEn2_->Fill(EnGenMu2,newweight);
+---
+>   h1_MassGenInAccep_->Fill(ZprimeGenMass,m_weight);
+>   h1_ZprimeGenmass_->Fill(ZprimeGenMass,m_weight);
+>   h1_ZprimeGenEta1_->Fill(EtaGenMu1,m_weight);
+>   h1_ZprimeGenEta2_->Fill(EtaGenMu2,m_weight);
+>   h1_ZprimeGenPt1_->Fill(PtGenMu1,m_weight);
+>   h1_ZprimeGenPt2_->Fill(PtGenMu2,m_weight);
+>   h1_ZprimeGenEn1_->Fill(EnGenMu1,m_weight);
+>   h1_ZprimeGenEn2_->Fill(EnGenMu2,m_weight);
+1585,1586c1164
+< 
+< bool ZprimeMuMuPatMiniAodNewMC::FillMuonHistograms(CutType cutType)
+---
+> void ZprimeMuMuPatMiniAodNewData::MuonPassingID()
+1588c1166
+<     for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+---
+>   for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+1592,1599c1170,1179
+< 	(Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 || cutType == CutType::PlotAbsDxy)&&
+< 	((Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10 || cutType == CutType::PlotTrackiso)  &&
+< 	(Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 || cutType == CutType::PlotLayers) &&
+< 	(Mu_numberOfValidPixelHits->at(i) > 0 || cutType == CutType::PlotPixelHits) &&
+< 	(Mu_numberOfValidMuonHits->at(i) > 0 || cutType == CutType::PlotMuonHits) &&
+< 	(Mu_numberOfMatchedStations->at(i) > 1 || cutType == CutType::PlotMatchedStations) &&
+< 	(Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3 || cutType == CutType::PlotPtError)) {
+<       return true;
+---
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_PtID_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaID_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>       h1_nbPVID_->Fill(Mu_nbofpv->at(i),m_weight);
+1601,1612c1181
+<     else return false;
+<   }
+< }
+< void ZprimeMuMuPatMiniAodNewMC::MuonPassingID()
+< {
+<   for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+<     if (FillMuonHistograms(CutType::PassingID))
+<       {
+<       h1_PtID_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaID_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_nbPVID_ ->Fill(Mu_nbofpv->at(i),newweight);
+<       }
+---
+>     else continue;
+1616c1185
+< void ZprimeMuMuPatMiniAodNewMC::PlotPterror()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotPterror()
+1619,1624c1188,1201
+<     if (FillMuonHistograms(CutType::PlotPtError))
+<       {
+<       h1_PtEffpterror_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffpterror_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_dPToverPT_ ->Fill(((Mu_dPToverPTTunePMuonBestTrack->at(i),newweight)));
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1) {
+>       h1_dPToverPT_->Fill(Mu_dPToverPTTunePMuonBestTrack->at(i),m_weight );
+>       h1_PtEffpterror_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffpterror_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1628c1205
+< void ZprimeMuMuPatMiniAodNewMC::PlotNbTrackLayers()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotNbTrackLayers()
+1631,1636c1208,1222
+<     if (FillMuonHistograms(CutType::PlotLayers))
+<       {
+<       h1_PtEffptnumberOftrackerLayers_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptnumberOftrackerLayers_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_numberOftrackerLayersWithMeasurement_ ->Fill(Mu_numberOftrackerLayersWithMeasurement->at(i),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        //Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_numberOftrackerLayersWithMeasurement_->Fill( Mu_numberOftrackerLayersWithMeasurement->at(i),m_weight );
+>       h1_PtEffptnumberOftrackerLayers_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptnumberOftrackerLayers_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1640c1226,1227
+< void ZprimeMuMuPatMiniAodNewMC::PlotNBValidPixelHits()
+---
+> 
+> void ZprimeMuMuPatMiniAodNewData::PlotNBValidPixelHits()
+1643,1648c1230,1244
+<     if (FillMuonHistograms(CutType::PlotPixelHits)) 
+<       {
+<       h1_PtEffptnumberOfPixelHits_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptnumberOfPixelHits_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_numberOfValidPixelHits_ ->Fill(Mu_numberOfValidPixelHits->at(i),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        //Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_numberOfValidPixelHits_->Fill( Mu_numberOfValidPixelHits->at(i),m_weight );
+>       h1_PtEffptnumberOfPixelHits_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptnumberOfPixelHits_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1652c1248
+< void ZprimeMuMuPatMiniAodNewMC::PlotNbValidMuonHits()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotNbValidMuonHits()
+1655,1660c1251,1265
+<     if (FillMuonHistograms(CutType::PlotMuonHits))
+<       {
+<       h1_PtEffptnumberOfMuonHits_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptnumberOfMuonHits_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_numberOfValidMuonHits_ ->Fill(Mu_numberOfValidMuonHits->at(i),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        //Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_numberOfValidMuonHits_->Fill( Mu_numberOfValidMuonHits->at(i),m_weight );
+>       h1_PtEffptnumberOfMuonHits_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptnumberOfMuonHits_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1664c1269,1270
+< void ZprimeMuMuPatMiniAodNewMC::PlotNbMatchedStations()
+---
+> 
+> void ZprimeMuMuPatMiniAodNewData::PlotNbMatchedStations()
+1667,1672c1273,1287
+<     if (FillMuonHistograms(CutType::PlotMatchedStations))
+<       {
+<       h1_PtEffptnumberOfMatchedStations_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptnumberOfMatchedStations_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_numberOfMatchedStations_ ->Fill(Mu_numberOfMatchedStations->at(i),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        //Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_numberOfMatchedStations_->Fill( Mu_numberOfMatchedStations->at(i),m_weight );
+>       h1_PtEffptnumberOfMatchedStations_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptnumberOfMatchedStations_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1677c1292
+< void ZprimeMuMuPatMiniAodNewMC::PlotTrackiso()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotTrackiso()
+1680,1685c1295,1309
+<     if (FillMuonHistograms(CutType::PlotTrackiso))
+<       {
+<       h1_PtEffptTrackIso_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptTrackIso_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_trackiso_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        //(Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_trackiso_->Fill( Mu_trackiso->at(i)/Mu_ptTunePMuonBestTrack->at(i),m_weight );
+>       h1_PtEffptTrackIso_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptTrackIso_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1690c1314
+< void ZprimeMuMuPatMiniAodNewMC::PlotAbsDxy()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotAbsDxy()
+1693,1698c1317,1331
+<     if (FillMuonHistograms(CutType::PlotAbsDxy))
+<       {
+<       h1_PtEffptabsdsy_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<       h1_EtaEffptabsdsy_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<       h1_absdxy_ ->Fill(Mu_absdxyTunePMuonBestTrack->at(i) ,newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        //Mu_absdxyTunePMuonBestTrack->at(i) < 0.2 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_absdxy_->Fill( Mu_absdxyTunePMuonBestTrack->at(i) ,m_weight);
+>       h1_PtEffptabsdsy_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaEffptabsdsy_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>     }
+>     else continue;
+1702c1335
+< void ZprimeMuMuPatMiniAodNewMC::PlotPtTuneP()
+---
+> void ZprimeMuMuPatMiniAodNewData::PlotPtTuneP()
+1713,1714c1346,1347
+<        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3 ) {
+<       h1_PtTuneP_->Fill( Mu_ptTunePMuonBestTrack->at(i) ,newweight);
+---
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_PtTuneP_->Fill( Mu_ptTunePMuonBestTrack->at(i) ,m_weight);
+1720c1353,1355
+< void ZprimeMuMuPatMiniAodNewMC::plotAllHighPtMuonsID()
+---
+> 
+> 
+> void ZprimeMuMuPatMiniAodNewData::plotAllHighPtMuonsID()
+1722d1356
+<   std::cout << "ahhhhhhhhhhhhhhhh";
+1736c1370
+< void ZprimeMuMuPatMiniAodNewMC::MuonPassingNewID()
+---
+> void ZprimeMuMuPatMiniAodNewData::MuonPassingNewID()
+1739,1744c1373,1387
+<     if (FillMuonHistograms(CutType::PassingID))
+<       {
+<   h1_PtNewID_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<   h1_EtaNewID_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<   h1_nbPVNewID_ ->Fill(Mu_nbofpv->at(i),newweight);
+<       }
+---
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.02 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_PtNewID_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaNewID_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>       h1_nbPVNewID_->Fill(Mu_nbofpv->at(i),m_weight);
+>     }
+>     else continue;
+1749,1757c1392,1408
+< void ZprimeMuMuPatMiniAodNewMC::MuonPassingTightID(){
+<   for (unsigned i=0; i<Mu_nbMuon->size(); i++) 
+<     {
+<       if (FillMuonHistograms(CutType::PassingID))
+<       {
+<   h1_PtTightID_ ->Fill(Mu_ptTunePMuonBestTrack->at(i),newweight);
+<   h1_EtaTightID_ ->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),newweight);
+<   h1_nbPVTightID_ ->Fill(Mu_nbofpv->at(i),newweight);
+<       }
+---
+> 
+> void ZprimeMuMuPatMiniAodNewData::MuonPassingTightID()
+> {
+>   for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+>     if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < 2.4 &&
+>        Mu_isGlobalMuon->at(i) == 1 &&
+>        (Mu_ptTunePMuonBestTrack->at(i) > 53.0 && Mu_ptTunePMuonBestTrack->at(i) < ptEffCut) &&
+>        Mu_absdxyTunePMuonBestTrack->at(i) < 0.01 &&
+>        (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i)) < 0.10  &&
+>        Mu_numberOftrackerLayersWithMeasurement->at(i) > 5 &&
+>        Mu_numberOfValidPixelHits->at(i) > 0 &&
+>        Mu_numberOfValidMuonHits->at(i) > 0 &&
+>        Mu_numberOfMatchedStations->at(i) > 1 &&
+>        Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+>       h1_PtTightID_->Fill(Mu_ptTunePMuonBestTrack->at(i),m_weight);
+>       h1_EtaTightID_->Fill(fabs(Mu_etaTunePMuonBestTrack->at(i)),m_weight);
+>       h1_nbPVTightID_->Fill(Mu_nbofpv->at(i),m_weight);
+1758a1410
+>     else continue;
+1759a1412
+> }
+1761,1763c1414,1418
+< float ZprimeMuMuPatMiniAodNewMC::CosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+< 						     float Et2,float Eta2,float Phi2,float En2,
+< 						     float ChargeEle1, float RecoMass) {
+---
+> 
+> float ZprimeMuMuPatMiniAodNewData::CosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+> 						       float Et2,float Eta2,float Phi2,float En2,
+> 						       float ChargeEle1,float RecoMass)
+> {
+1791,1792c1446
+< 
+<   if (Q.Pz()<0.0) costheta = -costheta;
+---
+>   if (Q.Pz() < 0.0) costheta = -costheta;
+1795,1812c1449,1458
+<     h1_CosAngleCollinSoperCorrect60Mass120_->Fill(costheta,newweight);
+<   }
+< 
+<   if (RecoMass > 120.0 && RecoMass < 300.0) {
+<     h1_CosAngleCollinSoperCorrect120Mass300_->Fill(costheta,newweight);
+<   }
+< 
+<   if (RecoMass > 300.0 && RecoMass < 700.0) {
+<     h1_CosAngleCollinSoperCorrect300Mass700_->Fill(costheta,newweight);
+<   }
+< 
+<   if (RecoMass > 700.0 && RecoMass < 3000.0) {
+<     h1_CosAngleCollinSoperCorrect700Mass3000_->Fill(costheta,newweight);
+<   }
+< 
+<   if (RecoMass > 4500.0 && RecoMass < 6000.0) {
+<     h1_CosAngleCollinSoperCorrect4900Mass5100_->Fill(costheta,newweight);
+<     h1_absCosAngleCollinSoperCorrect4500Mass5500_->Fill(fabs(costheta),newweight);
+---
+>     h1_CosAngleCollinSoperCorrect60Mass120_->Fill(costheta,m_weight);
+>   } else if (RecoMass > 120.0 && RecoMass < 300.0) {
+>     h1_CosAngleCollinSoperCorrect120Mass300_->Fill(costheta,m_weight);
+>   } else if (RecoMass > 300.0 && RecoMass < 700.0) {
+>     h1_CosAngleCollinSoperCorrect300Mass700_->Fill(costheta,m_weight);
+>   } else if (RecoMass > 700.0 && RecoMass < 3000.0) {
+>     h1_CosAngleCollinSoperCorrect700Mass3000_->Fill(costheta,m_weight);
+>   } else if (RecoMass > 4500.0 && RecoMass < 6000.0) {
+>     h1_CosAngleCollinSoperCorrect4900Mass5100_->Fill(costheta,m_weight);
+>     h1_absCosAngleCollinSoperCorrect4500Mass5500_->Fill(fabs(costheta),m_weight);
+1820c1466
+<   TLorentzVector Pbeam(0.0, 0.0,  4000., 4000.); // beam momentum in lab frame
+---
+>   TLorentzVector   Pbeam(0.0, 0.0,  4000., 4000.); // beam momentum in lab frame
+1832c1478
+<   //h1_TanPhiCollinSoperCorrect_->Fill(tanphi,newweight);
+---
+>   //h1_TanPhiCollinSoperCorrect_->Fill(tanphi,m_weight);
+1841c1487
+<   //h1_Sin2AngleCollinSoperCorrect_->Fill(sin2theta,newweight);
+---
+>   //h1_Sin2AngleCollinSoperCorrect_->Fill(sin2theta,m_weight);
+1847,1848c1493,1494
+< void ZprimeMuMuPatMiniAodNewMC::PrintEventInformation(unsigned int runNumber, unsigned int lumiNumber, unsigned int eventNumber,
+< 						      float vtxChi2, float vtxMass, float CosmicRejection)
+---
+> void ZprimeMuMuPatMiniAodNewData::PrintEventInformation(unsigned int runNumber, unsigned int lumiNumber, unsigned int eventNumber,
+> 					  float vtxChi2, float vtxMass, float CosmicRejection)
+1851,1889c1497,1537
+<     output_txt << event_runNo
+< 	       << "        " << event_lumi
+< 	       << "        " << event_evtNo
+< 	       << "        " << vtxChi2
+< 	       << "        " << vtxMass << std::endl;
+<     for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+<       /*if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < EtaCut ) {
+< 	std::cout<<"[1] eta="<<Mu_etaTunePMuonBestTrack->at(i) << std::endl;
+< 	}*/
+<       std::cout<<"[0] phi="<<Mu_phiTunePMuonBestTrack->at(i) << std::endl;
+<       std::cout<<"[1] eta="<<Mu_etaTunePMuonBestTrack->at(i) << std::endl;
+<       if (Mu_isGlobalMuon->at(i) == 1) {
+< 	std::cout<<"[2] isGlobal="<<Mu_isGlobalMuon->at(i) << std::endl;
+<       }
+<       if (Mu_ptTunePMuonBestTrack->at(i) > 53.0) {
+< 	std::cout<<"[3] ptcocktail="<<Mu_ptTunePMuonBestTrack->at(i) << std::endl;
+<       }
+<       if (Mu_absdxyTunePMuonBestTrack->at(i) < 0.2) {
+< 	std::cout<<"[4] absdxy="<<Mu_absdxyTunePMuonBestTrack->at(i) << std::endl;
+<       }
+<       if (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i) < 0.10) {
+< 	std::cout<<"[5] trackiso="<<Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i) << std::endl;
+<       }
+<       if (Mu_numberOftrackerLayersWithMeasurement->at(i) > 5) {
+< 	std::cout<<"[6] nbTrackerLayer="<<Mu_numberOftrackerLayersWithMeasurement->at(i) << std::endl;
+<       }
+<       /*if (Mu_numberOfValidPixelHits->at(i) > 0) {
+< 	std::cout<<"[7] nbPixelHits="<<Mu_numberOfValidPixelHits->at(i) << std::endl;
+< 	}*/
+<       std::cout<<"[7] nbPixelHits (global tk) ="<<Mu_numberOfValidPixelHits->at(i) << std::endl;
+<       /*std::cout<<"[7bar] nbPixelHits (inner tk) ="<<Mu_innerTK_numberOfValidPixelHits->at(i) << std::endl;*/
+<       if (Mu_numberOfValidMuonHits->at(i) > 0) {
+< 	std::cout<<"[8] nbMuonHits="<<Mu_numberOfValidMuonHits->at(i) << std::endl;
+<       }
+<       if (Mu_numberOfMatchedStations->at(i) > 1) {
+< 	std::cout<<"[9] nbStation="<<Mu_numberOfMatchedStations->at(i) << std::endl;
+<       }
+<       if (Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+< 	std::cout<<"[10] DeltaPterror="<<Mu_dPToverPTTunePMuonBestTrack->at(i) << std::endl;
+---
+>       output_txt << event_runNo
+>                  << "        " << event_lumi
+>                  << "        " << event_evtNo
+>                  << "        " << vtxChi2
+>                  << "        " << vtxMass << std::endl;
+>       for (unsigned i=0; i<Mu_nbMuon->size(); i++) {
+>         /*if (fabs(Mu_etaTunePMuonBestTrack->at(i)) < EtaCut) {
+> 	  std::cout << "[1] eta="<<Mu_etaTunePMuonBestTrack->at(i) << std::endl;
+> 	  }*/
+>         std::cout << "[0] phi="<<Mu_phiTunePMuonBestTrack->at(i) << std::endl;
+>         std::cout << "[1] eta="<<Mu_etaTunePMuonBestTrack->at(i) << std::endl;
+>         if (Mu_isGlobalMuon->at(i) == 1) {
+> 	  std::cout << "[2] isGlobal="<<Mu_isGlobalMuon->at(i) << std::endl;
+> 	}
+>         if (Mu_ptTunePMuonBestTrack->at(i) > 53.0) {
+> 	  std::cout << "[3] ptcocktail="<<Mu_ptTunePMuonBestTrack->at(i) << std::endl;
+> 	}
+>         if (Mu_absdxyTunePMuonBestTrack->at(i) < 0.2) {
+> 	  std::cout << "[4] absdxy="<<Mu_absdxyTunePMuonBestTrack->at(i) << std::endl;
+> 	}
+>         if (Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i) < 0.10) {
+> 	  std::cout << "[5] trackiso="<<Mu_trackiso->at(i)/Mu_ptInnerTrack->at(i) << std::endl;
+> 	}
+>         if (Mu_numberOftrackerLayersWithMeasurement->at(i) > 5) {
+> 	  std::cout << "[6] nbTrackerLayer="<<Mu_numberOftrackerLayersWithMeasurement->at(i) << std::endl;
+> 	}
+>         /*if (Mu_numberOfValidPixelHits->at(i) > 0) {
+> 	  std::cout << "[7] nbPixelHits="<<Mu_numberOfValidPixelHits->at(i) << std::endl;
+> 	  }*/
+>         std::cout << "[7] nbPixelHits (global tk) ="<<Mu_numberOfValidPixelHits->at(i) << std::endl;
+> 	/*std::cout << "[7bar] nbPixelHits (inner tk) ="<<Mu_innerTK_numberOfValidPixelHits->at(i) << std::endl;*/
+> 	if (Mu_numberOfValidMuonHits->at(i) > 0) {
+> 	  std::cout << "[8] nbMuonHits="<<Mu_numberOfValidMuonHits->at(i) << std::endl;
+> 	}
+>         if (Mu_numberOfMatchedStations->at(i) > 1) {
+> 	  std::cout << "[9] nbStation="<<Mu_numberOfMatchedStations->at(i) << std::endl;
+> 	}
+>         if (Mu_dPToverPTTunePMuonBestTrack->at(i) < 0.3) {
+> 	  std::cout << "[10] DeltaPterror="<<Mu_dPToverPTTunePMuonBestTrack->at(i) << std::endl;
+> 	}
+>         std::cout << "[11] Charge="<<Mu_chargeTunePMuonBestTrack->at(i) << std::endl;
+1891c1539,1541
+<       std::cout<<"[11] Charge="<<Mu_chargeTunePMuonBestTrack->at(i) << std::endl;
+---
+>       std::cout << "[000] vtxMassMu=" << vtxMass         << std::endl;
+>       std::cout << "[000] vtxChi2Mu=" << vtxChi2         << std::endl;
+>       std::cout << "[000] CosAngle="  << CosmicRejection << std::endl;
+1893,1897d1542
+<     std::cout<<"[000] vtxMassMu="        << vtxMass            << std::endl;
+<     std::cout<<"[000] vtxMassSmearedMu=" << m_vtxMassSmearedMu << std::endl;
+<     std::cout<<"[000] vtxChi2Mu="        << vtxChi2            << std::endl;
+<     std::cout<<"[000] CosAngle="         << CosmicRejection    << std::endl;
+<   }
+1905c1550
+< bool ZprimeMuMuPatMiniAodNewMC::isPassHLT()
+---
+> bool ZprimeMuMuPatMiniAodNewData::isPassHLT()
+1930c1575
+<       //std::cout<<"triggerName = "<<triggerName << std::endl;
+---
+>       //std::cout << "triggerName = "<<triggerName << std::endl;
+1936c1581,1582
+<   } else return false;
+---
+>   }
+>   else return false;
+1939c1585,1586
+< bool ZprimeMuMuPatMiniAodNewMC::RecoHLTMuonMatching(float RecoEta,float RecoPhi) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::RecoHLTMuonMatching(float RecoEta,float RecoPhi)
+> {
+1943c1590
+<     //std::cout<<"[before]triggerName"<<HLTObj_collection->at(i)  << std::endl;
+---
+>     //std::cout << "[before]triggerName"<<HLTObj_collection->at(i)  << std::endl;
+1965,1967c1612,1614
+<       //std::cout<<"[after]triggerName"<<HLTObj_collection->at(i)  << std::endl;
+<       deltaR   = delR(HLTObj_eta->at(i),HLTObj_phi->at(i),RecoEta,RecoPhi);
+<       //printf ("HLT_Eta = %f  HLT_Phi = %f recoEta = %f recoPhi = %f DelR_trigger = %f\n",HLTObj_eta->at(i),HLTObj_phi->at(i),RecoEta,RecoPhi,deltaR);
+---
+>       //std::cout << "[after]triggerName"<<HLTObj_collection->at(i)  << std::endl;
+> 	deltaR   = delR(HLTObj_eta->at(i),HLTObj_phi->at(i),RecoEta,RecoPhi);
+>         //printf ("HLT_Eta = %f  HLT_Phi = %f recoEta = %f recoPhi = %f DelR_trigger = %f\n",HLTObj_eta->at(i),HLTObj_phi->at(i),RecoEta,RecoPhi,deltaR);
+1981c1628,1629
+< bool ZprimeMuMuPatMiniAodNewMC::BTaggingDiscriminator(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::BTaggingDiscriminator(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2000c1648,1649
+< bool ZprimeMuMuPatMiniAodNewMC::BTaggingDiscriminator2(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::BTaggingDiscriminator2(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2019c1668,1669
+< bool ZprimeMuMuPatMiniAodNewMC::BTaggingDiscriminator3(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::BTaggingDiscriminator3(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2039c1689,1690
+< void ZprimeMuMuPatMiniAodNewMC::DrawBTaggingDiscriminator(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawBTaggingDiscriminator(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2048c1699
+<     h1_nbBTagStep1_->Fill(nbBTag,newweight);
+---
+>     h1_nbBTagStep1_->Fill(nbBTag);
+2050,2057c1701,1710
+<     if (nbBTag>1 && nbBTag<3) {
+<       h1_nbBTagStep2_->Fill(nbBTag,newweight);
+<       h1_jetBTagStep2_->Fill(jet_btag_pfCSVv2IVF_discriminator->at(i));
+<     }
+<     if (nbBTag>1 && nbBTag<3 && jet_btag_pfCSVv2IVF_discriminator->at(i)>0.5426) {
+<       h1_nbBTagStep3_->Fill(nbBTag,newweight);
+<       h1_jetBTagStep3_->Fill(jet_btag_pfCSVv2IVF_discriminator->at(i));
+<     }
+---
+>     if (nbBTag>1 && nbBTag<3)
+>       {
+> 	h1_nbBTagStep2_->Fill(nbBTag);
+> 	h1_jetBTagStep2_->Fill(jet_btag_pfCSVv2IVF_discriminator->at(i));
+>       }
+>     if (nbBTag>1 && nbBTag<3 && jet_btag_pfCSVv2IVF_discriminator->at(i)>0.5426)
+>       {
+> 	h1_nbBTagStep3_->Fill(nbBTag);
+> 	h1_jetBTagStep3_->Fill(jet_btag_pfCSVv2IVF_discriminator->at(i));
+>       }
+2061,2064c1714,1718
+< void ZprimeMuMuPatMiniAodNewMC::Boson(float Px1,float Py1,float Pz1,float En1,
+< 				      float Px2,float Py2,float Pz2,float En2,
+< 				      float ChargeMu1,float MetEt,float MetPx,
+< 				      float MetPy,float MetPz,float MetEn, float &bosonPt) {
+---
+> void ZprimeMuMuPatMiniAodNewData::Boson(float Px1,float Py1,float Pz1,float En1,
+> 					float Px2,float Py2,float Pz2,float En2,
+> 					float ChargeEle1,float MetEt,float MetPx,
+> 					float MetPy,float MetPz,float MetEn)
+> {
+2066,2067c1720,1721
+<   TLorentzVector Mu;
+<   TLorentzVector Mubar;
+---
+>   TLorentzVector Ele;
+>   TLorentzVector Elebar;
+2069,2075c1723,1725
+<   if (ChargeMu1<0) {
+<     Mu.SetPxPyPzE(Px1,Py1,Pz1,En1);
+<     Mubar.SetPxPyPzE(Px2,Py2,Pz2,En2);
+<   }
+<   if (ChargeMu1>0) {
+<     Mu.SetPxPyPzE(Px2,Py2,Pz2,En2);
+<     Mubar.SetPxPyPzE(Px1,Py1,Pz1,En1);
+---
+>   if (ChargeEle1<0) {
+>     Ele.SetPxPyPzE(Px1,Py1,Pz1,En1);
+>     Elebar.SetPxPyPzE(Px2,Py2,Pz2,En2);
+2077,2090c1727,1729
+<   TLorentzVector Boson(Mu+Mubar);
+<   MissingParticle.SetPxPyPzE(MetPx,MetPy,MetPz,MetEn);
+<   float a = Boson.Angle(MissingParticle.Vect()); // get angle between v1 and v2
+<   //BosPt  = Boson.Pt();
+<   //BosPhi = Boson.Phi();
+<   //  if (Boson.Pt()>60 && MetEt>0 && a>2.8 && (fabs(MetEt-Boson.Pt())/Boson.Pt())<0.4)
+<   if (Boson.Pt()>60) {
+<     h1_BosPt_->Fill(Boson.Pt());
+<     h1_BosPhi_->Fill(Boson.Phi());
+<     h1_DeltaPhi_->Fill(a,newweight); //Fill(MetPhi-Boson.Phi());
+<     h1_DeltaPtoverPt_->Fill(fabs(MetEt-Boson.Pt())/Boson.Pt());
+<     float Mt = sqrt(2.0*Boson.Pt()*MetEt*(1.0-cos(a)));
+<     h1_Mt_->Fill(Mt,newweight);
+<     h1_MissingEt_->Fill(MetEt,newweight);
+---
+>   if (ChargeEle1>0) {
+>     Ele.SetPxPyPzE(Px2,Py2,Pz2,En2);
+>     Elebar.SetPxPyPzE(Px1,Py1,Pz1,En1);
+2092c1731,1746
+<   bosonPt = Boson.Pt();
+---
+>   TLorentzVector Bosson(Ele+Elebar);
+>   MissingParticle.SetPxPyPzE(MetPx,MetPy,MetPz,MetEn);
+>   float a = Bosson.Angle(MissingParticle.Vect()); // get angle between v1 and v2
+>   //BosPt  = Bosson.Pt();
+>   //BosPhi = Bosson.Phi();
+>   //  if (Bosson.Pt()>60 && MetEt>0 && a>2.8 && (fabs(MetEt-Bosson.Pt())/Bosson.Pt())<0.4)
+>   if (Bosson.Pt()>60)
+>     {
+>       h1_BosPt_->Fill(Bosson.Pt());
+>       h1_BosPhi_->Fill(Bosson.Phi());
+>       h1_DeltaPhi_->Fill(a); //Fill(MetPhi-Bosson.Phi());
+>       h1_DeltaPtoverPt_->Fill(fabs(MetEt-Bosson.Pt())/Bosson.Pt());
+>       float Mt = sqrt(2.0*Bosson.Pt()*MetEt*(1.0-cos(a)));
+>       h1_Mt_->Fill(Mt);
+>       h1_MissingEt_->Fill(MetEt);
+>     }
+2095c1749,1750
+< bool ZprimeMuMuPatMiniAodNewMC::DiPFJet(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::DiPFJet(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2105c1760
+<     h1_NbPFjetsAll_->Fill(nbBTag,newweight);
+---
+>     h1_NbPFjetsAll_->Fill(nbBTag);
+2107,2108c1762,1763
+<       h1_NbPFjets2_->Fill(nbBTag,newweight);
+<       h1_ptPFjetsAll_->Fill(jet_pt->at(i),newweight);
+---
+>       h1_NbPFjets2_->Fill(nbBTag);
+>       h1_ptPFjetsAll_->Fill(jet_pt->at(i));
+2112c1767
+<    }
+---
+>   }
+2117c1772,1773
+< bool ZprimeMuMuPatMiniAodNewMC::DiPFJetCut(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2) {
+---
+> bool ZprimeMuMuPatMiniAodNewData::DiPFJetCut(float MuonEta1,float MuonPhi1,float MuonEta2,float MuonPhi2)
+> {
+2136c1792
+< double ZprimeMuMuPatMiniAodNewMC::MassCorrection(float M, float pT, float Eta1, float Eta2)
+---
+> double ZprimeMuMuPatMiniAodNewData::MassCorrection(float M)
+2138,2198c1794,1798
+<   float a = 0.;
+<   float b = 0.;
+<   float c = 0.;
+<   float d = 0.;
+<   float mAdj = M;
+< 
+<   /*
+<   if (pT > 30 && M < 170) {
+<     mAdj = M - 130;
+<     if (fabs(Eta1) <= 1.2 && fabs(Eta2) <= 1.2) { //sigma BB
+<       a =  1.003;
+<       b = -0.0002904;
+<       c = -3.281e-06;
+<       d =  5.258e-09;
+<     } else if ((fabs(Eta1) < 1.2 && (fabs(Eta2) > 1.2 && fabs(Eta2) < 2.4)) ||
+< 	       (fabs(Eta2) < 1.2 && (fabs(Eta1) > 1.2 && fabs(Eta1) < 2.4))) {  //BE
+<       a =  1.012;
+<       b = -0.001607;
+<       c =  8.796e-07;
+<       d =  1.401e-06;
+<     } else if ((fabs(Eta1) > 1.2 && fabs(Eta1) < 2.4) &&
+< 	       (fabs(Eta2) > 1.2 && fabs(Eta2) < 2.4)) {  //EE
+<       a =  1.012;
+<       b = -0.001607;
+<       c =  8.796e-07;
+<       d =  1.401e-06;
+<     } else { // other?
+<       a =  1.067;
+<       b = -0.000112;
+<       c =  3.176e-08;
+<       d =  -4.068e-12;
+<     }
+<   } else { // what about pT < 30?
+<   */
+<     mAdj = M - 400;
+<     if (fabs(Eta1) <= 1.2 && fabs(Eta2) <= 1.2) { //sigma BB
+<       a =  1.036;
+<       b = -0.0001441;
+<       c =  5.058e-08;
+<       d = -7.581e-12;
+<     } else if ((fabs(Eta1) < 1.2 && (fabs(Eta2) > 1.2 && fabs(Eta2) < 2.4)) ||
+< 	       (fabs(Eta2) < 1.2 && (fabs(Eta1) > 1.2 && fabs(Eta1) < 2.4))) {  //BE
+<       a =  1.052;
+<       b = -0.0001471;
+<       c =  5.903e-08;
+<       d = -9.037e-12;
+<     } else if ((fabs(Eta1) > 1.2 && fabs(Eta1) < 2.4) &&
+< 	       (fabs(Eta2) > 1.2 && fabs(Eta2) < 2.4)) {  //EE
+<       a =  1.052;
+<       b = -0.0001471;
+<       c =  5.903e-08;
+<       d = -9.037e-12;
+<     } else { // other?
+<       a =  1.052;
+<       b = -0.0001471;
+<       c =  5.903e-08;
+<       d = -9.037e-12;
+<     }
+<   // }
+< 
+<   double function = d*pow(mAdj,3) + c*pow(mAdj,2) + b*pow(mAdj,1) + a;
+---
+>   float a =  1.06780e+00;
+>   float b = -1.20666e-04;
+>   float c =  3.22646e-08;
+>   float d = -3.94886e-12;
+>   double function = d*pow(M,3) + c*pow(M,2) + b*pow(M,1) + a;
+2202,2230c1802
+< bool ZprimeMuMuPatMiniAodNewMC::CutJets(unsigned jet)
+< {
+<       if (Mu_isGlobalMuon->at(jet) == 1 &&
+<   	Mu_ptTunePMuonBestTrack->at(jet) > FR_Ptcut &&
+<         Mu_absdxyTunePMuonBestTrack->at(jet) < 0.2 &&
+<         (Mu_trackiso->at(jet)/Mu_ptInnerTrack->at(jet)) < 0.10  &&
+<         Mu_numberOftrackerLayersWithMeasurement->at(jet) > 5 &&
+<         Mu_numberOfValidPixelHits->at(jet) > 0 &&
+<         Mu_numberOfValidMuonHits->at(jet) > 0 &&
+< 	Mu_passNewMatchedStationsCut->at(jet) == 1 &&
+< 	Mu_dPToverPTTunePMuonBestTrack->at(jet) < 0.3 )
+< 	{
+< 	  return true;
+< 	}
+<       else return false;
+< }
+< 
+< bool ZprimeMuMuPatMiniAodNewMC::FollowupCut(unsigned jet)
+< {
+<   if ((Mu_isGlobalMuon->at(jet) == 0 || Mu_isTrackerMuon->at(jet) == 0) ||
+< 	Mu_ptTunePMuonBestTrack->at(jet) < FR_Ptcut ||
+<         Mu_absdxyTunePMuonBestTrack->at(jet) > 0.2 ||
+< 	Mu_absdzTunePMuonBestTrack->at(jet) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet) < 5  ||
+<       Mu_numberOfValidPixelHits->at(jet) < 0)
+<       {
+< 	return true;
+<       }
+<   else return false;
+< }
+---
+> 
+2233c1805
+< void ZprimeMuMuPatMiniAodNewMC::DrawDiJetMassBB()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawDiJetMassBB()
+2237,2238c1809,1823
+<     if (CutJets(jet1)) continue; //to get rid of real muons
+<     if (FollowupCut(jet1)) continue;
+---
+>     if (Mu_isGlobalMuon->at(jet1) == 1 &&
+> 	Mu_isMuonsCleaned->at(jet1) ==  Mu_isPF->at(jet1) &&
+> 	Mu_ptTunePMuonBestTrack->at(jet1) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) < 0.2 &&
+>         (Mu_trackiso->at(jet1)/Mu_ptInnerTrack->at(jet1)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(jet1) > 5 &&
+>         Mu_numberOfValidPixelHits->at(jet1) > 0 &&
+>         Mu_numberOfValidMuonHits->at(jet1) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(jet1) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(jet1) < 0.3 ) continue; //to get rid of real muons
+>     if ((Mu_isGlobalMuon->at(jet1) == 0 || Mu_isTrackerMuon->at(jet1) == 0) ||
+> 	Mu_ptTunePMuonBestTrack->at(jet1) < FR_Ptcut ||
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) > 0.2 ||
+> 	Mu_absdzTunePMuonBestTrack->at(jet1) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet1) < 5  ||
+>         Mu_numberOfValidPixelHits->at(jet1) < 0  ) continue;
+2242,2243c1827,1841
+<       if (CutJets(jet2)) continue; //to get rid of real muons
+<       if (FollowupCut(jet2) ) continue;
+---
+>       if (Mu_isGlobalMuon->at(jet2) == 1 &&
+> 	  Mu_isMuonsCleaned->at(jet2) ==  Mu_isPF->at(jet2) &&
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) > FR_Ptcut &&
+> 	  Mu_absdxyTunePMuonBestTrack->at(jet2) < 0.2 &&
+> 	  (Mu_trackiso->at(jet2)/Mu_ptInnerTrack->at(jet2)) < 0.10  &&
+> 	  Mu_numberOftrackerLayersWithMeasurement->at(jet2) > 5 &&
+> 	  Mu_numberOfValidPixelHits->at(jet2) > 0 &&
+> 	  Mu_numberOfValidMuonHits->at(jet2) > 0 &&
+> 	  Mu_passNewMatchedStationsCut->at(jet2) == 1 &&
+> 	  Mu_dPToverPTTunePMuonBestTrack->at(jet2) < 0.3 ) continue; //to get rid of real muons
+>       if ((Mu_isGlobalMuon->at(jet2) == 0 || Mu_isTrackerMuon->at(jet2) == 0) ||
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) < FR_Ptcut ||
+>           Mu_absdxyTunePMuonBestTrack->at(jet2) > 0.2 ||
+> 	  Mu_absdzTunePMuonBestTrack->at(jet2) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet2) < 5  ||
+> 	  Mu_numberOfValidPixelHits->at(jet2) < 0  ) continue;
+2275c1873
+< void ZprimeMuMuPatMiniAodNewMC::DrawDiJetMassBE()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawDiJetMassBE()
+2279,2280c1877,1892
+<     if (CutJets(jet1)) continue; //to get rid of real muons
+<     if (FollowupCut(jet1)) continue;
+---
+>     if (Mu_isGlobalMuon->at(jet1) == 1 &&
+> 	Mu_isMuonsCleaned->at(jet1) ==  Mu_isPF->at(jet1) &&
+>         Mu_ptTunePMuonBestTrack->at(jet1) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) < 0.2 &&
+>         (Mu_trackiso->at(jet1)/Mu_ptInnerTrack->at(jet1)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(jet1) > 5 &&
+>         Mu_numberOfValidPixelHits->at(jet1) > 0 &&
+>         Mu_numberOfValidMuonHits->at(jet1) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(jet1) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(jet1) < 0.3 ) continue; //to get rid of real muons
+>     if ((Mu_isGlobalMuon->at(jet1) == 0 || Mu_isTrackerMuon->at(jet1) == 0) ||
+> 	fabs(Mu_etaTunePMuonBestTrack->at(jet1)) > 2.4 ||
+> 	Mu_ptTunePMuonBestTrack->at(jet1) < FR_Ptcut ||
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) > 0.2 ||
+> 	Mu_absdzTunePMuonBestTrack->at(jet1) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet1) < 5  ||
+>         Mu_numberOfValidPixelHits->at(jet1) < 0  ) continue;
+2284,2285c1896,1911
+<       if (CutJets(jet2)) continue; //to get rid of real muons
+<       if (FollowupCut(jet2)) continue;
+---
+>       if (Mu_isGlobalMuon->at(jet2) == 1 &&
+> 	  Mu_isMuonsCleaned->at(jet2) ==  Mu_isPF->at(jet2) &&
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) > FR_Ptcut &&
+> 	  Mu_absdxyTunePMuonBestTrack->at(jet2) < 0.2 &&
+> 	  (Mu_trackiso->at(jet2)/Mu_ptInnerTrack->at(jet2)) < 0.10  &&
+> 	  Mu_numberOftrackerLayersWithMeasurement->at(jet2) > 5 &&
+> 	  Mu_numberOfValidPixelHits->at(jet2) > 0 &&
+> 	  Mu_numberOfValidMuonHits->at(jet2) > 0 &&
+> 	  Mu_passNewMatchedStationsCut->at(jet2) == 1 &&
+> 	  Mu_dPToverPTTunePMuonBestTrack->at(jet2) < 0.3 ) continue; //to get rid of real muons
+>       if ((Mu_isGlobalMuon->at(jet2) == 0 || Mu_isTrackerMuon->at(jet2) == 0) ||
+> 	  fabs(Mu_etaTunePMuonBestTrack->at(jet2)) > 2.4 ||
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) < FR_Ptcut ||
+>           Mu_absdxyTunePMuonBestTrack->at(jet2) > 0.2 ||
+> 	  Mu_absdzTunePMuonBestTrack->at(jet2) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet2) < 5  ||
+> 	  Mu_numberOfValidPixelHits->at(jet2) < 0  ) continue;
+2312c1938
+< 	}
+---
+>        }
+2318c1944
+< void ZprimeMuMuPatMiniAodNewMC::DrawDiJetMassEE()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawDiJetMassEE()
+2322,2323c1948,1963
+<     if (CutJets(jet1)) continue; //to get rid of real muons
+<     if (FollowupCut(jet1)) continue;
+---
+>     if (Mu_isGlobalMuon->at(jet1) == 1 &&
+> 	Mu_isMuonsCleaned->at(jet1) ==  Mu_isPF->at(jet1) &&
+>         Mu_ptTunePMuonBestTrack->at(jet1) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) < 0.2 &&
+>         (Mu_trackiso->at(jet1)/Mu_ptInnerTrack->at(jet1)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(jet1) > 5 &&
+>         Mu_numberOfValidPixelHits->at(jet1) > 0 &&
+>         Mu_numberOfValidMuonHits->at(jet1) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(jet1) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(jet1) < 0.3 ) continue; //to get rid of real muons
+>     if ((Mu_isGlobalMuon->at(jet1) == 0 || Mu_isTrackerMuon->at(jet1) == 0) ||
+> 	fabs(Mu_etaTunePMuonBestTrack->at(jet1)) > 2.4 ||
+> 	Mu_ptTunePMuonBestTrack->at(jet1) < FR_Ptcut ||
+>         Mu_absdxyTunePMuonBestTrack->at(jet1) > 0.2 ||
+> 	Mu_absdzTunePMuonBestTrack->at(jet1) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet1) < 5  ||
+>         Mu_numberOfValidPixelHits->at(jet1) < 0  ) continue;
+2327,2328c1967,1982
+<       if (CutJets(jet2)) continue; //to get rid of real muons
+<       if (FollowupCut(jet2) ) continue;
+---
+>       if (Mu_isGlobalMuon->at(jet2) == 1 &&
+> 	  Mu_isMuonsCleaned->at(jet2) ==  Mu_isPF->at(jet2) &&
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) > FR_Ptcut &&
+> 	  Mu_absdxyTunePMuonBestTrack->at(jet2) < 0.2 &&
+> 	  (Mu_trackiso->at(jet2)/Mu_ptInnerTrack->at(jet2)) < 0.10  &&
+> 	  Mu_numberOftrackerLayersWithMeasurement->at(jet2) > 5 &&
+> 	  Mu_numberOfValidPixelHits->at(jet2) > 0 &&
+> 	  Mu_numberOfValidMuonHits->at(jet2) > 0 &&
+> 	  Mu_passNewMatchedStationsCut->at(jet2) == 1 &&
+> 	  Mu_dPToverPTTunePMuonBestTrack->at(jet2) < 0.3 ) continue; //to get rid of real muons
+>       if ((Mu_isGlobalMuon->at(jet2) == 0 || Mu_isTrackerMuon->at(jet2) == 0) ||
+> 	  fabs(Mu_etaTunePMuonBestTrack->at(jet2)) > 2.4 ||
+> 	  Mu_ptTunePMuonBestTrack->at(jet2) < FR_Ptcut ||
+>           Mu_absdxyTunePMuonBestTrack->at(jet2) > 0.2 ||
+> 	  Mu_absdzTunePMuonBestTrack->at(jet2) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet2) < 5  ||
+> 	  Mu_numberOfValidPixelHits->at(jet2) < 0  ) continue;
+2361c2015
+< void ZprimeMuMuPatMiniAodNewMC::DrawWJetsMassBB()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawWJetsMassBB()
+2365c2019,2029
+<     if (CutJets(muon)) {
+---
+>     if (Mu_isGlobalMuon->at(muon) == 1 &&
+>         Mu_isMuonsCleaned->at(muon) ==  Mu_isPF->at(muon) &&
+> 	fabs(Mu_etaTunePMuonBestTrack->at(muon)) < 2.4 &&
+>         Mu_ptTunePMuonBestTrack->at(muon) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(muon) < 0.2 &&
+>         (Mu_trackiso->at(muon)/Mu_ptInnerTrack->at(muon)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(muon) > 5 &&
+>         Mu_numberOfValidPixelHits->at(muon) > 0 &&
+>         Mu_numberOfValidMuonHits->at(muon) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(muon) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(muon) < 0.3 ) {
+2369,2370c2033,2049
+< 	if (CutJets(jet)) continue; //to get rid of real muons
+< 	if (FollowupCut(jet)) continue;
+---
+> 	if (Mu_isGlobalMuon->at(jet) == 1 &&
+>             Mu_isMuonsCleaned->at(jet) ==  Mu_isPF->at(jet) &&
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) < 2.4 &&
+> 	    Mu_ptTunePMuonBestTrack->at(jet) > FR_Ptcut &&
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) < 0.2 &&
+> 	    (Mu_trackiso->at(jet)/Mu_ptInnerTrack->at(jet)) < 0.10  &&
+> 	    Mu_numberOftrackerLayersWithMeasurement->at(jet) > 5 &&
+> 	    Mu_numberOfValidPixelHits->at(jet) > 0 &&
+> 	    Mu_numberOfValidMuonHits->at(jet) > 0 &&
+> 	    Mu_passNewMatchedStationsCut->at(jet) == 1 &&
+> 	    Mu_dPToverPTTunePMuonBestTrack->at(jet) < 0.3 ) continue; //to get rid of real muons
+> 	if ((Mu_isGlobalMuon->at(jet) == 0 || Mu_isTrackerMuon->at(jet) == 0) ||
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) > 2.4 ||
+> 	    Mu_ptTunePMuonBestTrack->at(jet) < FR_Ptcut ||
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) > 0.2 ||
+> 	    Mu_absdzTunePMuonBestTrack->at(jet) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet) < 5  ||
+> 	    Mu_numberOfValidPixelHits->at(jet) < 0  ) continue;
+2390,2395c2069,2074
+< 	    h1_WjetsBinWidthBB_->Fill(invmass,newweight);
+< 	    h1_WjetsBinWidthBBBE_->Fill(invmass,newweight);
+<             h1_Wjets20GeVBB_->Fill(invmass,newweight);
+< 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets1GeVBB_->Fill(invmass,newweight);
+<             h1_Wjets1GeVBBBEEE_->Fill(invmass,newweight);
+---
+> 	    h1_WjetsBinWidthBB_->Fill(invmass,weight);
+> 	    h1_WjetsBinWidthBBBE_->Fill(invmass,weight);
+>             h1_Wjets20GeVBB_->Fill(invmass,weight);
+> 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets1GeVBB_->Fill(invmass,weight);
+>             h1_Wjets1GeVBBBEEE_->Fill(invmass,weight);
+2404c2083
+< void ZprimeMuMuPatMiniAodNewMC::DrawWJetsMassBE1()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawWJetsMassBE1()
+2408c2087,2097
+<     if (CutJets(muon)) {
+---
+>     if (Mu_isGlobalMuon->at(muon) == 1 &&
+>         Mu_isMuonsCleaned->at(muon) ==  Mu_isPF->at(muon) &&
+> 	fabs(Mu_etaTunePMuonBestTrack->at(muon)) < 2.4 &&
+>         Mu_ptTunePMuonBestTrack->at(muon) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(muon) < 0.2 &&
+>         (Mu_trackiso->at(muon)/Mu_ptInnerTrack->at(muon)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(muon) > 5 &&
+>         Mu_numberOfValidPixelHits->at(muon) > 0 &&
+>         Mu_numberOfValidMuonHits->at(muon) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(muon) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(muon) < 0.3 ) {
+2412,2413c2101,2117
+< 	if (CutJets(jet)) continue; //to get rid of real muons
+< 	if (FollowupCut(jet)) continue;
+---
+> 	if (Mu_isGlobalMuon->at(jet) == 1 &&
+>             Mu_isMuonsCleaned->at(jet) ==  Mu_isPF->at(jet) &&
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) < 2.4 &&
+> 	    Mu_ptTunePMuonBestTrack->at(jet) > FR_Ptcut &&
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) < 0.2 &&
+> 	    (Mu_trackiso->at(jet)/Mu_ptInnerTrack->at(jet)) < 0.10  &&
+> 	    Mu_numberOftrackerLayersWithMeasurement->at(jet) > 5 &&
+> 	    Mu_numberOfValidPixelHits->at(jet) > 0 &&
+> 	    Mu_numberOfValidMuonHits->at(jet) > 0 &&
+> 	    Mu_passNewMatchedStationsCut->at(jet) == 1 &&
+> 	    Mu_dPToverPTTunePMuonBestTrack->at(jet) < 0.3 ) continue; //to get rid of real muons
+> 	if ((Mu_isGlobalMuon->at(jet) == 0 || Mu_isTrackerMuon->at(jet) == 0) ||
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) > 2.4 ||
+> 	    Mu_ptTunePMuonBestTrack->at(jet) < FR_Ptcut ||
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) > 0.2 ||
+> 	    Mu_absdzTunePMuonBestTrack->at(jet) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet) < 5  ||
+> 	    Mu_numberOfValidPixelHits->at(jet) < 0  ) continue;
+2433,2438c2137,2142
+< 	    h1_WjetsBinWidthBE_->Fill(invmass,newweight);
+< 	    h1_WjetsBinWidthBBBE_->Fill(invmass,newweight);
+<             h1_Wjets20GeVBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets1GeVBEEE_->Fill(invmass,newweight);
+<             h1_Wjets1GeVBBBEEE_->Fill(invmass,newweight);
+---
+> 	    h1_WjetsBinWidthBE_->Fill(invmass,weight);
+> 	    h1_WjetsBinWidthBBBE_->Fill(invmass,weight);
+>             h1_Wjets20GeVBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets1GeVBEEE_->Fill(invmass,weight);
+>             h1_Wjets1GeVBBBEEE_->Fill(invmass,weight);
+2446c2150
+< void ZprimeMuMuPatMiniAodNewMC::DrawWJetsMassBE2()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawWJetsMassBE2()
+2450c2154,2164
+<     if (CutJets(muon)) {
+---
+>     if (Mu_isGlobalMuon->at(muon) == 1 &&
+> 	Mu_isMuonsCleaned->at(muon) ==  Mu_isPF->at(muon) &&
+>         fabs(Mu_etaTunePMuonBestTrack->at(muon)) < 2.4 &&
+>         Mu_ptTunePMuonBestTrack->at(muon) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(muon) < 0.2 &&
+>         (Mu_trackiso->at(muon)/Mu_ptInnerTrack->at(muon)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(muon) > 5 &&
+>         Mu_numberOfValidPixelHits->at(muon) > 0 &&
+>         Mu_numberOfValidMuonHits->at(muon) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(muon) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(muon) < 0.3 ) {
+2454c2168,2178
+< 	if (CutJets(jet)) continue; //to get rid of real muons
+---
+> 	if (Mu_isGlobalMuon->at(jet) == 1 &&
+>             Mu_isMuonsCleaned->at(jet) ==  Mu_isPF->at(jet) &&
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) < 2.4 &&
+> 	    Mu_ptTunePMuonBestTrack->at(jet) > FR_Ptcut &&
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) < 0.2 &&
+> 	    (Mu_trackiso->at(jet)/Mu_ptInnerTrack->at(jet)) < 0.10  &&
+> 	    Mu_numberOftrackerLayersWithMeasurement->at(jet) > 5 &&
+> 	    Mu_numberOfValidPixelHits->at(jet) > 0 &&
+> 	    Mu_numberOfValidMuonHits->at(jet) > 0 &&
+> 	    Mu_passNewMatchedStationsCut->at(jet) == 1 &&
+> 	    Mu_dPToverPTTunePMuonBestTrack->at(jet) < 0.3 ) continue; //to get rid of real muons
+2457c2181,2186
+< 	if (FollowupCut(jet)) continue;
+---
+> 	if ((Mu_isGlobalMuon->at(jet) == 0 || Mu_isTrackerMuon->at(jet) == 0) ||
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) > 2.4 ||
+> 	    Mu_ptTunePMuonBestTrack->at(jet) < FR_Ptcut ||
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) > 0.2 ||
+> 	    Mu_absdzTunePMuonBestTrack->at(jet) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet) < 5  ||
+> 	    Mu_numberOfValidPixelHits->at(jet) < 0  ) continue;
+2475,2480c2204,2209
+< 	    h1_WjetsBinWidthBE_->Fill(invmass,newweight);
+< 	    h1_WjetsBinWidthBBBE_->Fill(invmass,newweight);
+<             h1_Wjets20GeVBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets1GeVBEEE_->Fill(invmass,newweight);
+<             h1_Wjets1GeVBBBEEE_->Fill(invmass,newweight);
+---
+> 	    h1_WjetsBinWidthBE_->Fill(invmass,weight);
+> 	    h1_WjetsBinWidthBBBE_->Fill(invmass,weight);
+>             h1_Wjets20GeVBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets1GeVBEEE_->Fill(invmass,weight);
+>             h1_Wjets1GeVBBBEEE_->Fill(invmass,weight);
+2488c2217
+< void ZprimeMuMuPatMiniAodNewMC::DrawWJetsMassEE()
+---
+> void ZprimeMuMuPatMiniAodNewData::DrawWJetsMassEE()
+2492c2221,2231
+<     if (CutJets(muon)) {
+---
+>     if (Mu_isGlobalMuon->at(muon) == 1 &&
+>         Mu_isMuonsCleaned->at(muon) ==  Mu_isPF->at(muon) &&
+> 	fabs(Mu_etaTunePMuonBestTrack->at(muon)) < 2.4 &&
+>         Mu_ptTunePMuonBestTrack->at(muon) > FR_Ptcut &&
+>         Mu_absdxyTunePMuonBestTrack->at(muon) < 0.2 &&
+>         (Mu_trackiso->at(muon)/Mu_ptInnerTrack->at(muon)) < 0.10  &&
+>         Mu_numberOftrackerLayersWithMeasurement->at(muon) > 5 &&
+>         Mu_numberOfValidPixelHits->at(muon) > 0 &&
+>         Mu_numberOfValidMuonHits->at(muon) > 0 &&
+> 	Mu_passNewMatchedStationsCut->at(muon) == 1 &&
+>         Mu_dPToverPTTunePMuonBestTrack->at(muon) < 0.3 ) {
+2496,2497c2235,2251
+< 	if (CutJets(jet)) continue; //to get rid of real muons
+< 	if (FollowupCut(jet)) continue;
+---
+> 	if (Mu_isGlobalMuon->at(jet) == 1 &&
+>             Mu_isMuonsCleaned->at(jet) ==  Mu_isPF->at(jet) &&
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) < 2.4 &&
+> 	    Mu_ptTunePMuonBestTrack->at(jet) > FR_Ptcut &&
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) < 0.2 &&
+> 	    (Mu_trackiso->at(jet)/Mu_ptInnerTrack->at(jet)) < 0.10  &&
+> 	    Mu_numberOftrackerLayersWithMeasurement->at(jet) > 5 &&
+> 	    Mu_numberOfValidPixelHits->at(jet) > 0 &&
+> 	    Mu_numberOfValidMuonHits->at(jet) > 0 &&
+> 	    Mu_passNewMatchedStationsCut->at(jet) == 1 &&
+> 	    Mu_dPToverPTTunePMuonBestTrack->at(jet) < 0.3 ) continue; //to get rid of real muons
+> 	if ((Mu_isGlobalMuon->at(jet) == 0 || Mu_isTrackerMuon->at(jet) == 0) ||
+> 	    fabs(Mu_etaTunePMuonBestTrack->at(jet)) > 2.4 ||
+> 	    Mu_ptTunePMuonBestTrack->at(jet) < FR_Ptcut ||
+> 	    Mu_absdxyTunePMuonBestTrack->at(jet) > 0.2 ||
+> 	    Mu_absdzTunePMuonBestTrack->at(jet) > 1.0 || Mu_numberOftrackerLayersWithMeasurement->at(jet) < 5  ||
+> 	    Mu_numberOfValidPixelHits->at(jet) < 0  ) continue;
+2517,2523c2271,2277
+< 	    h1_WjetsBinWidthEE_->Fill(invmass,newweight);
+< 	    h1_WjetsBinWidthBE_->Fill(invmass,newweight);
+<             h1_Wjets20GeVBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,newweight);
+< 	    h1_Wjets1GeVEE_->Fill(invmass,newweight);
+< 	    h1_Wjets1GeVBEEE_->Fill(invmass,newweight);
+<             h1_Wjets1GeVBBBEEE_->Fill(invmass,newweight);
+---
+> 	    h1_WjetsBinWidthEE_->Fill(invmass,weight);
+> 	    h1_WjetsBinWidthBE_->Fill(invmass,weight);
+>             h1_Wjets20GeVBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets20GeVBBBEEE_->Fill(invmass,weight);
+> 	    h1_Wjets1GeVEE_->Fill(invmass,weight);
+> 	    h1_Wjets1GeVBEEE_->Fill(invmass,weight);
+>             h1_Wjets1GeVBBBEEE_->Fill(invmass,weight);
+2533c2287,2288
+< float ZprimeMuMuPatMiniAodNewMC::FRweight(float eta, float pt) {
+---
+> float ZprimeMuMuPatMiniAodNewData::FRweight(float eta, float pt)
+> {
+2552c2307
+<     std::cout<<"out of FR range" << std::endl;
+---
+>     std::cout << "out of FR range" << std::endl;
+2557c2312
+< /*
+---
+>  /*
+2559c2314,2315
+< float ZprimeMuMuPatMiniAodNewMC::FRweight(float eta, float pt) {
+---
+> float ZprimeMuMuPatMiniAodNewData::FRweight(float eta, float pt)
+> {
+2580c2336
+<     std::cout<<"out of FR range" << std::endl;
+---
+>     std::cout << "out of FR range" << std::endl;
+2587c2343
+<  //================= Method to select first high pt muon ==============
+---
+> //================= Method to select first high pt muon ==============
+2589c2345,2346
+< float ZprimeMuMuPatMiniAodNewMC::FRweight(float eta, float pt) {
+---
+> float ZprimeMuMuPatMiniAodNewData::FRweight(float eta, float pt)
+> {
+2591,2602c2348,2359
+<      float FR = 0.0;
+<      parEB1 = 1.11018e-01;
+<      parEB2 = -1.21961e-03;
+<      parEB3 = 5.27578e-06;
+<      parEB4 = 2.40160e+00;
+<      parEB5 = -5.90161e+03;
+<      parEB6 = 2.28745e+03;
+<      parEB7 = 4.04533e-01;
+<      parEE1 = 1.37269e-01;
+<      parEE2 =-1.08720e-03;
+<      parEE3 =  5.62699e-06;
+<      parEE4 = 2.33319e-01;*/
+---
+>   float FR = 0.0;
+>   parEB1 = 1.11018e-01;
+>   parEB2 = -1.21961e-03;
+>   parEB3 = 5.27578e-06;
+>   parEB4 = 2.40160e+00;
+>   parEB5 = -5.90161e+03;
+>   parEB6 = 2.28745e+03;
+>   parEB7 = 4.04533e-01;
+>   parEE1 = 1.37269e-01;
+>   parEE2 =-1.08720e-03;
+>   parEE3 =  5.62699e-06;
+>   parEE4 = 2.33319e-01;*/
+2629c2386
+<     std::cout<<"out of FR range" << std::endl;
+---
+>     std::cout << "out of FR range" << std::endl;
+2635c2392
+< float ZprimeMuMuPatMiniAodNewMC::FRweight(float eta, float pt)
+---
+> float ZprimeMuMuPatMiniAodNewData::FRweight(float eta, float pt)
+2642c2399
+<   parEB5  = 6.59464e+03;
+---
+>   parEB5  = 6.59464e+03 ;
+2669c2426
+<     std::cout<<"out of FR range" << std::endl;
+---
+>     std::cout << "out of FR range" << std::endl;

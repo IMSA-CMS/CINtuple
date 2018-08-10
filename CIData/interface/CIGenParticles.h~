@@ -1,0 +1,45 @@
+#ifndef CIGENPARTICLES_H
+#define CIGENPARTICLES_H
+
+//===================================
+//CIGenParticles header file 
+//Latest Version: Aug 3, 2018 
+//MHokinson
+//Used to simplify CIEvent and 
+//deal with all of the Gen particles
+//===================================
+
+//Includes for special types 
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
+
+class CIGenParticles
+{
+ public:
+  //=================================
+  //Constructors
+  //=================================
+  CIGenParticles() {}
+  CIGenParticles(int NbGenMuons, pat::PackedGenParticle p);
+  
+ private: 
+  //=================================
+  //Variables for Gen Particles
+  //(This ommits the unused variables 
+  //from MakeZprimeMC/CIEvent)
+  //=================================
+  int iCount;
+  int id;
+  int status;
+  float pt;
+  float eta;
+  float phi;
+  int charge;
+  float energy;
+  float px;
+  float py;
+  float pz;
+  ClassDefNV(CIGenParticles, 1)
+};
+
+
+#endif

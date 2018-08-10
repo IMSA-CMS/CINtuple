@@ -1,0 +1,446 @@
+#ifndef CIEVENT_H
+#define CIEVENT_H
+
+//======================================================================
+//CI Event Header File 
+//Matthew Hokinson and John Woods 
+//Date: July 19th, 2018
+//Built to Simplify the existing MakeZprimeMiniAodTreeMC.cc file 
+//======================================================================
+
+//======================================================================
+//Files to include (Same as the MakeZprimeMiniAodTreeMC header file)
+//Can be cut down later 
+//======================================================================
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "DataFormats/JetReco/interface/GenJetCollection.h"
+//#include "DataFormats/?EgammaReco/?interface/?SuperClusterFwd.h"
+//#include "CommonTools/?PileupAlgos/?plugins/?PuppiProducer.h"
+#include "DataFormats/PatCandidates/interface/Muon.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "DataFormats/PatCandidates/interface/Electron.h"
+#include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
+#include "DataFormats/PatCandidates/interface/Tau.h"
+#include "DataFormats/PatCandidates/interface/Photon.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
+//#include "DataFormats/?EcalRecHit/?interface/?EcalRecHitCollections.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "DataFormats/PatCandidates/interface/TriggerObjectStandAlone.h"
+#include "DataFormats/PatCandidates/interface/PackedTriggerPrescales.h"
+#include "DataFormats/PatCandidates/interface/PackedCandidate.h"
+#include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
+#include "FWCore/Utilities/interface/InputTag.h"
+#include "TTree.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+class CIEvent
+{
+  public:
+  	void PatElectronTree(double rhoIso, const reco::Vertex& PV, pat::ElectronCollection electron,
+                        EcalRecHitCollection ecalEB, EcalRecHitCollection ecalEE, EcalClusterLazyTools lazyTools_,
+                        edm::View<pat::Electron> eleHandle);
+    void TriggerMatchingTree(edm::TriggerResults triggerBits, pat::TriggerObjectStandAloneCollection triggerObjects,
+                            pat::TriggerObjectStandAloneCollection trigobj_handle,
+                            pat::PackedTriggerPrescales triggerPrescales, edm::TriggerNames& names);
+    bool isAncestor(const reco::Candidate * ancestor, const reco::Candidate * particle);
+    void accessGenInfo(bool h_passMInvCut, bool h_passPreFSRMInvCut, bool h_passST1MInvCut, bool h_passST23MInvCut,
+                      bool h_passHSMInvCut, double h_xsWeight, edm::View<reco::GenParticle> pruned,
+		       edm::View<pat::PackedGenParticle> packed, int BosonID_,  int ParticleID1_, int ParticleID2_, int ParticleID3_, int ParticleStatus_);
+    //void EBecalRecHitsTree(const edm::Event& iEvent,const edm::EventSetup& es);
+    //void EEecalRecHitsTree(const edm::Event& iEvent,const edm::EventSetup& es);
+    void PatMuonTree(const reco::Vertex& PV, pat::MuonCollection muons);//THIS REUSES PV from Pat Electron Tree (USE SAME PV)		
+    //void SuperClusterTree(const edm::Event& iEvent,const edm::EventSetup& es);
+    void ComputeMuonMassVtx(TransientTrackBuilder ttkb1, TransientTrackBuilder ttkb2, TransientTrackBuilder ttkb3,
+                           const reco::Vertex& vertex, pat::MuonCollection muons);
+    void ComputeMuonMassVtx30GeV(TransientTrackBuilder ttkb1, TransientTrackBuilder ttkb2, TransientTrackBuilder ttkb3,
+                                const reco::Vertex& vertex, pat::MuonCollection muons);
+    void PrimaryVertexTree(const reco::VertexCollection& vertices);
+    bool PrimaryVertex(const reco::VertexCollection &vertices, double maxAbsZ_, double maxd0_, int minNdof_, int NbGoodPv_);
+    void fillMET(const pat::MET& met);
+    void GenJetTree(std::vector<reco::GenJet> const &genjets);
+    void JetsTree(pat::JetCollection jets);
+    void EventsReWeighting(float EventWeight);
+    void ParticleFlowPhotonTree(pat::PackedCandidateCollection pfs, pat::PhotonCollection photons);
+    void fillPU(std::vector<PileupSummaryInfo> PupInfo);
+    //void fillRho();
+    void BtaggingTree(std::vector<pat::Jet> jets, const std::vector<std::string> bDiscriminators_);
+    void TauTree(pat::TauCollection taus);
+    void FillEventInfo(unsigned int JRun, unsigned int JEvent, unsigned int Jlumi, unsigned int Jbunch);
+
+  	//=============================================================
+  	//These are for Simplifying the Long IF statements  
+		//=============================================================
+    bool findTriggerMatch(const edm::TriggerNames names, const edm::Handle<edm::TriggerResults> triggerBits, int index);
+    bool findPathMatch(const std::vector<std::string> pathnames, int index);
+    std::vector<std::string> makeTriggerPathCombos();
+
+
+  private:
+
+  	//=============================================================
+    //
+    //           Create Branchs for Nb of event,run,lumi
+    //
+    //=============================================================
+    unsigned int Run;
+    unsigned int Event;
+    unsigned int lumi;
+    unsigned int bunch;
+    //==================================================
+    //
+    //      Create vectors for Electrons variables
+    //
+    //==================================================
+    std::vector<int> Ele_rawId;
+    std::vector<int> Ele_nbElectrons;
+    std::vector<bool> Ele_isEcalDrivenSeed;
+    std::vector<bool> Ele_isPassConversionVeto;
+    std::vector<int> Ele_charge;
+    std::vector<int> Ele_nbOfMissingHits;
+    std::vector<int> Ele_nbVtx;
+    std::vector<float> Ele_Et;
+    std::vector<float> Ele_EtFromCaloEn;
+    std::vector<float> Ele_pt;
+    std::vector<float> Ele_thetaSC;
+    std::vector<float> Ele_etaSC;
+    std::vector<float> Ele_phiSC;
+    std::vector<float> Ele_energySC;
+    std::vector<float> Ele_preshowerEnergySC;
+    std::vector<float> Ele_thetaTrack;
+    std::vector<float> Ele_etaTrack;
+    std::vector<float> Ele_phiTrack;
+    std::vector<float> Ele_hadronicOverEm;
+    std::vector<float> Ele_deltaEtaInSeedCluster;
+    std::vector<float> Ele_deltaPhiInSeedCluster;
+    std::vector<float> Ele_deltaEtaInSC;
+    std::vector<float> Ele_deltaPhiInSC;
+    std::vector<float> Ele_sigmaIetaIeta;
+    std::vector<float> Ele_e2x5Max;
+    std::vector<float> Ele_e1x5;
+    std::vector<float> Ele_frac51;
+    std::vector<float> Ele_frac15;
+    std::vector<float> Ele_e5x5;
+    std::vector<float> Ele_e3x3;
+    std::vector<float> Ele_e2x5MaxOver5x5;
+    std::vector<float> Ele_e1x5Over5x5;
+    std::vector<float> Ele_sigmaIetaIetaFull5x5;
+    std::vector<float> Ele_e2x5MaxFull5x5;
+    std::vector<float> Ele_e1x5Full5x5;
+    std::vector<float> Ele_e5x5Full5x5;
+    std::vector<float> Ele_e2x5MaxOver5x5Full5x5;
+    std::vector<float> Ele_e1x5Over5x5Full5x5;
+    std::vector<float> Ele_e2x5Right;
+    std::vector<float> Ele_e2x5Left;
+    std::vector<float> Ele_e2x5Top;
+    std::vector<float> Ele_e2x5Bottom;
+    std::vector<float> Ele_eMax;
+    std::vector<float> Ele_eRight;
+    std::vector<float> Ele_eLeft;
+    std::vector<float> Ele_eTop;
+    std::vector<float> Ele_eBottom;
+    std::vector<float> Ele_dxy;
+    std::vector<float> Ele_dz;
+    std::vector<float> Ele_rhoIso;
+    std::vector<float> Ele_fbrem;
+    std::vector<float> Ele_EoverP;
+    std::vector<float> Ele_Xposition;
+    std::vector<float> Ele_Yposition;
+    //------------- detector isolation -------------------------
+    std::vector<float> Ele_EcalPlusHcald1iso;
+    std::vector<float> Ele_dr03TkSumPt;
+    std::vector<float> Ele_dr03TkSumPt_corrected;
+    std::vector<float> Ele_dr03EcalRecHitSumEt;
+    std::vector<float> Ele_dr03HcalDepth1TowerSumEt;
+    std::vector<float> Ele_dr03HcalDepth1TowerSumEtBc;
+    std::vector<float> Ele_hcalDepth1OverEcal;
+    std::vector<float> Ele_hcalDepth2OverEcal;
+    std::vector<float> Ele_dr03HcalDepth2TowerSumEt;
+    std::vector<float> Ele_hcalDepth2TowerSumEtNoVeto;
+    std::vector<float> Ele_hcalDepth1TowerSumEtNoVeto;
+    //------------- PF isolation from pat::ele -------------------------
+    std::vector<float> Ele_pfSumPhotonEt;
+    std::vector<float> Ele_pfSumChargedHadronPt;
+    std::vector<float> Ele_pfSumNeutralHadronEt;
+    std::vector<float> Ele_pfSumPUPt;
+    std::vector<float> Ele_pfDeltaBeta;
+    std::vector<float> Ele_x;
+    std::vector<float> Ele_y;
+    std::vector<float> Ele_z;
+    std::vector<float> Ele_zTrackPositionAtVtx;
+    std::vector<int> Ele_ieta;
+    std::vector<float> Ele_phiWidth;
+    std::vector<float> Ele_etaWidth;
+    std::vector<float> Ele_nrSatCrys;
+    std::vector<bool>  Ele_isPassHeepID;
+    //=============================================================
+    //
+    //           Create Branchs for Muons match HLT variables
+    //
+    //=============================================================
+    std::vector<int>    HLT_nb;
+    std::vector<std::string> HLT_name;
+    std::vector<bool>   HLT_isaccept;
+    std::vector<int>    HLTObj_nbObj;
+    std::vector<float>  HLTObj_pt;
+    std::vector<float>  HLTObj_eta;
+    std::vector<float>  HLTObj_phi;
+    std::vector<std::string> HLTObj_collection;
+     //=============================================================
+    //
+    //           Create Branchs for Pimary Vertice variables
+    //
+    //=============================================================
+    std::vector<int> nbPv;
+    std::vector<int> Nbdof;
+    std::vector<float> PositionRho;
+    std::vector<float> PositionX;
+    std::vector<float> PositionY;
+    std::vector<float> PositionZ;
+    //====================================================
+    //
+    // Create vectors for Jets variables
+    //
+    //====================================================
+    std::vector<int>   jet_nb;
+    std::vector<float> jet_charge;
+    std::vector<float> jet_et;
+    std::vector<float> jet_pt;
+    std::vector<float> jet_eta;
+    std::vector<float> jet_phi;
+    std::vector<float> jet_en;
+    std::vector<float> jet_theta;
+    std::vector<float> jet_beta;
+    std::vector<float> jet_pileup_mva_disc;
+    //====================================================
+    //
+    // Create vectors for BTagging variables
+    //
+    //====================================================
+    std::vector<int>   Nb_bDiscriminators;
+    std::vector<int>   jet_btag_flavor;
+    std::vector<float> jet_btag_pfCSVv2IVF_discriminator;
+    std::vector<float> jet_btag_pt;
+    std::vector<float> jet_btag_eta;
+    std::vector<float> jet_btag_phi;
+    //====================================================
+    //
+    // Create vectors for Taus variables
+    //
+    //====================================================
+    std::vector<int>   Nb_taus;
+    std::vector<float> Tau_pt;
+    std::vector<float> Tau_eta;
+    std::vector<float> Tau_phi;
+    std::vector<int>   Tau_id;
+    std::vector<float> Tau_LooseCombinedIsolationDeltaBetaCorr3Hits;
+    //=============================================================
+    //
+    //           Create Branchs for PileUp tree
+    //
+    //=============================================================
+    int num_PU_vertices;
+    int PU_BunchCrossing;
+    int num_PU_gen_vertices;
+    //=============================================================
+    //
+    //           Create Branch for Rho
+    //
+    //=============================================================
+    float Rho;
+    //=============================================================
+    //
+    //           Create Branch for events reweighting
+    //
+    //=============================================================
+    std::vector<float> MC_weighting;
+    //===================================================
+    //
+    //    Create vectors for gen particles variables
+    //
+    //===================================================
+    std::vector<int> iGen;
+    std::vector<int> idGen;
+    std::vector<int> statusGen;
+    std::vector<float> ptGen;
+    std::vector<float> etaGen;
+    std::vector<float> phiGen;
+    std::vector<float> massGen;
+    std::vector<int> chargeGen;
+    std::vector<float> EnergyGen;
+    std::vector<float> pxGen;
+    std::vector<float> pyGen;
+    std::vector<float> pzGen;
+    std::vector<float> vxGen;
+    std::vector<float> vyGen;
+    std::vector<float> vzGen;
+    std::vector<int> NbOfDaughters;
+    std::vector<float> McZmass;
+    std::vector<float> McZpt;
+    std::vector<float> McZpx;
+    std::vector<float> McZpy;
+    std::vector<float> McZpz;
+    std::vector<float> McZen;
+    //=============================================================
+    //
+    //           Create tree variables for extra GEN level info
+    //
+    //=============================================================
+    double xsWeight;
+    bool   passPreFSRMInvCut;
+    bool   passMInvCut;
+    bool   passST1MInvCut;
+    bool   passST23MInvCut;
+    bool   passHSMInvCut;
+    //==================================================
+    //
+    //           Create vectors for Muons variables
+    //
+    //==================================================
+    std::vector<int> Mu_nbMuon;
+    std::vector<bool> Mu_passOldMatchedStationsCut;
+    std::vector<bool> Mu_passNewMatchedStationsCut;
+    std::vector<bool> Mu_isTightMuon;
+    std::vector<bool> Mu_isLooseMuon;
+    std::vector<bool> Mu_isGlobalMuon;
+    std::vector<bool> Mu_isHighPtMuon;
+    //std::vector<bool> Mu_isMuonsCleaned;
+    std::vector<bool> Mu_isPF;
+    std::vector<bool> Mu_isTrackerMuon;
+    std::vector<float> Mu_en;
+    std::vector<float> Mu_pt;
+    std::vector<float> Mu_eta;
+    std::vector<float> Mu_phi;
+    std::vector<float> Mu_et;
+    std::vector<float> Mu_charge;
+    std::vector<float> Mu_normalizedChi2;
+    std::vector<float> Mu_trackiso;
+    std::vector<int> Mu_numberOfMatchedStations;
+    std::vector<int> Mu_numberOfValidPixelHits;
+    std::vector<int> Mu_numberOftrackerLayersWithMeasurement;
+    std::vector<float> Mu_pfSumChargedHadronPt;
+    std::vector<float> Mu_pfSumNeutralHadronEt;
+    std::vector<float> Mu_PFSumPhotonEt;
+    std::vector<float> Mu_pfSumPUPt;
+    std::vector<float> Mu_calEnergy;
+    std::vector<int> Mu_numberOfValidMuonHits;
+    std::vector<float> Mu_emIso;
+    std::vector<float> Mu_hadIso;
+    std::vector<float> Mu_VTXnormalizedChi2;
+    std::vector<float> Mu_vtxTotalChi2;
+    std::vector<float> Mu_vtxMass;
+    std::vector<float> Mu_vtxMassLept;
+    std::vector<float> Mu_vtxNormChi2;
+    std::vector<float> Mu_vtxMass30GeV;
+    std::vector<float> Mu_vtxNormChi30GeV;
+    std::vector<float> Mu_vtxMass30GeVLept;
+    std::vector<int> Mu_nbofpv;
+    std::vector<float> Mu_pxTunePMuonBestTrack;
+    std::vector<float> Mu_pyTunePMuonBestTrack;
+    std::vector<float> Mu_pzTunePMuonBestTrack;
+    std::vector<float> Mu_pTunePMuonBestTrack;
+    std::vector<float> Mu_etaTunePMuonBestTrack;
+    std::vector<float> Mu_ptTunePMuonBestTrack;
+    std::vector<float> Mu_phiTunePMuonBestTrack;
+    std::vector<float> Mu_thetaTunePMuonBestTrack;
+    std::vector<float> Mu_chargeTunePMuonBestTrack;
+    std::vector<float> Mu_dPToverPTTunePMuonBestTrack;
+    std::vector<float> Mu_absdxyTunePMuonBestTrack;
+    std::vector<float> Mu_absdzTunePMuonBestTrack;
+    std::vector<float> Mu_ptInnerTrack;
+    std::vector<float> Mu_pxInnerTrack;
+    std::vector<float> Mu_pyInnerTrack;
+    std::vector<float> Mu_pzInnerTrack;
+    std::vector<float> Mu_pInnerTrack;
+    std::vector<float> Mu_etaInnerTrack;
+    std::vector<float> Mu_phiInnerTrack;
+    std::vector<float> Mu_thetaInnerTrack;
+    std::vector<float> Mu_chargeInnerTrack;
+    std::vector<float> Mu_dPToverPTInnerTrack;
+    std::vector<float> Mu_absdxyInnerTrack;
+    std::vector<float> Mu_absdzInnerTrack;
+    std::vector<float> Mu_absdxy;
+    std::vector<float> Mu_absdz;
+    std::vector<float> Mu_patDeltaBeta;
+    std::vector<int> Mu_stationMask;
+    std::vector<int> Mu_numberOfMatchedRPCLayers;
+    //=============================================================
+    //
+    //           Create Branches for PF MET
+    //
+    //=============================================================
+    double GenMet_pt;
+    //The default type1 corrected MET
+    double PFMet_et_cor;
+    double PFMet_pt_cor;
+    double PFMet_phi_cor;
+    double PFMet_en_cor;
+    double PFMet_px_cor;
+    double PFMet_py_cor;
+    double PFMet_pz_cor;
+    double PFMet_sumEt_cor;
+    //The Raw PF Met (un-corrected MET)
+    double PFMet_pt_uncor;
+    double PFMet_phi_uncor;
+    double PFMet_sumEt_uncor;
+    //The raw calo ETmiss
+    double CaloMet_pt;
+    double CaloMet_phi;
+    double CaloMet_sumEt;
+    //double METSign;
+    double PFMet_shiftedPt_JetEnUp;
+    double PFMet_shiftedPt_JetEnDown;
+    //Type I MET Uncertainties
+    double pfMETshiftedPtJetEnUp;
+    double pfMETshiftedPtJetEnDn;
+    double pfMETshiftedPtEleEnUp;
+    double pfMETshiftedPtEleEnDn;
+    double pfMETshiftedPtMuEnUp;
+    double pfMETshiftedPtMuEnDn;
+    double pfMETshiftedPtJetResUp;
+    double pfMETshiftedPtJetResDn;
+    double pfMETshiftedPtUnclEnUp;
+    double pfMETshiftedPtUnclEnDn;
+    double pfMETshiftedPtPhoEnUp;
+    double pfMETshiftedPtPhoEnDn;
+    //double pfMETshiftedPtJetEnUpSmear;
+    //double pfMETshiftedPtJetEnDnSmear;
+    //double pfMETUncertaintySize;
+    //double pfMETFullUncertaintySize;
+    //===================================================
+    //
+    //    Create vectors for gen Jets variables
+    //
+    //===================================================
+    std::vector<int> iGenJet;
+    std::vector<int> idGenJet;
+    std::vector<int> statusGenJet;
+    std::vector<int> chargeGenJet;
+    std::vector<float> ptGenJet;
+    std::vector<float> etaGenJet;
+    std::vector<float> phiGenJet;
+    //===================================================
+    //
+    //    Create vectors for photons variables
+    //
+    //===================================================
+    int pfphoton_size;
+    std::vector<float> pfphoton_pt;
+    std::vector<float> pfphoton_eta;
+    std::vector<float> pfphoton_phi;
+    std::vector<float> pfphoton_theta;
+    //std::vector<float> pfphoton_PFchHad;
+    //std::vector<float> pfphoton_PFneuHad;
+    //std::vector<float> pfphoton_PFphoton;
+    //std::vector<float> pfphoton_PFPUchAllPart;
+    //std::vector<float> pfphoton_PFX_rho;
+    ClassDefNV(CIEvent,1)
+};
+
+#endif
+
+

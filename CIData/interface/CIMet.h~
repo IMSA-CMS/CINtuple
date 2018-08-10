@@ -1,0 +1,17 @@
+#ifndef CIMET_H
+#define CIMET_H
+
+//=========================
+//CIMet header file 
+//MHokinson - Aug 9
+//This handles the Met values 
+//in CIEvent 
+//=========================
+
+//Include any special Types 
+#include "DataFormats/PatCandidates/interface/MET.h"
+
+class CIMet
+{
+
+}

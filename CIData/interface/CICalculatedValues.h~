@@ -1,0 +1,55 @@
+#ifndef CICALCULATEDVALUES_H
+#define CICALCULATEDVALUES_H
+
+//===================================
+//CICalculatedValues header file 
+//Latest Version: Aug 2, 2018 
+//JWoods
+//Used to store values from the nTupler.
+//===================================
+
+//Things to include 
+#include "DataFormats/PatCandidates/interface/Electron.h"
+#include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
+#include <cmath>
+
+class CICalculatedValues 
+{
+ public:
+  //================================
+  //Constructors
+  //================================
+  CICalculatedValues() {}
+  CICalculatedValues();
+
+  float cosThetaCS;
+  double tanPhi;
+  double sin2Theta;
+
+ private:
+
+
+
+  void CosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+                            float Et2,float Eta2,float Phi2,float En2,
+                            float ChargeEle1,float RecoMass);
+
+  float delR(float eta1,float phi1,float eta2,float phi2);
+  //=================================
+  //Private Functions
+  //=================================
+
+  //This is going to be called by the contructor so that the constructor 
+  //does not have to contain a large block of code 
+  void fillValues(EcalClusterLazyTools lazyTools_, pat::Electron el,
+		  unsigned NbElectrons, double rhoIso, 
+		  const reco::Vertex& PV);
+
+  //==================================
+  //Class Variables 
+  //==================================
+  
+  ClassDefNV(CICalculatedValues, 1)
+};
+
+#endif

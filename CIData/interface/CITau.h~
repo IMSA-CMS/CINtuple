@@ -1,0 +1,34 @@
+#ifndef CITAU_H
+#define CITAU_H
+
+//==============================
+//CITau header file 
+//MHokinson - Aug 3rd 
+//This will handle of of the Tau 
+//Data from CIEvent 
+//==============================
+
+//Include special types 
+
+
+class CITau 
+{
+ public: 
+  //============================
+  //Constructors 
+  //============================
+  CITau(){}
+  CITau()
+
+ private: 
+  int   Nb_taus;
+  float pt;
+  float eta;
+  float phi;
+  int   id;
+  float looseCombinedIsolationDeltaBetaCorr3Hits;
+
+  ClassDefNV(CITau, 1)
+};
+
+#endif 
