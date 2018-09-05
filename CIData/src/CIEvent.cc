@@ -7,7 +7,7 @@
 //Build to Simplify the existing MakeZprimeMiniAodTreeMC.cc file 
 //======================================================================
 
-#include "ZprimeDiLeptons/CIData/interface/CIEvent.h"
+#include "CINtuple/CIData/interface/CIEvent.h"
 
 //======================================================================
 //Files to include (Same as the MakeZprimeMiniAodTreeMC source file)
@@ -120,6 +120,8 @@
 #include "DataFormats/HepMCCandidate/interface/GenParticleFwd.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 
+//trivial change 
+
 void CIEvent::FillEventInfo(unsigned int JRun, unsigned int JEvent, unsigned int Jlumi, unsigned int Jbunch)
 {
   Run = JRun;
@@ -193,7 +195,7 @@ bool CIEvent::isAncestor(const reco::Candidate * ancestor, const reco::Candidate
   return false;
 }
 void CIEvent::accessGenInfo(bool h_passMInvCut, bool h_passPreFSRMInvCut, bool h_passST1MInvCut, bool h_passST23MInvCut,
-			    bool h_passHSMInvCut, double h_xsWeight, edm::View<reco::GenParticle> pruned,
+			    bool h_passHSMInvCut, double h_xsWeight, const edm::View<reco::GenParticle> & pruned,
 			    const edm::View<pat::PackedGenParticle> & packed, int BosonID_,  int ParticleID1_, 
 			    int ParticleID2_, int ParticleID3_, int ParticleStatus_)
 {
@@ -261,7 +263,7 @@ void CIEvent::ComputeMuonMassVtx(const TransientTrackBuilder & ttkb1, const Tran
 void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const TransientTrackBuilder & ttkb2, 
 				      const TransientTrackBuilder & ttkb3, const reco::Vertex & vertex, 
 				      const pat::MuonCollection & muons, double ptCut, 
-				      const std::vector<CIMuonVtx> & vertices)
+				      std::vector<CIMuonVtx> vertices)
 {
   int NbMuons1 = 0;
   int NbMuons2 = 0;
@@ -275,11 +277,16 @@ void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const
   reco::TrackRef MuonBestTrack1;
   reco::TrackRef MuonBestTrack2;
   reco::TrackRef MuonBestTrack3;
+
+  int muonIndex1 = 0;
+  int muonIndex2 = 0;
+  int muonIndex3 = 0;
   // Get TransientTracks (for use in e.g. the vertex fit) for each of
   // the muon tracks, using e.g. the cocktail momentum.
     
   for (const pat::Muon &mu : muons) 
    {
+     muonIndex1++;
     if(mu.pt() < 5.0 || !mu.globalTrack().isNonnull() || !mu.isTrackerMuon()) continue;
 
     MuonBestTrack1 = mu.tunePMuonBestTrack();
@@ -293,6 +300,7 @@ void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const
       //find the second high pt muon
       for (const pat::Muon &mu2 : muons) 
        {
+	 muonIndex2++;
 	if(mu2.pt() < 5.0 || !mu2.globalTrack().isNonnull() || !mu2.isTrackerMuon()) continue;
 
 	MuonBestTrack2 = mu2.tunePMuonBestTrack();
@@ -306,11 +314,12 @@ void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const
 	  if(NbMuons2>1) continue;
 	  ttv1.push_back(ttkb1.build(MuonBestTrack2));
 
-	  vertices.push_back(CIMuonVtx(ttv1, MuonBestTrack1, MuonBestTrack2));   
+	  vertices.push_back(CIMuonVtx(ttv1, MuonBestTrack1, MuonBestTrack2, muonIndex1, muonIndex2));   
 
 	  //find the third high pt muon
 	  for (const pat::Muon &mu3 : muons) 
 	   {
+	     muonIndex3++;
 	    if(mu3.pt() < 5.0 || !mu3.globalTrack().isNonnull() || !mu3.isTrackerMuon()) continue;
 
 	    MuonBestTrack3 = mu3.tunePMuonBestTrack();
@@ -329,8 +338,8 @@ void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const
 	      ttv3.push_back(ttkb3.build(MuonBestTrack2));
 	      ttv3.push_back(ttkb3.build(MuonBestTrack3));
 
-	      vertices.push_back(CIMuonVtx(ttv2, MuonBestTrack1, MuonBestTrack3));	      
-	      vertices.push_back(CIMuonVtx(ttv3, MuonBestTrack2, MuonBestTrack3));
+	      vertices.push_back(CIMuonVtx(ttv2, MuonBestTrack1, MuonBestTrack3, muonIndex1, muonIndex3));	      
+	      vertices.push_back(CIMuonVtx(ttv3, MuonBestTrack2, MuonBestTrack3, muonIndex2, muonIndex3));
 
 	    }
 	  }
@@ -513,7 +522,7 @@ void CIEvent::TauTree(const pat::TauCollection & tausC)
 
 
 //The following three functions were created to simplify long if statements in the trigger matching tree 
-bool CIEvent::findTriggerMatch(const edm::TriggerNames names, int index)
+bool CIEvent::findTriggerMatch(const edm::TriggerNames & names, int index)
 {
   std::vector<std::string> matchList = makeTriggerPathCombos();
   for (unsigned int j=0; j<matchList.size(); j++)
@@ -554,59 +563,35 @@ std::vector<std::string> CIEvent::makeTriggerPathCombos()
   return matchList;
 }
 
-void CIEvent::findChosenLeptons()
+void CIEvent::findPassedMuons(CIMuonVtx & bestMuons)
 {
-  //Only find the highest 2 pt's for each 
-  std::vector<CIMuon> passedMuons;
-  std::vector<CIElectron> passedElectrons;
-
-  findPassedMuons(passedMuons);
-  findPassedElectrons(passedElectrons);
-
-  bool isMuon = findIsMuon(passedMuons, passedElectrons);
-
-  if(isMuon)
-    {
-      lepton1 = CIChosenLepton(passedMuons[0]);
-      lepton2 = CIChosenLepton(passedMuons[1]);
-    }
-  else
-    {
-      lepton1 = CIChosenLepton(passedElectrons[0]);
-      lepton2 = CIChosenLepton(passedElectrons[1]);
-    }
-}
-
-void CIEvent::findPassedMuons(std::vector<CIMuon> & passedMuons)
-{
-  double highestPt = 0;
-  double secondHightestPt = 0;
+  double highestInvMass = 0;
 
   //muData is the collection of CIMuons
-  for(CIMuon & ciMu : muData)
+  for(CIMuonVtx & muVtx : muonVertices)
     {
-      if(ciMu.isChosen(highestPt))
-	{
-	  passedMuons[0] = ciMu;
-	  continue;
-	}
-      if(ciMu.isChosen(secondHighestPt))
-	{
-	  passedMuons[1] = ciMu;
+      if(muVtx.getMass() > highestInvMass)
+	{ 
+	  if(muVtx.getOppCharge())
+	    {
+	      highestInvMass = muVtx.getMass();
+	      bestMuons = muVtx;
+	    }
 	}
     }
 }
 
-void CIEvent::findPassedElectrons(std::vector<CIElectron> & passedElectrons)
+void CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 {
   double highestPt = 0;
-  double secondHightestPt = 0;
+  double secondHighestPt = 0;
 
-  //muData is the collection of CIElectrons
+  //elec is the collection of CIElectrons
   for(CIElectron & ciEle : elec)
     {
       if(ciEle.isChosen(highestPt))
 	{
+	  passedElectrons[1] = passedElectrons[0];
 	  passedElectrons[0] = ciEle;
 	  continue;
 	}
@@ -617,10 +602,38 @@ void CIEvent::findPassedElectrons(std::vector<CIElectron> & passedElectrons)
     }
 }
 
-bool CIEvent::findIsMuon(const std::vector<CIMuon> & passedMuons,
-			 const std::vector<CIElectron> & passedElectrons)
+void CIEvent::findChosenLeptons()
 {
-  
+  //Only find the highest 2 pt's for each
+  CIMuonVtx bestMuons;//Muons have a vertex object already 
+  CIElectron passedElectrons[2];//two best electrons are stored here 
+
+  findPassedMuons(bestMuons);
+  findPassedElectrons(passedElectrons);
+
+  bool isMuon = findIsMuon(bestMuons, passedElectrons);
+
+  if(isMuon)
+    {
+      lepton1 = CIChosenLepton(muData.at(bestMuons.lept1()));
+      lepton2 = CIChosenLepton(muData.at(bestMuons.lept2()));
+    }
+  else
+    {
+      lepton1 = CIChosenLepton(passedElectrons[0]);
+      lepton2 = CIChosenLepton(passedElectrons[1]);
+    }
+}
+
+bool CIEvent::findIsMuon(const CIMuonVtx & bestMuons,
+			 CIElectron passedElectrons[])
+{
+  if(bestMuons.getMass() > 
+     passedElectrons[0].findInvarientMass(passedElectrons[1]))
+    {
+      return true;
+    }
+  return false;
 }
 			 
 

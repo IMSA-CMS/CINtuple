@@ -13,4 +13,5 @@
   <class name="CIMuonVtx"/>
   <class name="CIMuon"/>
   <class name="CIMet"/>
+  <class name="CIChosenLepton"/>
 </lcgdict>

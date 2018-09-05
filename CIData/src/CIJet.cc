@@ -6,7 +6,7 @@
 //============================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIJet.h"
+#include "CINtuple/CIData/interface/CIJet.h"
 
 //Include any special types 
 #include "DataFormats/PatCandidates/interface/Jet.h"

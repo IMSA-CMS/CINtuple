@@ -8,13 +8,20 @@
 //=========================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIChosenLepton.h"
+#include "CINtuple/CIData/interface/CIChosenLepton.h"
 
-CIChosenLepton::CIChosenLepton(double pPt, double pPhi, double pEta,
-			       double pCharge, bool pIsMuon):
-  pt(pPt),
-  phi(pPhi),
-  eta(pEta),
-  charge(pCharge),
-  isMuon(pIsMuon)
+CIChosenLepton::CIChosenLepton(const CIElectron & el):
+  pt(el.getPt()),
+  phi(el.getPhi()),
+  eta(el.getEta()),
+  charge(el.getCharge()),
+  isMuon(false)
+{}
+
+CIChosenLepton::CIChosenLepton(const CIMuon & mu):
+  pt(mu.getPtTune()),
+  phi(mu.getPhiTune()),
+  eta(mu.getEtaTune()),
+  charge(mu.getCharge()),
+  isMuon(true)
 {}

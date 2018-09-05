@@ -24,7 +24,7 @@
 #include "FWCore/Framework/interface/stream/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Utilities/interface/InputTag.h"
-#include "ZprimeDiLeptons/CIData/interface/CIEvent.h"
+#include "CINtuple/CIData/interface/CIEvent.h"
 #include "TTree.h"
 #include <iostream>
 #include <string>

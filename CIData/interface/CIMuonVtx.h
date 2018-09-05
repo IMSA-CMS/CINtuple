@@ -27,7 +27,17 @@ class CIMuonVtx
   //===================
   CIMuonVtx(){}
   CIMuonVtx(std::vector<reco::TransientTrack> track, reco::TrackRef muTrack,
-	    reco::TrackRef muTrack2);
+	    reco::TrackRef muTrack2, int index1, int index2);
+
+  //===================
+  //Getters 
+  //===================
+  //These return the indicies of the two muons in the CIEvent muon collection 
+  int lept1()const {return muIndex1;}
+  int lept2()const {return muIndex2;}
+
+  float getMass() const {return mass;}
+  bool getOppCharge() const {return isOppositeSign;}
 
  private:
   //===================
@@ -43,6 +53,10 @@ class CIMuonVtx
   float massLept1;
   float massLept2;
   float normChi2;
+
+  bool isOppositeSign;
+  int muIndex1;
+  int muIndex2;
 
   ClassDefNV(CIMuonVtx, 1)
 };

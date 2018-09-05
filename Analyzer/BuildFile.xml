@@ -35,6 +35,6 @@
 <use   name="DataFormats/Math"/>
 <use   name="DataFormats/Common"/>
 <use   name="PhysicsTools/UtilAlgos"/>
-<use   name="ZprimeDiLeptons/CIData"/>
+<use   name="CINtuple/CIData"/>
 <use   name="clhep"/>
 <flags   EDM_PLUGIN="1"/> 

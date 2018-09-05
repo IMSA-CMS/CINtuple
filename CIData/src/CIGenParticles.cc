@@ -7,7 +7,7 @@
 //===================================
 
 //Include for the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIGenParticles.h"
+#include "CINtuple/CIData/interface/CIGenParticles.h"
 
 //Includes for special types 
 #include "DataFormats/PatCandidates/interface/PackedGenParticle.h"

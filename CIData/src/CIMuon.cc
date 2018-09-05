@@ -6,7 +6,7 @@
 //==============================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIMuon.h"
+#include "CINtuple/CIData/interface/CIMuon.h"
 
 //Include any special types 
 #include "DataFormats/PatCandidates/interface/Muon.h"
@@ -151,27 +151,5 @@ bool CIMuon::passesCut(const pat::Muon & mu, const reco::Vertex & vertex, double
 	   mu.numberOfMatchedRPCLayers()>2));
 }
 
-//This will take in the current Highest pt, and then will set it the first time around, 
-//but then it will make sure to find the second highest pt the second time around 
-bool CIMuon::isChosen(double & highestPt)
-{
-  if(isTrackerMuon->at(i) == 1 &&
-     isGlobalMuon->at(i) == 1 &&
-     fabs(etaTunePMuonBestTrack->at(i)) < 2.4 &&
-     ptTunePMuonBestTrack->at(i) > 53.0 &&
-     absdxyTunePMuonBestTrack->at(i) < 0.2 &&
-     (trackiso->at(i)/ptInnerTrack->at(i)) < 0.10  &&
-     numberOftrackerLayersWithMeasurement->at(i) > 5 &&
-     numberOfValidPixelHits->at(i) > 0 &&
-     numberOfValidMuonHits->at(i) > 0 &&
-     passNewMatchedStationsCut->at(i) == 1 &&
-     dPToverPTTunePMuonBestTrack->at(i) < 0.3 )
-    {
-      if(ptTunePMuonBestTrack > highestPt)
-	{
-	  highestPt = ptTunePMuonBestTrack;
-	  return true;
-	}
-    }
-  return false;
-}
+
+

@@ -6,7 +6,7 @@
 //==============================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIHLTrigger.h"
+#include "CINtuple/CIData/interface/CIHLTrigger.h"
 
 //include special types 
 #include "FWCore/Common/interface/TriggerNames.h"

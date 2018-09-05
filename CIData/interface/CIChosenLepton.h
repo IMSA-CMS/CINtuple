@@ -9,6 +9,8 @@
 //(There will be two of these
 //in CIEvent)
 //=========================
+#include "CINtuple/CIData/interface/CIMuon.h"
+#include "CINtuple/CIData/interface/CIElectron.h"
 
 class CIChosenLepton
 {
@@ -16,8 +18,11 @@ class CIChosenLepton
   //===============
   //Constructors
   //===============
-  CIChosenLepton(double pPt, double pPhi, double pEta, 
-		 double pCharge, bool pIsMuon);
+  CIChosenLepton() {}
+
+  CIChosenLepton(const CIElectron & el);
+
+  CIChosenLepton(const CIMuon & mu);
 
  private:
   //===============
@@ -29,4 +34,7 @@ class CIChosenLepton
   double charge;
   bool isMuon;
   
+  ClassDefNV(CIChosenLepton, 1)
 };
+
+#endif

@@ -6,7 +6,7 @@
 //==============================
 
 //Include the Header file 
-#include "ZprimeDiLeptons/CIData/interface/CITau.h"
+#include "CINtuple/CIData/interface/CITau.h"
 
 //Include special types 
 #include "DataFormats/PatCandidates/interface/Tau.h"

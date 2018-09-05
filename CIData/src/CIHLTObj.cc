@@ -1,12 +1,12 @@
 //==============================
-//CIHLTObj header file 
+//CIHLTObj source file 
 //MHokinson - Aug 3rd 
 //Handles the HLTObj values from 
 //CIEvent
 //==============================
 
 //Include the Header File 
-#include "ZprimeDiLeptons/CIData/interface/CIHLTObj.h"
+#include "CINtuple/CIData/interface/CIHLTObj.h"
 
 //include special types 
 #include "DataFormats/PatCandidates/interface/TriggerObjectStandAlone.h"

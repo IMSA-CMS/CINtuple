@@ -6,7 +6,7 @@
 //==============================
 
 //Include the Header file 
-#include "ZprimeDiLeptons/CIData/interface/CIBtags.h"
+#include "CINtuple/CIData/interface/CIBtags.h"
 
 //Include special types 
 #include "DataFormats/PatCandidates/interface/Jet.h"

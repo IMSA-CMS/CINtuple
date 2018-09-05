@@ -6,7 +6,7 @@
 //=========================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIMet.h"
+#include "CINtuple/CIData/interface/CIMet.h"
 
 //Include any special Types 
 #include "DataFormats/PatCandidates/interface/MET.h"

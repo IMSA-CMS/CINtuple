@@ -14,20 +14,20 @@
 //======================================================================
 
 //Include the other CI Classes 
-#include "ZprimeDiLeptons/CIData/interface/CIElectron.h"
-#include "ZprimeDiLeptons/CIData/interface/CIGenParticles.h"
-#include "ZprimeDiLeptons/CIData/interface/CIPhoton.h"
-#include "ZprimeDiLeptons/CIData/interface/CIPrimaryVertex.h"
-#include "ZprimeDiLeptons/CIData/interface/CIGenJets.h"
-#include "ZprimeDiLeptons/CIData/interface/CITau.h"
-#include "ZprimeDiLeptons/CIData/interface/CIJet.h"
-#include "ZprimeDiLeptons/CIData/interface/CIBtags.h"
-#include "ZprimeDiLeptons/CIData/interface/CIHLTrigger.h"
-#include "ZprimeDiLeptons/CIData/interface/CIHLTObj.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMuonVtx.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMuon.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMet.h"
-#include "ZprimeDILeptons/CIData/interface/CIChosenLepton.h"
+#include "CINtuple/CIData/interface/CIElectron.h"
+#include "CINtuple/CIData/interface/CIGenParticles.h"
+#include "CINtuple/CIData/interface/CIPhoton.h"
+#include "CINtuple/CIData/interface/CIPrimaryVertex.h"
+#include "CINtuple/CIData/interface/CIGenJets.h"
+#include "CINtuple/CIData/interface/CITau.h"
+#include "CINtuple/CIData/interface/CIJet.h"
+#include "CINtuple/CIData/interface/CIBtags.h"
+#include "CINtuple/CIData/interface/CIHLTrigger.h"
+#include "CINtuple/CIData/interface/CIHLTObj.h"
+#include "CINtuple/CIData/interface/CIMuonVtx.h"
+#include "CINtuple/CIData/interface/CIMuon.h"
+#include "CINtuple/CIData/interface/CIMet.h"
+#include "CINtuple/CIData/interface/CIChosenLepton.h"
 
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "DataFormats/JetReco/interface/GenJetCollection.h"
@@ -58,9 +58,12 @@
 class CIEvent
 {
   public:
+  CIEvent() {}
+
   void PatElectronTree(double rhoIso, const reco::Vertex & PV, const pat::ElectronCollection & electron,
                         const EcalRecHitCollection & ecalEB, const EcalRecHitCollection & ecalEE, const EcalClusterLazyTools & lazyTools_,
-                        edm::View<pat::Electron> eleHandle);
+                        const edm::View<pat::Electron> & eleHandle);
+
   void TriggerMatchingTree(const edm::TriggerResults & triggerBits, const pat::TriggerObjectStandAloneCollection & triggerObjects,
 			   const pat::TriggerObjectStandAloneCollection & trigobj_handle,
 			   const pat::PackedTriggerPrescales & triggerPrescales, const edm::TriggerNames & names);
@@ -97,17 +100,23 @@ class CIEvent
   bool findPathMatch(const std::vector<std::string> & pathnames, int index);
   std::vector<std::string> makeTriggerPathCombos();
 
-  //=====================================
-  //Finds the the two chosen leptons 
-  //=====================================
+  //================================
+  //Finds the the two chosen leptons
+  //================================
   void findChosenLeptons();
+  void findPassedMuons(CIMuonVtx & bestMuons);
+  void findPassedElectrons(CIElectron passedElectrons[]);
 
-
+  //===============================
+  //Finds the highest pt of leptons
+  //===============================
+  bool findIsMuon(const CIMuonVtx & bestMuons,
+		  CIElectron passedElectrons[]);
   private:
 
     //This is called twice for both pt cuts by ComputeMuonMassVtx
     void computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const TransientTrackBuilder & ttkb2, const TransientTrackBuilder & ttkb3,
-				 const reco::Vertex & vertex, const pat::MuonCollection & muons, double ptCut, const std::vector<CIMuonVtx> & vertices);
+				 const reco::Vertex & vertex, const pat::MuonCollection & muons, double ptCut, std::vector<CIMuonVtx> vertices);
 
     //=============================================================
     //

@@ -1,21 +1,23 @@
 #include "TString.h"
-#include "ZprimeDiLeptons/CIData/interface/CIEvent.h"
-#include "ZprimeDiLeptons/CIData/interface/CIElectron.h"
-#include "ZprimeDiLeptons/CIData/interface/CIGenParticles.h"
-#include "ZprimeDiLeptons/CIData/interface/CIPhoton.h"
-#include "ZprimeDiLeptons/CIData/interface/CIPrimaryVertex.h"
-#include "ZprimeDiLeptons/CIData/interface/CIGenJets.h"
-#include "ZprimeDiLeptons/CIData/interface/CITau.h"
-#include "ZprimeDiLeptons/CIData/interface/CIJet.h"
-#include "ZprimeDiLeptons/CIData/interface/CIBtags.h"
-#include "ZprimeDiLeptons/CIData/interface/CIHLTrigger.h"
-#include "ZprimeDiLeptons/CIData/interface/CIHLTObj.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMuonVtx.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMuon.h"
-#include "ZprimeDiLeptons/CIData/interface/CIMet.h"
+#include "CINtuple/CIData/interface/CIBtags.h"
+#include "CINtuple/CIData/interface/CIChosenLepton.h"
+#include "CINtuple/CIData/interface/CIElectron.h"
+#include "CINtuple/CIData/interface/CIEvent.h"
+#include "CINtuple/CIData/interface/CIGenJets.h"
+#include "CINtuple/CIData/interface/CIGenParticles.h"
+#include "CINtuple/CIData/interface/CIHLTObj.h"
+#include "CINtuple/CIData/interface/CIHLTrigger.h"
+#include "CINtuple/CIData/interface/CIJet.h"
+#include "CINtuple/CIData/interface/CIMet.h"
+#include "CINtuple/CIData/interface/CIPhoton.h"
+#include "CINtuple/CIData/interface/CIPrimaryVertex.h"
+#include "CINtuple/CIData/interface/CITau.h"
+#include "CINtuple/CIData/interface/CIMuonVtx.h"
+#include "CINtuple/CIData/interface/CIMuon.h"
 
 
-namespace ZprimeDiLeptons_CIData
+
+namespace CINtuple_CIData
 {
   struct dictionary {
   };

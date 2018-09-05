@@ -8,7 +8,7 @@
 //=================================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIMuonVtx.h"
+#include "CINtuple/CIData/interface/CIMuonVtx.h"
 
 //Include any special types 
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
@@ -20,7 +20,9 @@
 #include "RecoVertex/KalmanVertexFit/interface/KalmanVertexFitter.h"
 
 CIMuonVtx::CIMuonVtx(std::vector<reco::TransientTrack> track, reco::TrackRef
-		     muTrack, reco::TrackRef muTrack2)
+		     muTrack, reco::TrackRef muTrack2, int index1, int index2):
+  muIndex1(index1),
+  muIndex2(index2)
 {
   fillValues(track, muTrack, muTrack2);
 }
@@ -43,4 +45,6 @@ void CIMuonVtx::fillValues(std::vector<reco::TransientTrack> track, reco::TrackR
   normChi2 = vtxNormChi1;
   massLept1 = muTrack->pt();
   massLept2 = muTrack2->pt();
+
+  isOppositeSign = !(muTrack->charge() == muTrack2->charge());
 }

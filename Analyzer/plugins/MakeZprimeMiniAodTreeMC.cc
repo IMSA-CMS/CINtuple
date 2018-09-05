@@ -14,8 +14,8 @@
 //so you can easily include them in your analysis if you find them
 //useful
 
-#include "ZprimeDiLeptons/Analyzer/interface/MakeZprimeMiniAodTreeMC.h"
-#include "ZprimeDiLeptons/CIData/interface/CIEvent.h"
+#include "CINtuple/Analyzer/interface/MakeZprimeMiniAodTreeMC.h"
+#include "CINtuple/CIData/interface/CIEvent.h"
 
 #include "FWCore/Utilities/interface/InputTag.h"
 #include "FWCore/Utilities/interface/EDGetToken.h"

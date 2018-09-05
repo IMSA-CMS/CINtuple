@@ -6,7 +6,7 @@
 //=============================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIPrimaryVertex.h"
+#include "CINtuple/CIData/interface/CIPrimaryVertex.h"
 
 //Include special types 
 #include "DataFormats/VertexReco/interface/Vertex.h"

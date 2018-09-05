@@ -22,11 +22,13 @@ class CIMuon
   CIMuon(const reco::Vertex & PV, const pat::Muon & mu, int NbMuons);
 
   //=======================
-  //Other member functions
+  //Getters 
   //========================
-  //This is used in finding whether or not the muon 
-  //can be the chosen Lepton
-  bool isChosen(double & highestPt)
+
+  float getEtaTune() const {return etaTunePMuonBestTrack;}
+  float getPhiTune() const {return phiTunePMuonBestTrack;}
+  float getPtTune() const {return ptTunePMuonBestTrack;}
+  float getCharge() const {return charge;}
 
   //=====================
   //Static Functions

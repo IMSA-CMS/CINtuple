@@ -5,5 +5,5 @@
   <flags CXX_FLAGS="-O0 -g3 -fno-inline"/>
   <use   name="root"/>
   <use   name="FWCore/ServiceRegistry"/>
-  <use   name="ZprimeDiLeptons/Analyzer"/>
+  <use   name="CINtuple/Analyzer"/>
 </library>

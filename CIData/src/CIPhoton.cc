@@ -8,7 +8,7 @@
 //===================================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIPhoton.h"
+#include "CINtuple/CIData/interface/CIPhoton.h"
 
 //Things needed for special types 
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"

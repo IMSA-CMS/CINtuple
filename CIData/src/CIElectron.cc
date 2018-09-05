@@ -8,7 +8,7 @@
 //===================================
 
 //Include the header file 
-#include "ZprimeDiLeptons/CIData/interface/CIElectron.h"
+#include "CINtuple/CIData/interface/CIElectron.h"
 
 //Things to include for special types used 
 #include "DataFormats/PatCandidates/interface/Electron.h"
@@ -141,5 +141,47 @@ void CIElectron::fillValues(EcalClusterLazyTools lazyTools_, pat::Electron el,
    double deltaBeta = charged + std::max(0.0, neutral-0.5*pileup);
    pfDeltaBeta = deltaBeta;
 }
+
+
+//This will take in the current Highest pt, and then will set it the first time around, 
+//but then it will make sure to find the second highest pt the second time around 
+bool CIElectron::isChosen(double & highestPt)
+{
+  if(EtFromCaloEn > 35 && fabs(etaSC) < 1.4442 && isPassHeepID)
+    {
+      if(EtFromCaloEn > highestPt)
+	{
+	  highestPt = EtFromCaloEn;
+	  return true;
+	}
+    }
+  else if(EtFromCaloEn > 35 && fabs(etaSC) > 1.566 && fabs(etaSC) < 2.5 && isPassHeepID )
+    {
+      if(EtFromCaloEn > highestPt)
+	{
+	  highestPt = EtFromCaloEn;
+	  return true;
+	}
+    }
+  return false;
+}
+
+double CIElectron::findInvarientMass(const CIElectron & el)
+{
+  double deltaEta = abs(etaSC - el.getEta());
+  double deltaPhi = abs(phiSC - el.getPhi());
+  
+  double x = cosh(deltaEta);
+  double y = cos(deltaPhi);
+
+  double invMass = 2 * pt * el.getPt() * abs(x-y);
+
+  if(invMass > 0)
+    {
+      return sqrt(invMass);
+    }
+  return 0;
+}
+
 
 		       
