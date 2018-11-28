@@ -14,6 +14,8 @@
 #include "CINtuple/CIData/interface/CITau.h"
 #include "CINtuple/CIData/interface/CIMuonVtx.h"
 #include "CINtuple/CIData/interface/CIMuon.h"
+#include "CINtuple/CIData/interface/CIChosenLepton.h"
+#include "CINtuple/CIData/interface/CICalculatedValues.h"
 
 
 

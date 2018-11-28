@@ -21,5 +21,5 @@ CIJet::CIJet(int sum, int in, int jetNumber, const pat::Jet & j):
   en(j.muonEnergy()),
   theta(j.theta()),
   beta(sum ? in/sum : 0),
-  pileup_mva_disc(j.userFloat("pileupJetId:fillDiscriminant"))
+  pileup_mva_disc(j.userFloat("pileupJetId:fullDiscriminant"))
 {}

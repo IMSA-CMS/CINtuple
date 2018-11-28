@@ -33,6 +33,7 @@ class CIElectron
   double getPhi() const {return phiSC;}
   double getPt() const {return EtFromCaloEn;}
   int getCharge() const {return charge;}
+  double getEt() const {return Et;}
 
  private:
   //=================================

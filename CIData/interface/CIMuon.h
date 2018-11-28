@@ -29,6 +29,9 @@ class CIMuon
   float getPhiTune() const {return phiTunePMuonBestTrack;}
   float getPtTune() const {return ptTunePMuonBestTrack;}
   float getCharge() const {return charge;}
+  float getEn() const {return en;}
+  float getEt() const {return et;}
+  
 
   //=====================
   //Static Functions

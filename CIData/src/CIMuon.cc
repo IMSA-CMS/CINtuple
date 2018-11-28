@@ -14,11 +14,15 @@
 
 CIMuon::CIMuon(const reco::Vertex & PV, const pat::Muon & mu, int NbMuons)
 {
+  
   fillValues(PV, mu, NbMuons);
+  
+
 }
 
 void CIMuon::fillValues(const reco::Vertex & PV, const pat::Muon & mu, int NbMuons)
 {
+  
    nbMuon = NbMuons;
    isLooseMuon = mu.isLooseMuon();
    isTightMuon = mu.isTightMuon(PV);
@@ -27,6 +31,8 @@ void CIMuon::fillValues(const reco::Vertex & PV, const pat::Muon & mu, int NbMuo
    isPF = mu.isPFMuon();
    isTrackerMuon = mu.isTrackerMuon();
    nbofpv = PV.size;
+
+   
    //isMuonsCleaned = mu.userInt("muonsCleaned:oldPF"));
    //============== Parameters related to Kinematics =====================
    /*ERROR - tevOptimized is not a member of Muon 
@@ -50,52 +56,85 @@ void CIMuon::fillValues(const reco::Vertex & PV, const pat::Muon & mu, int NbMuo
    */
 
    // part for TuneP Muon Best track
-   const reco::TrackRef& tunePTrack  = mu.tunePMuonBestTrack();
-   ptTunePMuonBestTrack = tunePTrack->pt();
-   dPToverPTTunePMuonBestTrack = tunePTrack->ptError()/tunePTrack->pt();
-   pxTunePMuonBestTrack = tunePTrack->px(); //px component of the track
-   pyTunePMuonBestTrack = tunePTrack->py(); //py component of the track
-   pzTunePMuonBestTrack = tunePTrack->pz(); //pz component of the track
-   pTunePMuonBestTrack = tunePTrack->p();   //magnitude of momentum vector
-   etaTunePMuonBestTrack = tunePTrack->eta();
-   phiTunePMuonBestTrack = tunePTrack->phi();
-   thetaTunePMuonBestTrack = tunePTrack->theta();
-   chargeTunePMuonBestTrack = tunePTrack->charge();
-   absdxyTunePMuonBestTrack = fabs(tunePTrack->dxy(PV.position()));
-   absdzTunePMuonBestTrack = fabs(tunePTrack->dz(PV.position()));
+   if(!mu.tunePMuonBestTrack().isNull())
+     {
+       const reco::TrackRef& tunePTrack  = mu.tunePMuonBestTrack();
+       ptTunePMuonBestTrack = tunePTrack->pt();
+       dPToverPTTunePMuonBestTrack = tunePTrack->ptError()/tunePTrack->pt();
+       pxTunePMuonBestTrack = tunePTrack->px(); //px component of the track
+       pyTunePMuonBestTrack = tunePTrack->py(); //py component of the track
+       pzTunePMuonBestTrack = tunePTrack->pz(); //pz component of the track
+       pTunePMuonBestTrack = tunePTrack->p();   //magnitude of momentum vector
+       etaTunePMuonBestTrack = tunePTrack->eta();
+       phiTunePMuonBestTrack = tunePTrack->phi();
+       thetaTunePMuonBestTrack = tunePTrack->theta();
+       chargeTunePMuonBestTrack = tunePTrack->charge();
+       absdxyTunePMuonBestTrack = fabs(tunePTrack->dxy(PV.position()));
+       absdzTunePMuonBestTrack = fabs(tunePTrack->dz(PV.position()));
+     }
+
+   
+
    en = mu.energy();
    et = mu.et();
    pt = mu.pt();
    eta = mu.eta();
    phi = mu.phi();
    charge = mu.charge();
-   ptInnerTrack = mu.innerTrack()->pt();
-   dPToverPTInnerTrack = mu.innerTrack()->ptError()/mu.innerTrack()->pt();
-   pxInnerTrack = mu.innerTrack()->px();
-   pyInnerTrack = mu.innerTrack()->py();
-   pzInnerTrack = mu.innerTrack()->pz();
-   pInnerTrack = mu.innerTrack()->p();
-   etaInnerTrack = mu.innerTrack()->eta();
-   phiInnerTrack = mu.innerTrack()->phi();
-   thetaInnerTrack = mu.innerTrack()->theta();
-   chargeInnerTrack = mu.innerTrack()->charge();
-   absdxyInnerTrack = fabs(mu.innerTrack()->dxy(PV.position()));
-   absdzInnerTrack = fabs(mu.innerTrack()->dz(PV.position()));
-   absdxy = fabs(mu.globalTrack()->dxy(PV.position()));
-   absdz = fabs(mu.globalTrack()->dz(PV.position()));
 
-   //====================== Parameters related to track quality =====================
-   normalizedChi2 = mu.globalTrack()->normalizedChi2();
-   numberOfValidPixelHits = mu.globalTrack()->hitPattern().numberOfValidPixelHits();
-   numberOfValidMuonHits = mu.globalTrack()->hitPattern().numberOfValidMuonHits();
-   numberOftrackerLayersWithMeasurement = mu.globalTrack()->hitPattern().trackerLayersWithMeasurement();
+   
+
+
+   if(!mu.innerTrack().isNull())
+     {
+       ptInnerTrack = mu.innerTrack()->pt();
+       dPToverPTInnerTrack = mu.innerTrack()->ptError()/mu.innerTrack()->pt();
+       pxInnerTrack = mu.innerTrack()->px();
+       pyInnerTrack = mu.innerTrack()->py();
+       pzInnerTrack = mu.innerTrack()->pz();
+
+       
+
+
+       pInnerTrack = mu.innerTrack()->p();
+       etaInnerTrack = mu.innerTrack()->eta();
+       phiInnerTrack = mu.innerTrack()->phi();
+       thetaInnerTrack = mu.innerTrack()->theta();
+
+       
+
+
+       chargeInnerTrack = mu.innerTrack()->charge();
+       absdxyInnerTrack = fabs(mu.innerTrack()->dxy(PV.position()));
+       absdzInnerTrack = fabs(mu.innerTrack()->dz(PV.position()));
+     }
+
+   
+   if(!mu.globalTrack().isNull()) 
+     {
+       absdxy = fabs(mu.globalTrack()->dxy(PV.position()));//HERE
+       absdz = fabs(mu.globalTrack()->dz(PV.position()));
+
+        //====================== Parameters related to track quality =====================
+       normalizedChi2 = mu.globalTrack()->normalizedChi2();
+       numberOfValidPixelHits = mu.globalTrack()->hitPattern().numberOfValidPixelHits();
+       numberOfValidMuonHits = mu.globalTrack()->hitPattern().numberOfValidMuonHits();
+       numberOftrackerLayersWithMeasurement = mu.globalTrack()->hitPattern().trackerLayersWithMeasurement();
+
+     }
+   
+
+   
+   
+   
+   //====================== Parameters related to track quality ==============
    numberOfMatchedStations = mu.numberOfMatchedStations();
-
+   
    //============= Parameters related to detector isolation =====================
    emIso = mu.isolationR03().emEt;
    hadIso = mu.isolationR03().hadEt;
    trackiso = mu.isolationR03().sumPt;
-
+   
    //============= Parameters related to PF isolation =====================
    pfSumChargedHadronPt = mu.pfIsolationR03().sumChargedHadronPt;
    pfSumNeutralHadronEt = mu.pfIsolationR03().sumNeutralHadronEt;
@@ -109,7 +148,7 @@ void CIMuon::fillValues(const reco::Vertex & PV, const pat::Muon & mu, int NbMuo
    patDeltaBeta = deltaBeta;
    stationMask = mu.stationMask();
    numberOfMatchedRPCLayers = mu.numberOfMatchedRPCLayers();
-
+   
    //New Proposed Muon Matched Stations Cut*:
    if(mu.numberOfMatchedStations()>1) 
      {
@@ -119,36 +158,44 @@ void CIMuon::fillValues(const reco::Vertex & PV, const pat::Muon & mu, int NbMuo
      {
        passOldMatchedStationsCut = false;
      }
-
+   
    if (mu.numberOfMatchedStations()>1 || 
-       (mu.numberOfMatchedStations()==1 && !(mu.stationMask()==1 || 
-					     mu.stationMask()==16)) || 
-       ((mu.numberOfMatchedStations()==1 && (mu.stationMask()==1 || 
-					     mu.stationMask()==16)) && 
-	mu.numberOfMatchedRPCLayers()>2))  
+       (mu.numberOfMatchedStations()==1 && !(mu.stationMask()==1 || mu.stationMask()==16)) || 
+       ((mu.numberOfMatchedStations()==1 && (mu.stationMask()==1 || mu.stationMask()==16)) 
+	&& mu.numberOfMatchedRPCLayers()>2))  
      {
+       
        passNewMatchedStationsCut = true;
      }
    else 
      {
+       
        passNewMatchedStationsCut = false;
      }
 
+   
    canPassCuts = passesCut(mu, PV, 53);  
 }
 
 bool CIMuon::passesCut(const pat::Muon & mu, const reco::Vertex & vertex, double ptCut)
 {
-  return mu.tunePMuonBestTrack()->pt() > ptCut && (mu.isolationR03().sumPt/mu.innerTrack()->pt() < 0.10) && 
-         (mu.tunePMuonBestTrack()->ptError()/mu.tunePMuonBestTrack()->pt()<0.3) &&
-         fabs(mu.tunePMuonBestTrack()->dxy(vertex.position()))<0.2 &&
-         mu.globalTrack()->hitPattern().trackerLayersWithMeasurement()>5 &&
-         mu.globalTrack()->hitPattern().numberOfValidPixelHits()>0 &&
-         mu.globalTrack()->hitPattern().numberOfValidMuonHits()>0 &&
-         (mu.numberOfMatchedStations()>1 || 
-	  (mu.numberOfMatchedStations()==1 && !(mu.stationMask()==1 || mu.stationMask()==16)) || 
-	  ((mu.numberOfMatchedStations()==1 && (mu.stationMask()==1 || mu.stationMask()==16)) && 
-	   mu.numberOfMatchedRPCLayers()>2));
+  
+  if(!mu.globalTrack().isNull() 
+     && !mu.tunePMuonBestTrack().isNull() 
+     && !mu.innerTrack().isNull())
+    {
+      return mu.tunePMuonBestTrack()->pt() > ptCut && (mu.isolationR03().sumPt/mu.innerTrack()->pt() < 0.10) && 
+	(mu.tunePMuonBestTrack()->ptError()/mu.tunePMuonBestTrack()->pt()<0.3) &&
+	fabs(mu.tunePMuonBestTrack()->dxy(vertex.position()))<0.2 &&
+	mu.globalTrack()->hitPattern().trackerLayersWithMeasurement()>5 &&
+	mu.globalTrack()->hitPattern().numberOfValidPixelHits()>0 &&
+	mu.globalTrack()->hitPattern().numberOfValidMuonHits()>0 &&
+	(mu.numberOfMatchedStations()>1 || 
+	 (mu.numberOfMatchedStations()==1 && !(mu.stationMask()==1 || mu.stationMask()==16)) || 
+	 ((mu.numberOfMatchedStations()==1 && (mu.stationMask()==1 || mu.stationMask()==16)) && 
+	  mu.numberOfMatchedRPCLayers()>2));
+    }
+  return false;
 }
 
 

@@ -122,9 +122,15 @@ private:
   double maxd0_;
   int minNdof_;
   int NbGoodPv_;
+
+  bool isLRHelicity;
+  int lambda;
+
   //=============================================================
   TFile*  rootFile_;
   std::string outputFile_; // output file
+  edm::InputTag genEventInfoProduct_;
+  edm::EDGetTokenT<GenEventInfoProduct> genEventInfoProductToken_;
 };
 
 template<template<typename> class H, typename T>

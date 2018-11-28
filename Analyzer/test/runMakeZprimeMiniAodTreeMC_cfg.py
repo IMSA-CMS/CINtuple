@@ -1,4 +1,5 @@
 import os,sys
+import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.ParameterSet.Config as cms
 from FWCore.ParameterSet.VarParsing import VarParsing
 options = VarParsing('analysis')
@@ -32,7 +33,7 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cout.threshold = cms.untracked.string('WARNING')
 process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
     reportEvery = cms.untracked.int32(500),
-    limit = cms.untracked.int32(1000000),
+    limit = cms.untracked.int32(10000),
 )
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
@@ -179,13 +180,31 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_Tra
 #    infiles = []
 #
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10000))
-process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring('file:/uscms/physics_grp/lpcci2dileptons/nobackup/CI_study/Samples/Lambda_16TeV/CITo2Mu/LLCon/M300/step_MINIAODSIM_bumpHunt_1.root'
-                                                                            )
-)
+
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1200))
+
+#Load info from the text file 
+#sourceFiles = FileUtils.loadListFromFile('root_MINIAOD_M300.txt')#JOHN  TURN THIS ONE BACK ON 
+#sourceFiles = FileUtils.loadListFromFile('fileQueryTestMuM300L16ConLL.txt') #THIS IS THE ROOT XD 
+#for line in sourceFiles:
+#    print(line)
+
+#sourceList = ['file:/uscms/physics_grp/lpcci2dileptons/nobackup/CI_study/Samples/Lambda_16TeV/CITo2Mu/LLCon/M300/' + line for line in sourceFiles]#JOHN TURN THIS ONE BACK ON
+#sourceList = ['root://cmsxrootd.fnal.gov//' + line for line in sourceFiles]  #THIS IS ALSO ROOT XD 
+#for line in sourceList:
+#    print(line)
+
+#process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring(*sourceList))
+
+#for running on crab 
+process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('file:file.root'))
+
+#process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('root://cmsxrootd.fnal.gov///store/mc/RunIISummer16MiniAODv2/CITo2E_M1300_CUETP8M1_Lam10TeVConLL_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/B82FCB94-1ED9-E611-8A29-24BE05CEDC81.root'))#on one file 
+
+
 
 #KLUDGE for now
-lowerCut = 0
+lowerCut = 0.0
 upperCut = 5000
 sample = ['CITo2Mu']
 weight = 1
@@ -216,6 +235,7 @@ addHEEPV70ElesMiniAOD(process,useStdName=True)
 process.TFileService = cms.Service("TFileService",
     fileName = cms.string(outfile)
 )
+
 #this is our example analysis module reading the results, you will have your own module
 process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
     eles=cms.InputTag("slimmedElectrons"),
@@ -272,7 +292,10 @@ process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
         #'pfCombinedMVABJetTags'
     ),
 
-    outputFile = cms.string(outfile)
+    outputFile = cms.string(outfile),
+
+    isLRHelicity = cms.bool(False), 
+    lambda_ = cms.int32(16000)                                   
         
     )
 

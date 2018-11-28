@@ -37,6 +37,7 @@
 <use   name="PhysicsTools/UtilAlgos"/>
 <use   name="clhep"/>
 <use   name="rootcore"/>
+<use   name="pythia8"/>
 <export>
   <lib   name="1"/>
 </export>

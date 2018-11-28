@@ -127,7 +127,9 @@ void CIEvent::FillEventInfo(unsigned int JRun, unsigned int JEvent, unsigned int
   Run = JRun;
   Event = JEvent;
   lumi = Jlumi;
+  std::cout << "Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy";
   bunch = Jbunch;
+  //std::cout << "\n(1)cosTheta = " << cosThetaCS;
 }
 void CIEvent::PatElectronTree(double rhoIso, const reco::Vertex & PV, const pat::ElectronCollection & electron,
 			      const EcalRecHitCollection & ecalEB, const EcalRecHitCollection & ecalEE, 
@@ -178,7 +180,7 @@ void CIEvent::TriggerMatchingTree(const edm::TriggerResults & triggerBits, const
 
       hltObjValues.push_back(CIHLTObj(NbTriggerObj, src, pathnames, j));
 
-      
+      //std::cout << "\n(2)cosTheta = " << cosThetaCS;
     }
   }
 }
@@ -238,8 +240,12 @@ void CIEvent::accessGenInfo(bool h_passMInvCut, bool h_passPreFSRMInvCut, bool h
 void CIEvent::PatMuonTree(const reco::Vertex & PV, const pat::MuonCollection & muons)
 {
   int NbMuons = 0;
+
+  
   
   muData.clear();
+
+  
   
   
   // pat candidate collection
@@ -247,7 +253,11 @@ void CIEvent::PatMuonTree(const reco::Vertex & PV, const pat::MuonCollection & m
     {
       NbMuons++;
 
+      
+      std::cout << "Going deeper xd vhruwo\n";
       muData.push_back(CIMuon(PV, mu, NbMuons));
+
+      
     }
 }
 //void SuperClusterTree(const edm::Event& iEvent,const edm::EventSetup& es);
@@ -263,7 +273,7 @@ void CIEvent::ComputeMuonMassVtx(const TransientTrackBuilder & ttkb1, const Tran
 void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const TransientTrackBuilder & ttkb2, 
 				      const TransientTrackBuilder & ttkb3, const reco::Vertex & vertex, 
 				      const pat::MuonCollection & muons, double ptCut, 
-				      std::vector<CIMuonVtx> vertices)
+				      std::vector<CIMuonVtx> & vertices)
 {
   int NbMuons1 = 0;
   int NbMuons2 = 0;
@@ -287,6 +297,7 @@ void CIEvent::computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const
   for (const pat::Muon &mu : muons) 
    {
      muonIndex1++;
+     std::cout << "Muon vertice filling: Muon index is " << muonIndex1 << '\n';
     if(mu.pt() < 5.0 || !mu.globalTrack().isNonnull() || !mu.isTrackerMuon()) continue;
 
     MuonBestTrack1 = mu.tunePMuonBestTrack();
@@ -563,25 +574,32 @@ std::vector<std::string> CIEvent::makeTriggerPathCombos()
   return matchList;
 }
 
-void CIEvent::findPassedMuons(CIMuonVtx & bestMuons)
+bool CIEvent::findPassedMuons(CIMuonVtx & bestMuons)
 {
   double highestInvMass = 0;
+
+  std::cout << "Finding the passed Muons\n";
 
   //muData is the collection of CIMuons
   for(CIMuonVtx & muVtx : muonVertices)
     {
+      std::cout << "We are going through the for loop\n";
+      std::cout << "Muon index "  << muVtx.lept1() << '\n';
       if(muVtx.getMass() > highestInvMass)
 	{ 
 	  if(muVtx.getOppCharge())
 	    {
 	      highestInvMass = muVtx.getMass();
 	      bestMuons = muVtx;
+	      std::cout << "we got to here\n";
 	    }
 	}
     }
+
+  return highestInvMass > 0;
 }
 
-void CIEvent::findPassedElectrons(CIElectron passedElectrons[])
+bool CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 {
   double highestPt = 0;
   double secondHighestPt = 0;
@@ -600,28 +618,60 @@ void CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 	  passedElectrons[1] = ciEle;
 	}
     }
+
+  return highestPt > 0 && secondHighestPt > 0;
 }
 
-void CIEvent::findChosenLeptons()
+void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & pruned, 
+				bool isLR, int lambda)
 {
   //Only find the highest 2 pt's for each
   CIMuonVtx bestMuons;//Muons have a vertex object already 
   CIElectron passedElectrons[2];//two best electrons are stored here 
 
-  findPassedMuons(bestMuons);
-  findPassedElectrons(passedElectrons);
+  bool foundMuons = findPassedMuons(bestMuons);
+  bool foundElectrons = findPassedElectrons(passedElectrons);
+
+  if (!foundMuons && !foundElectrons)//If this gets called, we are going to fill the CIChosenLeptons and 
+                                     //CICalculated values with Null Values (-1) and set isEmpty to true
+    {
+      lepton1 = CIChosenLepton::setBadValues();
+      lepton2 = CIChosenLepton::setBadValues();
+
+      calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, 
+				      lepton2, -1, isLR, lambda);//Passing in badValues (-1) for invariantMass
+      return; 
+    }
+
+  
 
   bool isMuon = findIsMuon(bestMuons, passedElectrons);
 
   if(isMuon)
     {
-      lepton1 = CIChosenLepton(muData.at(bestMuons.lept1()));
-      lepton2 = CIChosenLepton(muData.at(bestMuons.lept2()));
+      
+      std::cout << "Lep index " << bestMuons.lept1() << std::endl;
+      lepton1 = CIChosenLepton(muData.at(bestMuons.lept1() - 1));
+      
+      std::cout << "Lep index " << bestMuons.lept2() << std::endl;
+      lepton2 = CIChosenLepton(muData.at(bestMuons.lept2() - 1));
+      
+      
+      //Pass through 2 leptons, 2 CIMuons, and 1 float for mass 
+      calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2, 
+				      bestMuons.getMass(),
+				      isLR, lambda);
     }
   else
     {
       lepton1 = CIChosenLepton(passedElectrons[0]);
       lepton2 = CIChosenLepton(passedElectrons[1]);
+
+      //Pass through 2 leptons, 2 CIElectrons, and float for Mass 
+      //Overload the constructors in CICalculatedValues 
+      calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2,
+				      passedElectrons[0].findInvarientMass(passedElectrons[1]),
+				      isLR, lambda);
     }
 }
 

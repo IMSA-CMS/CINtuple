@@ -3,14 +3,18 @@
 
 //===================================
 //CICalculatedValues header file 
-//Latest Version: Aug 2, 2018 
-//JWoods
+//Latest Version: Sep. 11, 2018 
+//John Woods and Matt Hokinson and Harry Smith
 //Used to store values from the nTupler.
 //===================================
 
 //Things to include 
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
+#include "CINtuple/CIData/interface/CIChosenLepton.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "DataFormats/PatCandidates/interface/PackedCandidate.h"
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 #include <cmath>
 
 class CICalculatedValues 
@@ -20,34 +24,54 @@ class CICalculatedValues
   //Constructors
   //================================
   CICalculatedValues() {}
-  CICalculatedValues();
-
-  float cosThetaCS;
-  double tanPhi;
-  double sin2Theta;
+  
+  CICalculatedValues(const GenEventInfoProduct & genEventInfoProduct,
+		     const edm::View<reco::GenParticle> & packed, 
+		     const CIChosenLepton & lep1, const CIChosenLepton & lep2,
+		     double invMass, bool isLR, int lam);
+  
 
  private:
-
-
-
-  void CosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+  //=================================
+  //Private Functions
+  //=================================
+  void cosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
                             float Et2,float Eta2,float Phi2,float En2,
                             float ChargeEle1,float RecoMass);
 
   float delR(float eta1,float phi1,float eta2,float phi2);
-  //=================================
-  //Private Functions
-  //=================================
 
   //This is going to be called by the contructor so that the constructor 
   //does not have to contain a large block of code 
-  void fillValues(EcalClusterLazyTools lazyTools_, pat::Electron el,
-		  unsigned NbElectrons, double rhoIso, 
-		  const reco::Vertex& PV);
+  void fillValues(const GenEventInfoProduct & genEventInfoProduct,
+		  const edm::View<reco::GenParticle> & packed, 
+		  const CIChosenLepton & lep1, const CIChosenLepton & lep2,
+		  double invMass);
+
+  void fillHelicities(const GenEventInfoProduct & gProduct, 
+		      const edm::View<reco::GenParticle> & gen, 
+		      double lam);
+
+  const reco::Candidate* getBosonMother(const reco::GenParticle & p);
+
+  const reco::Candidate* getLeptonMother(const reco::GenParticle & p, bool second);
+
 
   //==================================
   //Class Variables 
   //==================================
+  bool isLRHelicity;
+  int lambda;
+  double invariantMass;
+  float cosThetaCS;
+  double tanPhi;
+  double sin2Theta;
+  bool isEmpty;
+
+  //Weights for Helicities 
+  double weightRL;
+  double weightLR;
+ 
   
   ClassDefNV(CICalculatedValues, 1)
 };

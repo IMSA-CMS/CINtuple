@@ -28,6 +28,7 @@
 #include "CINtuple/CIData/interface/CIMuon.h"
 #include "CINtuple/CIData/interface/CIMet.h"
 #include "CINtuple/CIData/interface/CIChosenLepton.h"
+#include "CINtuple/CIData/interface/CICalculatedValues.h"
 
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "DataFormats/JetReco/interface/GenJetCollection.h"
@@ -103,9 +104,12 @@ class CIEvent
   //================================
   //Finds the the two chosen leptons
   //================================
-  void findChosenLeptons();
-  void findPassedMuons(CIMuonVtx & bestMuons);
-  void findPassedElectrons(CIElectron passedElectrons[]);
+  void findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
+			 const edm::View<reco::GenParticle> & pruned,
+			 bool isLR,
+			 int lambda);
+  bool findPassedMuons(CIMuonVtx & bestMuons);
+  bool findPassedElectrons(CIElectron passedElectrons[]);
 
   //===============================
   //Finds the highest pt of leptons
@@ -116,7 +120,7 @@ class CIEvent
 
     //This is called twice for both pt cuts by ComputeMuonMassVtx
     void computeMuonMassVertices(const TransientTrackBuilder & ttkb1, const TransientTrackBuilder & ttkb2, const TransientTrackBuilder & ttkb3,
-				 const reco::Vertex & vertex, const pat::MuonCollection & muons, double ptCut, std::vector<CIMuonVtx> vertices);
+				 const reco::Vertex & vertex, const pat::MuonCollection & muons, double ptCut, std::vector<CIMuonVtx> & vertices);
 
     //=============================================================
     //
@@ -237,6 +241,8 @@ class CIEvent
     //===================================================
     CIChosenLepton lepton1;
     CIChosenLepton lepton2;
+
+    CICalculatedValues calcValues;
 
     
     ClassDefNV(CIEvent,1)

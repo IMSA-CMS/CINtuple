@@ -12,6 +12,8 @@
 #include "CINtuple/CIData/interface/CIMuon.h"
 #include "CINtuple/CIData/interface/CIElectron.h"
 
+
+
 class CIChosenLepton
 {
  public:
@@ -24,7 +26,22 @@ class CIChosenLepton
 
   CIChosenLepton(const CIMuon & mu);
 
+  CIChosenLepton(int bad);
+  
+  double getEta() const {return eta;}
+  double getPt() const {return pt;}
+  double getPhi() const {return phi;}
+  double getCharge() const {return charge;}
+  double getEt() const {return et;}
+  double getEn() const {return en;}
+  bool getIsMuon() const {return isMuon;}
+  bool getIsEmpty() const {return isEmpty;}
+  static CIChosenLepton setBadValues();
+
  private:
+
+
+
   //===============
   //Class values
   //===============
@@ -32,8 +49,11 @@ class CIChosenLepton
   double phi;
   double eta;
   double charge;
+  double et;
+  double en;
   bool isMuon;
-  
+  bool isEmpty;
+
   ClassDefNV(CIChosenLepton, 1)
 };
 

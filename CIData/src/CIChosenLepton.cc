@@ -15,13 +15,39 @@ CIChosenLepton::CIChosenLepton(const CIElectron & el):
   phi(el.getPhi()),
   eta(el.getEta()),
   charge(el.getCharge()),
-  isMuon(false)
-{}
+  et(el.getEt()),
+  isMuon(false),
+  isEmpty(false)
+{
+
+}
 
 CIChosenLepton::CIChosenLepton(const CIMuon & mu):
   pt(mu.getPtTune()),
   phi(mu.getPhiTune()),
   eta(mu.getEtaTune()),
   charge(mu.getCharge()),
-  isMuon(true)
+  et(mu.getEt()),
+  en(mu.getEn()),
+  isMuon(true),
+  isEmpty(false)
+{
+
+}
+
+CIChosenLepton::CIChosenLepton(int bad):
+  pt(bad),
+  phi(bad),
+  eta(bad),
+  charge(bad),
+  et(bad),
+  en(bad),
+  isMuon(false),
+  isEmpty(true)
 {}
+
+CIChosenLepton CIChosenLepton::setBadValues()
+{
+  return CIChosenLepton(-1);
+}
+
