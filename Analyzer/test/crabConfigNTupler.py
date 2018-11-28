@@ -1,6 +1,6 @@
 #crabConfigNTupler.py
 # Harry Smith & Matthew Hokinson
-# October 24, 2018
+# November 28, 2018
 
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 import datetime
