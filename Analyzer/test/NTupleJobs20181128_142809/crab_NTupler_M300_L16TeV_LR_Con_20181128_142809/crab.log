@@ -1,0 +1,95 @@
+DEBUG 2018-11-28 14:28:08,880: 	 Executing command: 'submit'
+DEBUG 2018-11-28 14:28:08,880: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2018-11-28 14:28:08,885: 	 Checking credentials
+DEBUG 2018-11-28 14:28:08,886: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-28 14:28:08,886: 	 Getting proxy life time left
+DEBUG 2018-11-28 14:28:08,988: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 85962
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:09,091: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 85961
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:09,091: 	 Proxy valid for 23:52:42 hours
+INFO 2018-11-28 14:28:09,091: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2018-11-28 14:28:09,091: 	 Loading CRAB configuration file.
+DEBUG 2018-11-28 14:28:09,098: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+DEBUG 2018-11-28 14:28:09,339: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:09,339: 	 Checking credentials
+DEBUG 2018-11-28 14:28:09,339: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-28 14:28:09,339: 	 Getting proxy life time left
+DEBUG 2018-11-28 14:28:09,441: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 85961
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:09,544: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 85961
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:09,544: 	 Proxy valid for 23:52:41 hours
+DEBUG 2018-11-28 14:28:09,646: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u53391 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:10,604: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+DEBUG 2018-11-28 14:28:10,710: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:10,710: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2018-11-28 14:28:10,710: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson_cmsweb.cern.ch for credential name
+DEBUG 2018-11-28 14:28:11,413: 	 Executing : 
+ command : myproxy-info -l 362dc453b47ebc731dba947ecf22bc8a08b624e8 -s myproxy.cern.ch
+ output : username: 362dc453b47ebc731dba947ecf22bc8a08b624e8
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  timeleft: 382:33:32  (15.9 days)
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:11,415: 	 Myproxy is valid: 1377212
+DEBUG 2018-11-28 14:28:11,415: 	 Command use: submit
+DEBUG 2018-11-28 14:28:11,415: 	 Options use: ['-c', 'crabConfigNTupler.py']
+DEBUG 2018-11-28 14:28:12,319: 	 CRABClient version: 3.3.1809
+DEBUG 2018-11-28 14:28:12,319: 	 Instance is prod
+DEBUG 2018-11-28 14:28:12,319: 	 Server base url is cmsweb.cern.ch
+DEBUG 2018-11-28 14:28:12,319: 	 Command url /crabserver/prod/workflow
+DEBUG 2018-11-28 14:28:12,319: 	 Started submission
+DEBUG 2018-11-28 14:28:12,319: 	 Working on /uscms_data/d3/hokinson/WORK/nTupler/CMSSW_8_0_25/src/CINtuple/Analyzer/test/NTupleJobs20181128_142809/crab_NTupler_M300_L16TeV_LR_Con_20181128_142809
+DEBUG 2018-11-28 14:28:13,386: 	 Loading required information from the environment
+DEBUG 2018-11-28 14:28:13,387: 	 Found CMSSW_8_0_21 for slc6_amd64_gcc530 with base /uscms_data/d3/hokinson/WORK/CMSSW_8_0_21
+ERROR 2018-11-28 14:28:13,387: 	 Invalid CRAB configuration: Parameter Data.splitting has an invalid value ('EventBased').
+Analysis job type only supports the following splitting algorithms (plus 'Automatic' as of CMSSW_7_2_X): ['FileBased', 'LumiBased', 'EventAwareLumiBased', 'Automatic'].
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2018-11-28 14:28:13,387: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 148, in __call__
+    self.cmd()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 101, in __call__
+    plugjobtype = crab_job_types[upper(self.configreq['jobtype'])](*pluginParams)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/JobType/BasicJobType.py", line 34, in __init__
+    raise ConfigurationException(msg)
+ConfigurationException: Invalid CRAB configuration: Parameter Data.splitting has an invalid value ('EventBased').
+Analysis job type only supports the following splitting algorithms (plus 'Automatic' as of CMSSW_7_2_X): ['FileBased', 'LumiBased', 'EventAwareLumiBased', 'Automatic'].
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile

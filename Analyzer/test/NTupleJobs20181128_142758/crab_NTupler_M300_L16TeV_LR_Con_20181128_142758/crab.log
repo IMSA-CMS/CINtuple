@@ -1,0 +1,79 @@
+DEBUG 2018-11-28 14:27:58,023: 	 Executing command: 'submit'
+DEBUG 2018-11-28 14:27:58,023: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2018-11-28 14:27:58,030: 	 Checking credentials
+DEBUG 2018-11-28 14:27:58,030: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-28 14:27:58,030: 	 Getting proxy life time left
+DEBUG 2018-11-28 14:27:58,132: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 85972
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:27:58,235: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 85972
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:27:58,235: 	 Proxy valid for 23:52:52 hours
+INFO 2018-11-28 14:27:58,235: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2018-11-28 14:27:58,236: 	 Loading CRAB configuration file.
+DEBUG 2018-11-28 14:27:58,367: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+DEBUG 2018-11-28 14:28:00,462: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:00,463: 	 Checking credentials
+DEBUG 2018-11-28 14:28:00,463: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-28 14:28:00,463: 	 Getting proxy life time left
+DEBUG 2018-11-28 14:28:00,566: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 85970
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:00,669: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 85970
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:00,669: 	 Proxy valid for 23:52:50 hours
+DEBUG 2018-11-28 14:28:00,772: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u53391 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:01,666: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+DEBUG 2018-11-28 14:28:01,773: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:01,773: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2018-11-28 14:28:01,773: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson_cmsweb.cern.ch for credential name
+DEBUG 2018-11-28 14:28:02,477: 	 Executing : 
+ command : myproxy-info -l 362dc453b47ebc731dba947ecf22bc8a08b624e8 -s myproxy.cern.ch
+ output : username: 362dc453b47ebc731dba947ecf22bc8a08b624e8
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  timeleft: 382:33:41  (15.9 days)
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-28 14:28:02,479: 	 Myproxy is valid: 1377221
+DEBUG 2018-11-28 14:28:02,479: 	 Command use: submit
+DEBUG 2018-11-28 14:28:02,479: 	 Options use: ['-c', 'crabConfigNTupler.py']
+DEBUG 2018-11-28 14:28:03,393: 	 CRABClient version: 3.3.1809
+DEBUG 2018-11-28 14:28:03,393: 	 Instance is prod
+DEBUG 2018-11-28 14:28:03,393: 	 Server base url is cmsweb.cern.ch
+DEBUG 2018-11-28 14:28:03,393: 	 Command url /crabserver/prod/workflow
+DEBUG 2018-11-28 14:28:03,393: 	 Started submission
+DEBUG 2018-11-28 14:28:03,393: 	 Working on /uscms_data/d3/hokinson/WORK/nTupler/CMSSW_8_0_25/src/CINtuple/Analyzer/test/NTupleJobs20181128_142758/crab_NTupler_M300_L16TeV_LR_Con_20181128_142758
+ERROR 2018-11-28 14:28:04,300: 	 Keyboard Interrupted
+INFO 2018-11-28 14:28:04,444: 	 Log file is /uscms_data/d3/hokinson/WORK/nTupler/CMSSW_8_0_25/src/CINtuple/Analyzer/test/NTupleJobs20181128_142758/crab_NTupler_M300_L16TeV_LR_Con_20181128_142758/crab.log

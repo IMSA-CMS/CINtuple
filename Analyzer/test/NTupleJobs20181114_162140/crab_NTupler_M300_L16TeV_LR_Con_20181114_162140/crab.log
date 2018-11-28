@@ -1,0 +1,93 @@
+DEBUG 2018-11-14 16:21:40,454: 	 Executing command: 'submit'
+DEBUG 2018-11-14 16:21:40,460: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2018-11-14 16:21:40,477: 	 Checking credentials
+DEBUG 2018-11-14 16:21:40,477: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-14 16:21:40,477: 	 Getting proxy life time left
+DEBUG 2018-11-14 16:21:40,581: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 86070
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:40,684: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 86070
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:40,685: 	 Proxy valid for 23:54:30 hours
+INFO 2018-11-14 16:21:40,685: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2018-11-14 16:21:40,685: 	 Loading CRAB configuration file.
+DEBUG 2018-11-14 16:21:40,691: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+DEBUG 2018-11-14 16:21:40,810: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:40,810: 	 Checking credentials
+DEBUG 2018-11-14 16:21:40,810: 	 Found proxy file /tmp/x509up_u53391
+DEBUG 2018-11-14 16:21:40,810: 	 Getting proxy life time left
+DEBUG 2018-11-14 16:21:40,914: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -timeleft
+ output : 86070
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:41,018: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u53391 -actimeleft
+ output : 86070
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:41,018: 	 Proxy valid for 23:54:30 hours
+DEBUG 2018-11-14 16:21:41,122: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u53391 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:42,265: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+DEBUG 2018-11-14 16:21:42,373: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:42,374: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2018-11-14 16:21:42,374: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson_cmsweb.cern.ch for credential name
+DEBUG 2018-11-14 16:21:43,179: 	 Executing : 
+ command : myproxy-info -l 362dc453b47ebc731dba947ecf22bc8a08b624e8 -s myproxy.cern.ch
+ output : username: 362dc453b47ebc731dba947ecf22bc8a08b624e8
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  timeleft: 716:40:00  (29.9 days)
+
+ error: 
+ retcode : 0
+DEBUG 2018-11-14 16:21:43,181: 	 Myproxy is valid: 2580000
+DEBUG 2018-11-14 16:21:43,181: 	 Command use: submit
+DEBUG 2018-11-14 16:21:43,181: 	 Options use: ['-c', 'crabConfigNTupler.py']
+DEBUG 2018-11-14 16:21:44,061: 	 CRABClient version: 3.3.1809
+DEBUG 2018-11-14 16:21:44,061: 	 Instance is prod
+DEBUG 2018-11-14 16:21:44,061: 	 Server base url is cmsweb.cern.ch
+DEBUG 2018-11-14 16:21:44,061: 	 Command url /crabserver/prod/workflow
+DEBUG 2018-11-14 16:21:44,061: 	 Started submission
+DEBUG 2018-11-14 16:21:44,061: 	 Working on /uscms_data/d3/hokinson/WORK/nTupler/CMSSW_8_0_25/src/CINtuple/Analyzer/test/NTupleJobs20181114_162140/crab_NTupler_M300_L16TeV_LR_Con_20181114_162140
+ERROR 2018-11-14 16:21:45,191: 	 Invalid CRAB configuration: Analysis job type with input dataset does not accept an output primary dataset name to be specified, because the later will be extracted from the first.
+Suggestion: Remove the parameter Data.outputPrimaryDataset.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2018-11-14 16:21:45,191: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 148, in __call__
+    self.cmd()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 101, in __call__
+    plugjobtype = crab_job_types[upper(self.configreq['jobtype'])](*pluginParams)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/JobType/BasicJobType.py", line 34, in __init__
+    raise ConfigurationException(msg)
+ConfigurationException: Invalid CRAB configuration: Analysis job type with input dataset does not accept an output primary dataset name to be specified, because the later will be extracted from the first.
+Suggestion: Remove the parameter Data.outputPrimaryDataset.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
