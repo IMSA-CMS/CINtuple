@@ -26,7 +26,7 @@ class CICalculatedValues
   CICalculatedValues() {}
   
   CICalculatedValues(const GenEventInfoProduct & genEventInfoProduct,
-		     const edm::View<reco::GenParticle> & packed, 
+		     const edm::View<reco::GenParticle> & pruned, 
 		     const CIChosenLepton & lep1, const CIChosenLepton & lep2,
 		     double invMass, bool isLR, int lam);
   
@@ -44,7 +44,7 @@ class CICalculatedValues
   //This is going to be called by the contructor so that the constructor 
   //does not have to contain a large block of code 
   void fillValues(const GenEventInfoProduct & genEventInfoProduct,
-		  const edm::View<reco::GenParticle> & packed, 
+		  const edm::View<reco::GenParticle> & pruned, 
 		  const CIChosenLepton & lep1, const CIChosenLepton & lep2,
 		  double invMass);
 

@@ -28,6 +28,7 @@ config.Data.outputDatasetTag = 'CI_M300_L16TeV_LR_Con_NTuple_Nov14'
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = 1
 #config.Data.splitting = 'EventBased'
-config.Data.splitting = 'Automatic'
+#config.Data.splitting = 'Automatic'
+config.Data.splitting = 'EventAwareLumiBased'
 config.Site.storageSite = 'T3_US_FNALLPC'
 
