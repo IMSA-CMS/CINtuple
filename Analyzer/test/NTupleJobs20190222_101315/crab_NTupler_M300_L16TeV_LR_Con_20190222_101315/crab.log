@@ -1,0 +1,138 @@
+DEBUG 2019-02-22 10:13:15,527: 	 Executing command: 'submit'
+DEBUG 2019-02-22 10:13:15,528: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2019-02-22 10:13:15,538: 	 Checking credentials
+DEBUG 2019-02-22 10:13:15,538: 	 Found proxy file /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-02-22 10:13:15,538: 	 Getting proxy life time left
+DEBUG 2019-02-22 10:13:15,642: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -timeleft
+ output : 42460
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:15,746: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -actimeleft
+ output : 42460
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:15,746: 	 Proxy valid for 11:47:40 hours
+INFO 2019-02-22 10:13:15,746: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2019-02-22 10:13:15,746: 	 Loading CRAB configuration file.
+DEBUG 2019-02-22 10:13:15,949: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+DEBUG 2019-02-22 10:13:16,085: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:16,086: 	 Checking credentials
+DEBUG 2019-02-22 10:13:16,086: 	 Found proxy file /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-02-22 10:13:16,086: 	 Getting proxy life time left
+DEBUG 2019-02-22 10:13:16,189: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -timeleft
+ output : 42459
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:16,293: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -actimeleft
+ output : 42459
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:16,294: 	 Proxy valid for 11:47:39 hours
+DEBUG 2019-02-22 10:13:16,397: 	 Executing : 
+ command : env X509_USER_PROXY=/uscms/home/hokinson/x509up_u53391 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:17,183: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+DEBUG 2019-02-22 10:13:17,293: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:17,293: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2019-02-22 10:13:17,293: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson_cmsweb.cern.ch for credential name
+DEBUG 2019-02-22 10:13:18,299: 	 Executing : 
+ command : myproxy-info -l 362dc453b47ebc731dba947ecf22bc8a08b624e8 -s myproxy.cern.ch
+ output : username: 362dc453b47ebc731dba947ecf22bc8a08b624e8
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mahokins/CN=827550/CN=Matthew Hokinson
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(052|058|030|0118|0105|0109).cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod)-tw(02|01).cern.ch
+  timeleft: 672:03:55  (28.0 days)
+
+ error: 
+ retcode : 0
+DEBUG 2019-02-22 10:13:18,301: 	 Myproxy is valid: 2419435
+DEBUG 2019-02-22 10:13:18,301: 	 Command use: submit
+DEBUG 2019-02-22 10:13:18,301: 	 Options use: ['-c', 'crabConfigNTupler.py']
+DEBUG 2019-02-22 10:13:19,083: 	 CRABClient version: 3.3.1902.patch1
+DEBUG 2019-02-22 10:13:19,083: 	 Instance is prod
+DEBUG 2019-02-22 10:13:19,083: 	 Server base url is cmsweb.cern.ch
+DEBUG 2019-02-22 10:13:19,083: 	 Command url /crabserver/prod/workflow
+DEBUG 2019-02-22 10:13:19,083: 	 Started submission
+DEBUG 2019-02-22 10:13:19,083: 	 Working on /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315
+DEBUG 2019-02-22 10:13:19,984: 	 Loading required information from the environment
+DEBUG 2019-02-22 10:13:19,984: 	 Found CMSSW_9_4_6_patch1 for slc6_amd64_gcc630 with base /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1
+DEBUG 2019-02-22 10:13:19,985: 	 Loading required information from the environment
+DEBUG 2019-02-22 10:13:19,985: 	 Found CMSSW_9_4_6_patch1 for slc6_amd64_gcc630 with base /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1
+DEBUG 2019-02-22 10:13:19,997: 	 UNIQUE NAME: tarUUID d143fe5b-ed51-49f8-9c10-02f93a98b95f 
+DEBUG 2019-02-22 10:13:19,998: 	 self.config: from WMCore.Configuration import Configuration
+config = Configuration()
+config.section_('General')
+config.General.transferLogs = True
+config.General.transferOutputs = True
+config.General.workArea = 'NTupleJobs20190222_101315'
+config.General.requestName = 'NTupler_M300_L16TeV_LR_Con_20190222_101315'
+config.section_('JobType')
+config.JobType.psetName = 'runMakeZprimeMiniAodTreeMC_cfg.py'
+config.JobType.pluginName = 'Analysis'
+config.section_('Data')
+config.Data.inputDataset = '/MC17_CITo2Mu_M300to800_CP5_Lam16TeVConLRPythia8_v1/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'
+config.Data.unitsPerJob = 1
+config.Data.outputDatasetTag = 'CI_M300_L16TeV_LR_Con_NTuple_20190222_101315'
+config.Data.publication = True
+config.Data.splitting = 'FileBased'
+config.section_('Site')
+config.Site.storageSite = 'T3_US_FNALLPC'
+config.section_('User')
+config.section_('Debug')
+
+DEBUG 2019-02-22 10:13:19,998: 	 self.config.JobType.psetName: runMakeZprimeMiniAodTreeMC_cfg.py
+INFO 2019-02-22 10:13:19,998: 	 Importing CMSSW configuration runMakeZprimeMiniAodTreeMC_cfg.py
+INFO 2019-02-22 10:13:20,858: 	 Finished importing CMSSW configuration runMakeZprimeMiniAodTreeMC_cfg.py
+DEBUG 2019-02-22 10:13:20,858: 	 Writing CMSSW configuration to /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/inputs/PSet.py
+DEBUG 2019-02-22 10:13:21,043: 	 The following EDM output files will be collected: []
+DEBUG 2019-02-22 10:13:21,043: 	 The following TFile output files will be collected: ['test.root']
+DEBUG 2019-02-22 10:13:21,043: 	 The following user output files will be collected: []
+DEBUG 2019-02-22 10:13:21,043: 	 Loading required information from the environment
+DEBUG 2019-02-22 10:13:21,043: 	 Found CMSSW_9_4_6_patch1 for slc6_amd64_gcc630 with base /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1
+DEBUG 2019-02-22 10:13:21,043: 	 Making tarball in /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/inputs/d143fe5b-ed51-49f8-9c10-02f93a98b95fdefault.tgz
+DEBUG 2019-02-22 10:13:21,105: 	 Checking directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/lib
+DEBUG 2019-02-22 10:13:21,105: 	 Adding directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/lib to tarball
+DEBUG 2019-02-22 10:13:22,967: 	 Checking directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/biglib
+DEBUG 2019-02-22 10:13:22,968: 	 Adding directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/biglib to tarball
+DEBUG 2019-02-22 10:13:22,970: 	 Checking directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/module
+DEBUG 2019-02-22 10:13:25,233: 	 Adding data directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/interface to tarball
+DEBUG 2019-02-22 10:13:25,522: 	 Adding data directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/python/wsuciutils/xsec-tools/data to tarball
+DEBUG 2019-02-22 10:13:27,276: 	 Adding data directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/CIData/interface to tarball
+DEBUG 2019-02-22 10:13:27,766: 	 Adding data directory /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/HEEP/VID/interface to tarball
+DEBUG 2019-02-22 10:13:27,833: 	 Uploading archive /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/inputs/d143fe5b-ed51-49f8-9c10-02f93a98b95fdefault.tgz (5.232422.1 MB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2019-02-22 10:13:36,199: 	 Loading required information from the environment
+DEBUG 2019-02-22 10:13:36,199: 	 Found CMSSW_9_4_6_patch1 for slc6_amd64_gcc630 with base /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1
+DEBUG 2019-02-22 10:13:36,199: 	 Making tarball in /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/inputs/debugFiles.tgz
+DEBUG 2019-02-22 10:13:36,206: 	 Uploading archive /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/inputs/debugFiles.tgz (4 KB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2019-02-22 10:13:37,117: 	 Result uploading input files: 96541608a1d550bb534aa81d662106fc146b4704353494a91a87bb3049a25848.tar.gz 
+WARNING 2019-02-22 10:13:37,118: 	 Warning: The following output files will not be published, as they are not EDM files: ['test.root']
+INFO 2019-02-22 10:13:37,118: 	 Sending the request to the server
+DEBUG 2019-02-22 10:13:37,118: 	 Submitting {'maxjobruntime': 1250, 'extrajdl': [], 'ignorelocality': 0, 'savelogsflag': 1, 'useparent': 0, 'asyncdest': 'T3_US_FNALLPC', 'algoargs': 1, 'cachefilename': '96541608a1d550bb534aa81d662106fc146b4704353494a91a87bb3049a25848.tar.gz', 'numcores': 1, 'addoutputfiles': [], 'generator': 'pythia', 'maxmemory': 2000, 'publishdbsurl': 'https://cmsweb.cern.ch/dbs/prod/phys03/DBSWriter', 'priority': 10, 'jobsw': 'CMSSW_9_4_6_patch1', 'edmoutfiles': [], 'userfiles': [], 'primarydataset': '', 'inputdata': '/MC17_CITo2Mu_M300to800_CP5_Lam16TeVConLRPythia8_v1/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM', 'dryrun': 0, 'workflow': 'crab_NTupler_M300_L16TeV_LR_Con_20190222_101315', 'cacheurl': u'https://cmsweb.cern.ch/crabcache', 'nonprodsw': 0, 'tfileoutfiles': ['test.root'], 'oneEventMode': 0, 'debugfilename': 'ae8a056709f3fc3f8a5930b36293c1141bf1c676037daecbb2323c2afe5743e5.tar.gz', 'saveoutput': 1, 'publication': 1, 'jobarch': 'slc6_amd64_gcc630', 'totalunits': 0, 'splitalgo': 'FileBased', 'ignoreglobalblacklist': 0, 'nonvaliddata': 0, 'dbsurl': 'https://cmsweb.cern.ch/dbs/prod/global/DBSReader', 'publishgroupname': 0, 'jobtype': 'Analysis', 'publishname2': 'CI_M300_L16TeV_LR_Con_NTuple_20190222_101315'} 
+DEBUG 2019-02-22 10:13:37,119: 	 Encoded submit request: maxjobruntime=1250&ignorelocality=0&savelogsflag=1&useparent=0&asyncdest=T3_US_FNALLPC&algoargs=1&cachefilename=96541608a1d550bb534aa81d662106fc146b4704353494a91a87bb3049a25848.tar.gz&numcores=1&generator=pythia&maxmemory=2000&publishdbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fphys03%2FDBSWriter&priority=10&jobsw=CMSSW_9_4_6_patch1&primarydataset=&inputdata=%2FMC17_CITo2Mu_M300to800_CP5_Lam16TeVConLRPythia8_v1%2FRunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1%2FMINIAODSIM&dryrun=0&workflow=crab_NTupler_M300_L16TeV_LR_Con_20190222_101315&cacheurl=https%3A%2F%2Fcmsweb.cern.ch%2Fcrabcache&nonprodsw=0&oneEventMode=0&debugfilename=ae8a056709f3fc3f8a5930b36293c1141bf1c676037daecbb2323c2afe5743e5.tar.gz&saveoutput=1&publication=1&jobarch=slc6_amd64_gcc630&totalunits=0&splitalgo=FileBased&ignoreglobalblacklist=0&nonvaliddata=0&dbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fglobal%2FDBSReader&publishgroupname=0&jobtype=Analysis&publishname2=CI_M300_L16TeV_LR_Con_NTuple_20190222_101315&tfileoutfiles=test.root
+DEBUG 2019-02-22 10:13:40,130: 	 Result: {u'result': [{u'RequestName': u'190222_161339:mahokins_crab_NTupler_M300_L16TeV_LR_Con_20190222_101315'}]}
+INFO 2019-02-22 10:13:40,133: 	 Success: Your task has been delivered to the CRAB3 server.
+INFO 2019-02-22 10:13:40,133: 	 Task name: 190222_161339:mahokins_crab_NTupler_M300_L16TeV_LR_Con_20190222_101315
+INFO 2019-02-22 10:13:40,134: 	 Please use 'crab status' to check how the submission process proceeds.
+DEBUG 2019-02-22 10:13:40,134: 	 About to return
+INFO 2019-02-22 10:13:40,139: 	 Log file is /uscms_data/d3/hokinson/WORK/NTupler/CMSSW_9_4_6_patch1/src/CINtuple/Analyzer/test/NTupleJobs20190222_101315/crab_NTupler_M300_L16TeV_LR_Con_20190222_101315/crab.log

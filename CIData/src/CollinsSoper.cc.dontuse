@@ -1,0 +1,258 @@
+#include <TH1.h>
+#include <TTree.h>
+#include <TBranch.h>
+#include <TFile.h>
+#include <math.h>
+#include <TLorentzVector.h>
+#include <vector>
+#include <random>
+#include "CINtuple/CIData/interface/CollinsSoper.h"
+#include "CIChosenLepton.cc"
+#include "CINtuple/CIData/interface/CICalculatedValues.h"
+
+//Programmer: Ayan Mallik
+
+
+bool isSameCharge;
+int charge;
+CIChosenLepton lep1;
+CIChosenLepton lep2;
+TLorentzVector Ele;
+TLorentzVector Elebar;
+double square(double a)
+{
+  return a*a;
+}
+
+double mass(double energy, double px, double py, double pz)
+{
+  return sqrt(square(energy)-square(px)-square(py)-square(pz));
+}
+
+double invariantMass(double p1Energy, double p1px, double p1py, double p1pz, double p2Energy, double p2px, double p2py, double p2pz)
+{
+  return sqrt(square(p1Energy+p2Energy)-square(p1px+p2px)-square(p1py+p2py)-square(p1pz+p2pz));
+}
+
+
+
+  //want to see percentage of flips
+
+  //---------------------------------------------------
+  //if you want pt differentiation
+  //---------------------------------------------------
+void highPt()
+{
+  bool highpt = false;
+  if(isSameCharge)
+    {
+      highpt = true;
+    }
+
+  if(highpt)
+    {
+      if(lep1.getPt() > lep2.getPt())
+        {
+          ;
+	}
+      else
+        {
+	Elebar.SetPtEtaPhiE(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn());
+	Ele.SetPtEtaPhiE(lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn());
+        charge = lep2.getCharge();
+        }
+    }
+}
+
+void lowPt()
+{
+  bool lowpt = false;
+  if(isSameCharge)
+    {
+      lowpt = true;
+    }
+
+  if(lowpt)
+    {
+      if(lep1.getPt() > lep2.getPt())
+        {
+          ;
+	}
+      else
+        {
+	Elebar.SetPtEtaPhiE(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn());
+	Ele.SetPtEtaPhiE(lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn());
+        charge = lep2.getCharge();
+        }
+    }
+}
+
+  //----------------------------------------------------
+  //if you want random electron differentiation
+  //----------------------------------------------------
+
+
+double CICalculatedValues::calculateCosTheta(TLorentzVector Ele, TLorentzVector Elebar)
+{
+  //=***********************************************************************
+  //
+  // 1) cos(theta) = 2 Q^-1 (Q^2+Qt^2)^-1 (Ele^+ Elebar^- - Ele^- Elebar^+)
+  //
+  // ?) cos(theta) = (2/(Q.Mag()*sqrt(Q.Mag()^2 + Q.Pt()^2 
+  //          * (Eleplus * Elebarminus - Eleminus * Elebarplus)
+  //
+  //
+  //=***********************************************************************
+  double Eleplus  = 1.0/sqrt(2.0) * (Ele.E() + Ele.Z());
+  double Eleminus = 1.0/sqrt(2.0) * (Ele.E() - Ele.Z());
+
+  double Elebarplus  = 1.0/sqrt(2.0) * (Elebar.E() + Elebar.Z());
+  double Elebarminus = 1.0/sqrt(2.0) * (Elebar.E() - Elebar.Z());
+
+  TLorentzVector Q(Ele+Elebar);
+
+  std::cout << "\nQ.Mag = " << Q.Mag() << " Mag of Mag = " << sqrt(pow(Q.Mag(), 2));
+  // double costheta = 2.0 / Q.Mag() / sqrt(pow(Q.Mag(), 2) + pow(Q.Pt(), 2)) *
+  //  (Eleplus * Elebarminus - Eleminus * Elebarplus);
+
+  //Fix her!!!!
+  std::cout << "\nQ.Mag = " << Q.Mag() << " Q.Pt = " << Q.Pt() << " Ele+ = " << Eleplus << " Elebar- = " << Elebarminus << " Ele- = " << Eleminus << " Elebar+ = " << Elebarplus << " Pz = " << Ele.E() << " E = " << Ele.Z() << " Pz = " << Elebar.E() << " E = " << Elebar.Z();
+  double costheta = 2.0 / (Q.Mag() * sqrt(pow(Q.Mag(),2) + pow(Q.Pt(),2))) * (Eleplus * Elebarminus - Eleminus * Elebarplus);
+  std::cout << "\n(0) cosTheta = " << costheta;
+  if (Q.Pz()<0.0) costheta = -costheta;
+  std::cout << "\n(1) cosTheta = " << costheta;
+  return costheta;
+}
+
+
+void CICalculatedValues::cosThetaCollinsSoper(float Et1,float Eta1,float Phi1,float En1,
+					     float Et2,float Eta2,float Phi2,float En2,
+					     float ChargeEle1, float RecoMass) 
+//start collinssoper
+{  
+  std::cout << "big bop";
+  std::cout << "starting collinper\n";
+  TLorentzVector Ele;
+  TLorentzVector Elebar;
+  std::cout << "/nEt1 = " << Et1 << " Eta1 = " << Eta1 << " Phi1 = " << Phi1 << " En1 = " << En1;
+  std::cout << "/nEt2 = " << Et2 << " Eta2 = " << Eta2 << " Phi2 = " << Phi2 << " En2 = " << En2;
+
+  if (ChargeEle1<0) 
+    {
+      Ele.SetPtEtaPhiE(Et1,Eta1,Phi1,En1);
+      Elebar.SetPtEtaPhiE(Et2,Eta2,Phi2,En2);
+    }
+  if (ChargeEle1>0) 
+    {
+      Ele.SetPtEtaPhiE(Et2,Eta2,Phi2,En2);
+      Elebar.SetPtEtaPhiE(Et1,Eta1,Phi1,En1);
+    }
+  TLorentzVector Q(Ele+Elebar);
+  
+  double costheta = calculateCosTheta(Ele, Elebar);
+
+
+  //=************************************************************************
+  //
+  // 2) tanphi = (Q^2 + Qt^2)^1/2 / Q (Dt dot R unit) /(Dt dot Qt unit)
+  //
+  //= ************************************************************************ /
+  TLorentzVector Pbeam(0.0, 0.0,  4000., 4000.); // beam momentum in lab frame
+  TLorentzVector Ptarget(0.0, 0.0, -4000., 4000.); // beam momentum in lab frame
+  std::cout << "\n(2) cosTheta = " << costheta;
+
+  TLorentzVector D(Ele-Elebar);
+  // unit vector on R direction
+  TVector3 R = Pbeam.Vect().Cross(Q.Vect());
+  TVector3 Runit = R.Unit();
+  // unit vector on Qt
+  TVector3 Qt = Q.Vect(); Qt.SetZ(0);
+  TVector3 Qtunit = Qt.Unit();
+  TVector3 Dt = D.Vect(); Dt.SetZ(0);
+  double tanphi = sqrt(pow(Q.Mag(), 2) + pow(Q.Perp(), 2)) / Q.Mag() * Dt.Dot(Runit) / 
+    Dt.Dot(Qtunit);
+  std::cout << "tanphi equals ";
+  std::cout << tanphi;
+  if (Q.Pz()<0.0) 
+    tanphi = -tanphi;
+  std::cout << "\n(3) cosTheta = " << costheta;
+  //h1_TanPhiCollinsSoperCorrect_->Fill(tanphi,newweight);
+  //=************************************************************************
+  //
+  // 3) sin2(theta) = Q^-2 Dt^2 - Q^-2 (Q^2 + Qt^2)^-1 * (Dt dot Qt)^2
+  //
+  //=************************************************************************ /
+  double dt_qt = D.X()*Q.X() + D.Y()*Q.Y();
+  double sin2theta = pow(D.Pt()/Q.Mag(), 2)
+  - 1.0/pow(Q.Mag(), 2)/(pow(Q.Mag(), 2) + pow(Q.Pt(), 2))*pow(dt_qt, 2);
+  //h1_Sin2AngleCollinsSoperCorrect_->Fill(sin2theta,newweight);
+  
+  //std::cout << "\n(4) cosTheta = " << cosThetaCS << " = " << costheta;
+  std::cout << "finishing collinssoper\n";
+  cosThetaCS = costheta;
+  if (cosThetaCS == 0)
+    {
+      //exit(1);
+    }
+  std::cout << "\n(5) cosTheta = " << cosThetaCS << " = " << costheta;
+  tanPhi = tanphi;
+  sin2Theta = sin2theta;
+}
+//end collissoper
+
+void CollinsSoper()
+{
+  //opens the file and tree
+  auto file = TFile::Open("eos/uscms/store/user/hokinson/MC17_CITo2Mu_M300to800_CP5_Lam16TeVConLRPythia8_v1/CI_M300_L16TeV_LR_Con_NTuple_20190222_101315/190222_161339/0000/*.root");
+  auto tree = dynamic_cast<TTree*>(file->Get("tree"));
+
+  //variables for lepton 1
+  double lep1_pt;
+  double lep1_eta;
+  double lep1_phi;
+  double lep1_charge;
+  double lep1_en;
+
+  //variables for lepton 2
+  double lep2_pt;
+  double lep2_eta;
+  double lep2_phi;
+  double lep2_charge;
+  double lep2_en;
+
+  //sets branch addresses for lep1
+  tree->SetBranchAddress("Test.lepton1.pt", &lep1_pt);
+  tree->SetBranchAddress("Test.lepton1.phi", &lep1_phi);
+  tree->SetBranchAddress("Test.lepton1.eta", &lep1_eta);
+  tree->SetBranchAddress("Test.lepton1.charge", &lep1_charge);
+  tree->SetBranchAddress("Test.lepton1.en", &lep1_en);
+
+  //sets branch addresses for lep2
+  tree->SetBranchAddress("Test.lepton2.pt", &lep2_pt);
+  tree->SetBranchAddress("Test.lepton2.phi", &lep2_phi);
+  tree->SetBranchAddress("Test.lepton2.eta", &lep2_eta);
+  tree->SetBranchAddress("Test.lepton2.charge", &lep2_charge);
+  tree->SetBranchAddress("Test.lepton2.en", &lep2_en);
+
+  TH1* cosThetaHist  = new TH1F("cosTheta", "cosTheta", 1000, -1, 1);
+
+  int nEntries = tree->GetEntries();
+  for (int i=0; i < nEntries; ++i)
+  {
+    tree->GetEntry(i);
+
+    TLorentzVector Ele;
+    Ele.SetPtEtaPhiE(lep1_pt, lep1_eta, lep1_phi, lep1_en);
+
+    TLorentzVector Elebar;
+    Elebar.SetPtEtaPhiE(lep2_pt, lep2_eta, lep2_phi, lep2_en);
+
+    double cosTheta = CICalculatedValues::calculateCosTheta(Ele, Elebar);
+    cosThetaHist->Fill(cosTheta);
+
+    //need to put double cosTheta into TH1 cosThetaHist
+    
+  }
+
+  cosThetaHist->Draw();
+}
