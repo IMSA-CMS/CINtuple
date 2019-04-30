@@ -28,12 +28,14 @@ class CIElectron
 
   bool isChosen(double & highestPt);
 
-  double findInvarientMass(const CIElectron & el);
+  static double findInvarientMass(const CIElectron & el, const CIElectron & el2);
   double getEta() const {return etaSC;}
   double getPhi() const {return phiSC;}
-  double getPt() const {return EtFromCaloEn;}
+  double getEtFromCaloEn() const {return EtFromCaloEn;}
+  double getPt() const {return pt;}
   int getCharge() const {return charge;}
   double getEt() const {return Et;}
+  double getEn() const {return energySC;}
 
  private:
   //=================================

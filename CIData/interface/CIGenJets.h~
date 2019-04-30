@@ -1,9 +1,0 @@
-#ifndef CIGENJETS_H 
-#define CIGENJETS_H 
-
-//==============================
-//CIGenJets Header file 
-//MHokinson - Aug 3rd
-//This is used to contain all gen
-//jet values from CIEvent 
-//==============================

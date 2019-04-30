@@ -181,7 +181,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_Tra
 #
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1200))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 #Load info from the text file 
 sourceFiles = FileUtils.loadListFromFile('root_MINIAOD_M300.txt')#JOHN  TURN THIS ONE BACK ON 

@@ -1,8 +1,11 @@
 import os,sys
 import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.ParameterSet.Config as cms
-from FWCore.ParameterSet.VarParsing import VarParsing
-options = VarParsing('analysis')
+import  FWCore.ParameterSet.VarParsing as VarParsing
+options = VarParsing.VarParsing('analysis')
+
+print("Hello")
+
 #options.register('sampleType',
 #                '',
 #                VarParsing.multiplicity.singleton,
@@ -19,11 +22,24 @@ options = VarParsing('analysis')
 #                VarParsing.multiplicity.singleton,
 #                VarParsing.varType.bool,
 #                "add debugging.")
-#
-#options.parseArguments()
+#Register the Lambda and Helicity 
+options.register('isHelicityLR',
+                  "false",
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.bool,
+                  "Makes LR Helicity true")
+options.register('Lambda',
+                  16000,
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.int,
+                  "Lambda Value")
+
+options.parseArguments()
+print("We have parsed the arguments")
 #if options.debug:
 #    print("sampleType",options.sampleType)
 #    print("runCrab",options.runCrab)
+
 # set up process
 process = cms.Process("HEEP")
 process.options = cms.untracked.PSet(
@@ -33,7 +49,7 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cout.threshold = cms.untracked.string('WARNING')
 process.MessageLogger.cerr.FwkReport = cms.untracked.PSet(
     reportEvery = cms.untracked.int32(500),
-    limit = cms.untracked.int32(10000),
+    limit = cms.untracked.int32(1500),
 )
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
@@ -44,6 +60,7 @@ process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
 # Global tag (MC)
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_TrancheIV_v6', '')
+print("We have just started setting up the process")
 
 
 # Global tag (data)
@@ -181,25 +198,26 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_Tra
 #
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1200))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(500))
 
 #Load info from the text file 
-sourceFiles = FileUtils.loadListFromFile('root_MINIAOD_M300.txt')#JOHN  TURN THIS ONE BACK ON 
+sourceFiles = FileUtils.loadListFromFile('localRootEM800Files.txt')#JOHN  TURN THIS ONE BACK ON 
 #sourceFiles = FileUtils.loadListFromFile('fileQueryTestMuM300L16ConLL.txt') #THIS IS THE ROOT XD 
 #for line in sourceFiles:
 #    print(line)
 
-sourceList = ['file:/uscms/physics_grp/lpcci2dileptons/nobackup/CI_study/Samples/Lambda_16TeV/CITo2Mu/LLCon/M300/' + line for line in sourceFiles]#JOHN TURN THIS ONE BACK ON
+sourceList = ['file:/uscms/physics_grp/lpcci2dileptons/nobackup/CI_study/Samples/Lambda_16TeV/CITo2E/LRCon/M800/' + line for line in sourceFiles]#JOHN TURN THIS ONE BACK ON
 #sourceList = ['root://cmsxrootd.fnal.gov//' + line for line in sourceFiles]  #THIS IS ALSO ROOT XD 
 #for line in sourceList:
 #    print(line)
 
 process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring(*sourceList))
 
-#for running on crab 
+#for running on crab HARRY TOLD ME TO LEAVE THIS FOR SOME REASON 
 #process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('file:file.root'))
 
-#process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('root://cmsxrootd.fnal.gov///store/mc/RunIISummer16MiniAODv2/CITo2E_M1300_CUETP8M1_Lam10TeVConLL_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/B82FCB94-1ED9-E611-8A29-24BE05CEDC81.root'))#on one file 
+#For running on a single file 
+#process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('root://cmsxrootd.fnal.gov///store/mc/RunIISummer16MiniAODv2/CITo2E_M1300_CUETP8M1_Lam10TeVConLL_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/B82FCB94-1ED9-E611-8A29-24BE05CEDC81.root'))
 
 
 
@@ -210,12 +228,29 @@ sample = ['CITo2Mu']
 weight = 1
 outfile = "test.root"
 
+print("Right after we call process.source")
+
 #we setup the HEEP ID V7.0 and enable VID via the following function
 #and then add it to a new collection of pat::Electrons
 #there is the option to call the new collection "slimmedElectrons" (useStdName=True)
 #otherwise it calls them "heepElectrons"
 #it creates a sequence "process.heepSequence" which we add to our path
-from WSUDiLeptons.GenLevelFilter.genLevelFilter_cfi import genLevelFilter
+import FWCore.ParameterSet.Config as cms
+
+genLevelFilter = cms.EDFilter('GenLevelFilter',
+    genParticleSource = cms.InputTag('prunedGenParticles'),
+    filterevent       = cms.bool(False),
+    filterPreFSR      = cms.bool(False),
+    filterST1         = cms.bool(False),
+    filterST23        = cms.bool(False),
+    filterHS          = cms.bool(False),
+    debug             = cms.bool(False),
+    minCut            = cms.double(-1.),
+    maxCut            = cms.double(1e8),
+    xsWeight          = cms.double(-1),
+    sampleType        = cms.string(""),
+)
+
 process.genweightfilter = genLevelFilter.clone(
     filterevent   = cms.bool(False),
     filterPreFSR  = cms.bool(False),
@@ -235,6 +270,7 @@ addHEEPV70ElesMiniAOD(process,useStdName=True)
 process.TFileService = cms.Service("TFileService",
     fileName = cms.string(outfile)
 )
+print("RIght before we define isLR")
 
 #this is our example analysis module reading the results, you will have your own module
 process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
@@ -294,13 +330,16 @@ process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
 
     outputFile = cms.string(outfile),
 
-    isLRHelicity = cms.bool(False), 
-    lambda_ = cms.int32(16000)                                   
+    #isLRHelicity = cms.bool(options.isHelicityLR), 
+    #lambda_ = cms.int32(options.Lambda)  #This is in eV  
+    isLRHelicity = cms.bool(True),
+    lambda_ = cms.int32(16)                           
         
     )
+print("After we define isLR")
 
 process.p = cms.Path(
-    process.genweightfilter+
+    #process.genweightfilter+
     (process.heepSequence*
     process.heepIdExample)) #our analysing example module, replace with your module
 

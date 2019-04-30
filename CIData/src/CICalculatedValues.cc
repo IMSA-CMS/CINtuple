@@ -36,6 +36,7 @@
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include <Pythia8/Pythia.h>
 #include <complex>
+#include <random>
 
 
 //#include "DataFormats/Math/interface/deltaR.h"                                
@@ -51,7 +52,9 @@ CICalculatedValues::CICalculatedValues(const GenEventInfoProduct & genEventInfoP
 				       double invMass, bool isLR, int lam):
   isLRHelicity(isLR),
   lambda(lam),
-  invariantMass(invMass)
+  invariantMass(invMass),
+  isEmpty(false),
+  pdfWeight(genEventInfoProduct.weight())
 {
   //empty goes through this if statement
   if(lep1.getIsEmpty() || lep2.getIsEmpty())
@@ -69,6 +72,7 @@ CICalculatedValues::CICalculatedValues(const GenEventInfoProduct & genEventInfoP
 
       //Set CalculatedValues isEmpty to true, which is only for the values 
       //dependent on having leptons chosen, so not the weighting part
+      //Otherwise, isEmpty is set to false by default, and is only changed here 
       isEmpty = true;
       std::cout << "\ncos theta = " << cosThetaCS;
       return;
@@ -76,6 +80,7 @@ CICalculatedValues::CICalculatedValues(const GenEventInfoProduct & genEventInfoP
   std::cout << cosThetaCS; //empty doesn't print, not empty has wild values
   std::cout << "filling values\n";//empty doesn't print
   fillValues(genEventInfoProduct, pruned, lep1, lep2, invariantMass);
+  setIsBarrel(lep1, lep2);
 }
 
 
@@ -83,14 +88,82 @@ void CICalculatedValues::fillValues(const GenEventInfoProduct & genEventInfoProd
 				    const CIChosenLepton & lep1, const CIChosenLepton & lep2,
 				    double invMass)
 {
+  isSameCharge = false;
+  if(lep1.getCharge() == lep2.getCharge() && !lep1.getIsMuon()){isSameCharge = true;}
+  static std::default_random_engine engine = std::default_random_engine();
+
+  static std::uniform_int_distribution<int> dist(0, 1);
   //Pass values from chosen Leptons into this 
-  std::cout << "calling collinssoper\n";
+  std::cout << "filling values\n";
   std::cout << "\nlep1: Et = " << lep1.getEt() << " Eta = =" << lep1.getEta() << " Phi = " << lep1.getPhi() << " En = " <<lep1.getEn();
   std::cout << "\nlep2: Et = " << lep2.getEt() << " Eta = =" << lep2.getEta() << " Phi = " << lep2.getPhi() << " En = " <<lep2.getEn();
 
-  cosThetaCollinSoper(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn(), 
-		      lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn(),
-		      lep1.getCharge(), invariantMass);
+  //cosThetaCollinsSoper(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn(), 
+  //lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn(),
+  //lep1.getCharge(), invariantMass);
+
+  //default setting
+  TLorentzVector Ele;
+  Ele.SetPtEtaPhiE(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn());
+  TLorentzVector Elebar;
+  Elebar.SetPtEtaPhiE(lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn());
+  float charge = lep1.getCharge();
+
+  //want to see percentage of flips
+
+  //---------------------------------------------------
+  //if you want pt differentiation
+  //---------------------------------------------------
+  bool highpt = false;
+  if(isSameCharge)
+    {
+      highpt = true;
+    }
+
+  if(highpt)
+    {
+      if(lep1.getPt() > lep2.getPt())
+        {
+          ;
+	}
+      else
+        {
+	Elebar.SetPtEtaPhiE(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn());
+	Ele.SetPtEtaPhiE(lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn());
+        charge = lep2.getCharge();
+        }
+    }
+
+  //----------------------------------------------------
+  //if you want random electron differentiation
+  //----------------------------------------------------
+  bool random = false;
+  if(isSameCharge)
+    {
+      random = false;
+    }
+
+  if(random)
+    {
+    
+      if (dist(engine) == 0)
+      {
+	;
+      }
+    else
+      {
+	Elebar.SetPtEtaPhiE(lep1.getEt(), lep1.getEta(), lep1.getPhi(), lep1.getEn());
+	Ele.SetPtEtaPhiE(lep2.getEt(), lep2.getEta(), lep2.getPhi(), lep2.getEn());
+        charge = lep2.getCharge();
+      }
+    }
+
+std::cout << "values filled\n";
+ std::cout << "\nlep1: Et = " << Ele.Et() << " Eta = =" << Ele.Eta() << " Phi = " << Ele.Phi()  << " En = " << Ele.E();
+ std::cout << "\nlep2: Et = " << Elebar.Et() << " Eta = =" << Elebar.Eta() << " Phi = " << Elebar.Phi() << " En = " << Elebar.E();
+      
+
+  cosThetaCollinsSoper(Ele.Et(), Ele.Eta(), Ele.Phi(), Ele.E(), Elebar.Et(), Elebar.Eta(), Elebar.Phi(), Elebar.E(), charge, invariantMass);
 
   fillHelicities(genEventInfoProduct, pruned, lambda);
 }
@@ -128,11 +201,11 @@ double CICalculatedValues::calculateCosTheta(TLorentzVector Ele, TLorentzVector 
 }
 
 
-void CICalculatedValues::cosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+void CICalculatedValues::cosThetaCollinsSoper(float Et1,float Eta1,float Phi1,float En1,
 					     float Et2,float Eta2,float Phi2,float En2,
 					     float ChargeEle1, float RecoMass) 
 //start collinssoper
-{
+{  
   std::cout << "big bop";
   std::cout << "starting collinper\n";
   TLorentzVector Ele;
@@ -179,7 +252,7 @@ void CICalculatedValues::cosThetaCollinSoper(float Et1,float Eta1,float Phi1,flo
   if (Q.Pz()<0.0) 
     tanphi = -tanphi;
   std::cout << "\n(3) cosTheta = " << costheta;
-  //h1_TanPhiCollinSoperCorrect_->Fill(tanphi,newweight);
+  //h1_TanPhiCollinsSoperCorrect_->Fill(tanphi,newweight);
   //=************************************************************************
   //
   // 3) sin2(theta) = Q^-2 Dt^2 - Q^-2 (Q^2 + Qt^2)^-1 * (Dt dot Qt)^2
@@ -188,11 +261,15 @@ void CICalculatedValues::cosThetaCollinSoper(float Et1,float Eta1,float Phi1,flo
   double dt_qt = D.X()*Q.X() + D.Y()*Q.Y();
   double sin2theta = pow(D.Pt()/Q.Mag(), 2)
   - 1.0/pow(Q.Mag(), 2)/(pow(Q.Mag(), 2) + pow(Q.Pt(), 2))*pow(dt_qt, 2);
-  //h1_Sin2AngleCollinSoperCorrect_->Fill(sin2theta,newweight);
+  //h1_Sin2AngleCollinsSoperCorrect_->Fill(sin2theta,newweight);
   
-  std::cout << "\n(4) cosTheta = " << cosThetaCS << " = " << costheta;
+  //std::cout << "\n(4) cosTheta = " << cosThetaCS << " = " << costheta;
   std::cout << "finishing collinssoper\n";
   cosThetaCS = costheta;
+  if (cosThetaCS == 0)
+    {
+      //exit(1);
+    }
   std::cout << "\n(5) cosTheta = " << cosThetaCS << " = " << costheta;
   tanPhi = tanphi;
   sin2Theta = sin2theta;
@@ -282,9 +359,9 @@ void CICalculatedValues::fillHelicities(const GenEventInfoProduct & genEventInfo
   const reco::Candidate* leptonPlus = nullptr;
   const reco::Candidate* leptonMinus = nullptr;
   std::cout << __LINE__ <<'\n';
-  auto fMasterGen = new Pythia8::Pythia;
+  Pythia8::Pythia fMasterGen;
   std::cout << __LINE__ <<'\n';
-  fMasterGen->init();
+  fMasterGen.init();
   std::cout << __LINE__ <<'\n';
 //Begin particle loop
 //  for(const reco::GenParticle& particle : prunedGenParticlesCollection){
@@ -754,9 +831,26 @@ std::cout << __LINE__ <<'\n';
   leptonMinuspx = leptonMinus->px();
   leptonMinuspy = leptonMinus->py();
   leptonMinuspz = leptonMinus->pz();
+  leptonPlusenergy = leptonPlus->energy();
+  leptonPluspx = leptonPlus->px();
+  leptonPluspy = leptonPlus->py();
+  leptonPluspz = leptonPlus->pz();
 
-  //outputting the gensim level lepton data for the cosThetaCS graph -John
+  //outputting the gensim level lepton data for the cosThetaCS graph -John  
+  //-----------------------------------------------------------------------------
+  //
+  //                            ~~ Setting Gensim ~~
+  //
+  //-----------------------------------------------------------------------------
+  TLorentzVector Ele(leptonPlus->pt(), leptonPlus->eta(), leptonPlus->phi(), leptonPlus->energy());
+  TLorentzVector Elebar(leptonMinus->pt(), leptonMinus->eta(), leptonMinus->phi(), leptonPlus->energy());
+  //TLorentzVector Ele(leptonPluspx, leptonPluspy, leptonPluspz, leptonPlusenergy);
+  //TLorentzVector Elebar(leptonMinuspx, leptonMinuspy, leptonMinuspz, leptonMinusenergy);
+  
 
+  
+  cosThetaGenSim = calculateCosTheta(Elebar, Ele);
+  std::cout << "cosTheta Gensim = " << cosThetaGenSim << std::endl;
 
   //Get Mandelstam variables                                                    
   TLorentzVector s_hat_4vector(quarkpx + antiquarkpx, quarkpy +antiquarkpy, quarkpz + antiquarkpz, quarkenergy + antiquarkenergy);
@@ -808,28 +902,28 @@ std::cout << __LINE__ <<'\n';
 
   //Process name                                                            
   // Incoming quarks                                                        
-  double tmPgvf = 0.25 * fMasterGen->couplingsPtr->vf(idAbs);
-  double tmPgaf = 0.25 * fMasterGen->couplingsPtr->af(idAbs);
+  double tmPgvf = 0.25 * fMasterGen.couplingsPtr->vf(idAbs);
+  double tmPgaf = 0.25 * fMasterGen.couplingsPtr->af(idAbs);
   //Outgoing fermions                                                       
-  double tmPgvl = 0.25 * fMasterGen->couplingsPtr->vf(idNew);
-  double tmPgal = 0.25 * fMasterGen->couplingsPtr->af(idNew);
+  double tmPgvl = 0.25 * fMasterGen.couplingsPtr->vf(idNew);
+  double tmPgal = 0.25 * fMasterGen.couplingsPtr->af(idNew);
   double tmPgLf = tmPgvf + tmPgaf;
   double tmPgLl = tmPgvl + tmPgal;
   double tmPgRf = tmPgvf - tmPgaf;
   double tmPgRl = tmPgvl - tmPgal;
 
   // Kinematics                                                             
-  //double qCmNew  = fMasterGen->particleData.m0(idNew);                    
+  //double qCmNew  = fMasterGen.particleData.m0(idNew);                    
   //double qCmNew2 = qCmNew * qCmNew;                                       
-  double qCmZ    = fMasterGen->particleData.m0(23);
+  double qCmZ    = fMasterGen.particleData.m0(23);
   double qCmZ2   = qCmZ * qCmZ;
-  double qCGZ    = fMasterGen->particleData.mWidth(23);
+  double qCGZ    = fMasterGen.particleData.mWidth(23);
   double qCGZ2   = qCGZ * qCGZ;
 
  // Necessary variables to ampitude                                        
   // First term                                                             
   // double alpEM =1./137;                                                  
-  double tmPe2QfQl = 4. * M_PI * alpEM * fMasterGen->couplingsPtr->ef(idAbs) * fMasterGen->couplingsPtr->ef(idNew);
+  double tmPe2QfQl = 4. * M_PI * alpEM * fMasterGen.couplingsPtr->ef(idAbs) * fMasterGen.couplingsPtr->ef(idNew);
   double qCPropGm   = 1./sH;
 std::cout << __LINE__ <<'\n';
   //Second term.Model depended variables are defined using incoming quark and outgoing fermion information                                                 
@@ -1079,4 +1173,28 @@ const reco::Candidate* CICalculatedValues::getLeptonMother(const reco::GenPartic
 
   return muonMother;
 }
+
+void CICalculatedValues::setIsBarrel(const CIChosenLepton & lep1, const CIChosenLepton & lep2)
+{
+  std::cout << "\nJOHN'S CODE WAS 700 LINES LONG! " << "lep1: " << lep1.getIsBarrel() << " lep2: " << lep2.getIsBarrel();
+
+  if (lep1.getIsBarrel() && lep2.getIsBarrel())
+    isBB = true;
+  else
+    isBB = false;
+  
+  if ((lep1.getIsBarrel() && lep2.getIsEndcap()) || (lep1.getIsEndcap() && lep2.getIsBarrel()))
+    isBE = true;
+
+  if (lep1.getIsEndcap() && lep2.getIsEndcap())
+    {
+      if (lep1.getIsMuon() && lep2.getIsMuon())
+	isBE = true;
+      else if (!lep1.getIsMuon() && !lep2.getIsMuon())
+	isBE = false;
+    }
+}
+
+
+
 

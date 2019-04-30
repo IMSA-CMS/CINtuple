@@ -127,7 +127,6 @@ void CIEvent::FillEventInfo(unsigned int JRun, unsigned int JEvent, unsigned int
   Run = JRun;
   Event = JEvent;
   lumi = Jlumi;
-  std::cout << "Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy Matt is a big dummy";
   bunch = Jbunch;
   //std::cout << "\n(1)cosTheta = " << cosThetaCS;
 }
@@ -201,6 +200,7 @@ void CIEvent::accessGenInfo(bool h_passMInvCut, bool h_passPreFSRMInvCut, bool h
 			    const edm::View<pat::PackedGenParticle> & packed, int BosonID_,  int ParticleID1_, 
 			    int ParticleID2_, int ParticleID3_, int ParticleStatus_)
 {
+  std::cout << "We are in the Gen info function\n";
   int NbGenMuons  = 0;
   genParticles.clear();
 
@@ -266,6 +266,8 @@ void CIEvent::ComputeMuonMassVtx(const TransientTrackBuilder & ttkb1, const Tran
 				 const TransientTrackBuilder & ttkb3,
 				 const reco::Vertex & vertex, const pat::MuonCollection & muons)
 {
+  //magic numbers 53 and 30 are pt cuts
+  //grr magic numbers
   computeMuonMassVertices(ttkb1, ttkb2, ttkb3, vertex, muons, 53, muonVertices);
   computeMuonMassVertices(ttkb1, ttkb2, ttkb3, vertex, muons, 30, muonVertices30);
 }
@@ -585,13 +587,14 @@ bool CIEvent::findPassedMuons(CIMuonVtx & bestMuons)
     {
       std::cout << "We are going through the for loop\n";
       std::cout << "Muon index "  << muVtx.lept1() << '\n';
+      //MATT LOOK HERE FOR THE ERROR IT HAPPENED ONCE AND MAYBE IT IS NOT A BIG DEAL ANYMORE 
       if(muVtx.getMass() > highestInvMass)
 	{ 
 	  if(muVtx.getOppCharge())
 	    {
 	      highestInvMass = muVtx.getMass();
 	      bestMuons = muVtx;
-	      std::cout << "we got to here\n";
+	      std::cout << "we have a highest muon inv mass: " << bestMuons.getMass() << "\n";
 	    }
 	}
     }
@@ -603,7 +606,6 @@ bool CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 {
   double highestPt = 0;
   double secondHighestPt = 0;
-
   //elec is the collection of CIElectrons
   for(CIElectron & ciEle : elec)
     {
@@ -611,58 +613,65 @@ bool CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 	{
 	  passedElectrons[1] = passedElectrons[0];
 	  passedElectrons[0] = ciEle;
-	  continue;
 	}
-      if(ciEle.isChosen(secondHighestPt))
+      else if(ciEle.isChosen(secondHighestPt))
 	{
 	  passedElectrons[1] = ciEle;
 	}
     }
-
+  std::cout << "Pt's are: " << highestPt << " " << secondHighestPt << "\n";
   return highestPt > 0 && secondHighestPt > 0;
 }
 
 void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & pruned, 
 				bool isLR, int lambda)
 {
+
+  //making default bad leptons, if they're good, it will overwrite them; if they're bad, we don't get garbage
+  lepton1 = CIChosenLepton::setBadValues();
+  lepton2 = CIChosenLepton::setBadValues();
+
+  calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, 
+				      lepton2, -1, isLR, lambda);//Passing in badValues (-1) for invariantMass
+
+
   //Only find the highest 2 pt's for each
   CIMuonVtx bestMuons;//Muons have a vertex object already 
   CIElectron passedElectrons[2];//two best electrons are stored here 
 
+  //These are not used, but might be needed in the future again, so I kept them 
   bool foundMuons = findPassedMuons(bestMuons);
-  bool foundElectrons = findPassedElectrons(passedElectrons);
-
-  if (!foundMuons && !foundElectrons)//If this gets called, we are going to fill the CIChosenLeptons and 
-                                     //CICalculated values with Null Values (-1) and set isEmpty to true
-    {
-      lepton1 = CIChosenLepton::setBadValues();
-      lepton2 = CIChosenLepton::setBadValues();
-
-      calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, 
-				      lepton2, -1, isLR, lambda);//Passing in badValues (-1) for invariantMass
-      return; 
-    }
-
-  
+  bool foundElectrons = findPassedElectrons(passedElectrons);  
 
   bool isMuon = findIsMuon(bestMuons, passedElectrons);
 
-  if(isMuon)
+  if(isMuon && foundMuons)
     {
+      //Jay found the bug here:
+      //check that bestMuons.lept1()-1 >= 0
+      std::cout << "We are in the isMuon check\n";
+      //Do some checks because sometimes this doesn't work normally I guess 
+      if(bestMuons.lept1() >= 1 && bestMuons.lept2() >= 1 && (unsigned)bestMuons.lept1() < muData.size() && (unsigned)bestMuons.lept2() < muData.size())
+	{
+	  std::cout << "We made it through the muon index check\n";
+	  std::cout << "Lep index " << bestMuons.lept1() << std::endl;
+	  lepton1 = CIChosenLepton(muData.at(bestMuons.lept1() - 1));
       
-      std::cout << "Lep index " << bestMuons.lept1() << std::endl;
-      lepton1 = CIChosenLepton(muData.at(bestMuons.lept1() - 1));
+	  std::cout << "Lep index " << bestMuons.lept2() << std::endl;
+	  lepton2 = CIChosenLepton(muData.at(bestMuons.lept2() - 1));
+
+	  std::cout << "We have set the leptons I guess jfkdsla\n";
+	  lepton1.print();
+	  lepton2.print();
       
-      std::cout << "Lep index " << bestMuons.lept2() << std::endl;
-      lepton2 = CIChosenLepton(muData.at(bestMuons.lept2() - 1));
       
-      
-      //Pass through 2 leptons, 2 CIMuons, and 1 float for mass 
-      calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2, 
+	  //Pass through 2 leptons, 2 CIMuons, and 1 float for mass 
+	  calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2, 
 				      bestMuons.getMass(),
 				      isLR, lambda);
+	}     
     }
-  else
+  else if (!isMuon && foundElectrons)
     {
       lepton1 = CIChosenLepton(passedElectrons[0]);
       lepton2 = CIChosenLepton(passedElectrons[1]);
@@ -670,20 +679,17 @@ void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
       //Pass through 2 leptons, 2 CIElectrons, and float for Mass 
       //Overload the constructors in CICalculatedValues 
       calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2,
-				      passedElectrons[0].findInvarientMass(passedElectrons[1]),
+				      CIElectron::findInvarientMass(passedElectrons[0],passedElectrons[1]),
 				      isLR, lambda);
     }
 }
 
+//Returns true if the invarient mass of the muons is greater than that of the electrons 
 bool CIEvent::findIsMuon(const CIMuonVtx & bestMuons,
 			 CIElectron passedElectrons[])
 {
-  if(bestMuons.getMass() > 
-     passedElectrons[0].findInvarientMass(passedElectrons[1]))
-    {
-      return true;
-    }
-  return false;
+  std::cout << "Muon Mass: " << bestMuons.getMass() << " Electron Mass: " << CIElectron::findInvarientMass(passedElectrons[0],passedElectrons[1]) << "\n";
+  return bestMuons.getMass() > CIElectron::findInvarientMass(passedElectrons[0],passedElectrons[1]);
 }
 			 
 

@@ -36,7 +36,7 @@ class CICalculatedValues
   //=================================
   //Private Functions
   //=================================
-  void cosThetaCollinSoper(float Et1,float Eta1,float Phi1,float En1,
+  void cosThetaCollinsSoper(float Et1,float Eta1,float Phi1,float En1,
                             float Et2,float Eta2,float Phi2,float En2,
                             float ChargeEle1,float RecoMass);
   double calculateCosTheta(TLorentzVector Ele, TLorentzVector Elebar);
@@ -58,6 +58,8 @@ class CICalculatedValues
 
   const reco::Candidate* getLeptonMother(const reco::GenParticle & p, bool second);
 
+  void setIsBarrel(const CIChosenLepton & lep1, const CIChosenLepton & lep2);
+
 
   //==================================
   //Class Variables 
@@ -66,9 +68,15 @@ class CICalculatedValues
   int lambda;
   double invariantMass;
   float cosThetaCS;
+  double cosThetaGenSim;
   double tanPhi;
   double sin2Theta;
   bool isEmpty;
+  bool isBB;
+  bool isBE;
+  bool isSameCharge;
+  double pdfWeight;
+
 
   //Weights for Helicities 
   double weightRL;

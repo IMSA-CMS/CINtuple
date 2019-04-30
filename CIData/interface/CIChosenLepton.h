@@ -11,6 +11,7 @@
 //=========================
 #include "CINtuple/CIData/interface/CIMuon.h"
 #include "CINtuple/CIData/interface/CIElectron.h"
+#include <iostream>
 
 
 
@@ -27,6 +28,10 @@ class CIChosenLepton
   CIChosenLepton(const CIMuon & mu);
 
   CIChosenLepton(int bad);
+
+  void classifyBarrel();
+  void classifyEndcap();
+  void print();
   
   double getEta() const {return eta;}
   double getPt() const {return pt;}
@@ -36,6 +41,11 @@ class CIChosenLepton
   double getEn() const {return en;}
   bool getIsMuon() const {return isMuon;}
   bool getIsEmpty() const {return isEmpty;}
+  bool getIsBarrel() const {return isBarrel;}
+  bool getIsEndcap() const {return isEndcap;}
+
+  void johnsCodeWas700LinesLong() { std::cout << "JOHNSCODEWAS605LINESLONG"; }
+ 
   static CIChosenLepton setBadValues();
 
  private:
@@ -53,6 +63,9 @@ class CIChosenLepton
   double en;
   bool isMuon;
   bool isEmpty;
+  bool isBarrel; 
+  bool isEndcap;
+  
 
   ClassDefNV(CIChosenLepton, 1)
 };

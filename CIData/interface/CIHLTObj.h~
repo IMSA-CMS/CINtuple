@@ -1,9 +1,0 @@
-#ifndef CIHLTOBJ_H
-#define CIHLTOBJ_H
-
-//==============================
-//CIHLTObj header file 
-//MHokinson - Aug 3rd 
-//Handles the HLTObj values from 
-//CIEvent
-//==============================

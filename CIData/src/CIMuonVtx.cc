@@ -25,6 +25,13 @@ CIMuonVtx::CIMuonVtx(std::vector<reco::TransientTrack> track, reco::TrackRef
   muIndex2(index2)
 {
   fillValues(track, muTrack, muTrack2);
+
+
+
+
+
+
+  std::cout << "Did you know? Printing 400 characters (with cout instead of scripting) to draw a picture every event REALLY slows down the program, and delays actual progress. Calm yourselves." << std::endl;
 }
 
 void CIMuonVtx::fillValues(std::vector<reco::TransientTrack> track, reco::TrackRef&

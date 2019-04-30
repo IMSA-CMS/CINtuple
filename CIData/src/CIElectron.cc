@@ -147,41 +147,44 @@ void CIElectron::fillValues(EcalClusterLazyTools lazyTools_, pat::Electron el,
 //but then it will make sure to find the second highest pt the second time around 
 bool CIElectron::isChosen(double & highestPt)
 {
-  if(EtFromCaloEn > 35 && fabs(etaSC) < 1.4442 && isPassHeepID)
+  std::cout << "Et value: " << EtFromCaloEn << " etaSC: " << etaSC << " isPassHeepID: " << isPassHeepID << "\n";
+  if(EtFromCaloEn > 35 && fabs(etaSC) < 1.4442 )//&& isPassHeepID
     {
       if(EtFromCaloEn > highestPt)
 	{
 	  highestPt = EtFromCaloEn;
+	  std::cout << "We have set the highestPt to something: " << highestPt << " From Et " << EtFromCaloEn << "\n";
+
 	  return true;
 	}
     }
-  else if(EtFromCaloEn > 35 && fabs(etaSC) > 1.566 && fabs(etaSC) < 2.5 && isPassHeepID )
+  else if(EtFromCaloEn > 35 && fabs(etaSC) > 1.566 && fabs(etaSC) < 2.5 )//&& isPassHeepID 
     {
       if(EtFromCaloEn > highestPt)
 	{
 	  highestPt = EtFromCaloEn;
+	  std::cout << "We have set the highestPt to something: " << highestPt << " From Et " << EtFromCaloEn << "\n";
 	  return true;
 	}
     }
   return false;
 }
 
-double CIElectron::findInvarientMass(const CIElectron & el)
+double CIElectron::findInvarientMass(const CIElectron & el, const CIElectron & el2)
 {
-  double deltaEta = abs(etaSC - el.getEta());
-  double deltaPhi = abs(phiSC - el.getPhi());
+  double deltaEta = abs(el.getEta() - el2.getEta());
+  double deltaPhi = abs(el.getPhi() - el2.getPhi());
   
   double x = cosh(deltaEta);
   double y = cos(deltaPhi);
 
-  double invMass = 2 * pt * el.getPt() * abs(x-y);
-
-  if(invMass > 0)
-    {
-      return sqrt(invMass);
-    }
-  return 0;
+  double invMass = 2 * el.getPt() * el2.getPt() * abs(x-y);
+  std::cout << "Pseudo Invariant Mass: " << invMass << "\n";
+  
+  return (invMass > 0) ? sqrt(invMass) : 0;
 }
+
+
 
 
 		       

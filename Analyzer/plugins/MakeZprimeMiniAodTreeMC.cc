@@ -371,18 +371,19 @@ void MakeZprimeMiniAodTreeMC::analyze(const edm::Event& iEvent, const edm::Event
   
   event.PatElectronTree(rhoIso, PV, getHandle(electrons),
                         getHandle(ecalEB), getHandle(ecalEE), *lazyTools_, getHandle(eleHandle));
-  event.TriggerMatchingTree(getHandle(triggerBits), getHandle(triggerObjects), getHandle(trigobj_handle), getHandle(triggerPrescales), names);
+  //Trying to comment this out for testing with MC17 samples 
+  //event.TriggerMatchingTree(getHandle(triggerBits), getHandle(triggerObjects), getHandle(trigobj_handle), getHandle(triggerPrescales), names);
 
   std::cout << __LINE__ << '\n';
-
-
-  event.accessGenInfo(getHandle(h_passMInvCut), getHandle(h_passPreFSRMInvCut),  getHandle(h_passST1MInvCut), 
-		      getHandle(h_passHSMInvCut), getHandle(h_passST23MInvCut), getHandle(h_xsWeight), getHandle(pruned), 
-		      getHandle(packed), BosonID_, ParticleID1_, ParticleID2_, ParticleID3_, ParticleStatus_);
-
-  std::cout << __LINE__ << '\n';
-
   std::cout << "Here is where the error is happening\n";
+
+  //event.accessGenInfo(getHandle(h_passMInvCut), getHandle(h_passPreFSRMInvCut),  getHandle(h_passST1MInvCut), 
+  // getHandle(h_passHSMInvCut), getHandle(h_passST23MInvCut), getHandle(h_xsWeight), getHandle(pruned), 
+  //		      getHandle(packed), BosonID_, ParticleID1_, ParticleID2_, ParticleID3_, ParticleStatus_);
+
+  std::cout << __LINE__ << '\n';
+
+
 
 
   event.PatMuonTree(PV, getHandle(muons));//THIS REUSES PV from Pat Electron Tree (USE SAME PV)	
