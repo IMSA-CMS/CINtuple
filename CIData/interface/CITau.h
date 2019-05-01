@@ -21,6 +21,9 @@ class CITau
   CITau(int tausNumber, const pat::Tau & tau);
 
  private: 
+  //============================
+  //Class Variables
+  //============================
   int   nb_taus;
   float pt;
   float eta;

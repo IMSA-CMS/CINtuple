@@ -14,11 +14,17 @@
 class CIHLTObj 
 {
  public:
+  //=================================
+  //Constructors
+  //=================================
   CIHLTObj(){}
   CIHLTObj(int nbTriggerObj, pat::TriggerObjectStandAlone src, 
 	   std::vector<std::string> const & pathnames, int j);
 
  private:
+  //=================================
+  //Class Variables 
+  //=================================
   int    nbObj;
   float  pt;
   float  eta;

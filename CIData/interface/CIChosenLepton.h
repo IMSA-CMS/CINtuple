@@ -29,10 +29,16 @@ class CIChosenLepton
 
   CIChosenLepton(int bad);
 
+  //===============
+  //Classifying functions
+  //===============
   void classifyBarrel();
   void classifyEndcap();
   void print();
   
+  //===============
+  //Get functions
+  //===============
   double getEta() const {return eta;}
   double getPt() const {return pt;}
   double getPhi() const {return phi;}
@@ -44,13 +50,11 @@ class CIChosenLepton
   bool getIsBarrel() const {return isBarrel;}
   bool getIsEndcap() const {return isEndcap;}
 
-  void johnsCodeWas700LinesLong() { std::cout << "JOHNSCODEWAS605LINESLONG"; }
+  void johnsCodeWas700LinesLong() { std::cout << "JOHNSCODEWAS605LINESLONG"; } //Important
  
   static CIChosenLepton setBadValues();
 
  private:
-
-
 
   //===============
   //Class values

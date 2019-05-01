@@ -21,6 +21,9 @@ class CIJet
   CIJet(int sum, int in, int jetNumber, const pat::Jet & j);
 
  private:
+  //==========================
+  //Class Variables
+  //==========================
   int   jetNb;
   float charge;
   float et;

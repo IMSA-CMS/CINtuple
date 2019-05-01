@@ -38,7 +38,7 @@ class CICalculatedValues
   //=================================
   void cosThetaCollinsSoper(float Et1,float Eta1,float Phi1,float En1,
                             float Et2,float Eta2,float Phi2,float En2,
-                            float ChargeEle1,float RecoMass);
+                            float ChargeEle1,float RecoMass); //Collins Soper Angle
   double calculateCosTheta(TLorentzVector Ele, TLorentzVector Elebar);
 
   float delR(float eta1,float phi1,float eta2,float phi2);

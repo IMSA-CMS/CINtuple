@@ -26,9 +26,15 @@ class CIElectron
 	     unsigned NbElectrons, double rhoIso,
 	     const reco::Vertex& PV);
 
+  //================================
+  //Calculating functions
+  //================================
   bool isChosen(double & highestPt);
 
   static double findInvarientMass(const CIElectron & el, const CIElectron & el2);
+  //================================
+  //Get functions
+  //================================
   double getEta() const {return etaSC;}
   double getPhi() const {return phiSC;}
   double getEtFromCaloEn() const {return EtFromCaloEn;}
