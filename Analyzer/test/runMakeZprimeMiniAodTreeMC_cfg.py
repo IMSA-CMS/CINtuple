@@ -198,7 +198,7 @@ print("We have just started setting up the process")
 #
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(500))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 #Load info from the text file 
 sourceFiles = FileUtils.loadListFromFile('localRootEM800Files.txt')#JOHN  TURN THIS ONE BACK ON 
@@ -264,8 +264,8 @@ process.genweightfilter = genLevelFilter.clone(
     xsWeight      = cms.double(weight),
 )
 
-from HEEP.VID.tools import addHEEPV70ElesMiniAOD
-addHEEPV70ElesMiniAOD(process,useStdName=True)
+#from HEEP.VID.tools import addHEEPV70ElesMiniAOD
+#addHEEPV70ElesMiniAOD(process,useStdName=True)
 
 process.TFileService = cms.Service("TFileService",
     fileName = cms.string(outfile)
@@ -340,6 +340,6 @@ print("After we define isLR")
 
 process.p = cms.Path(
     #process.genweightfilter+
-    (process.heepSequence*
-    process.heepIdExample)) #our analysing example module, replace with your module
-
+    #(process.heepSequence*
+    #process.heepIdExample)) #our analysing example module, replace with your module
+    process.heepIdExample)
