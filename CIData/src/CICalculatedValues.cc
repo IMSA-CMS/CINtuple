@@ -842,10 +842,10 @@ std::cout << __LINE__ <<'\n';
   //                            ~~ Setting Gensim ~~
   //
   //-----------------------------------------------------------------------------
-  TLorentzVector Ele(leptonPlus->pt(), leptonPlus->eta(), leptonPlus->phi(), leptonPlus->energy());
-  TLorentzVector Elebar(leptonMinus->pt(), leptonMinus->eta(), leptonMinus->phi(), leptonPlus->energy());
-  //TLorentzVector Ele(leptonPluspx, leptonPluspy, leptonPluspz, leptonPlusenergy);
-  //TLorentzVector Elebar(leptonMinuspx, leptonMinuspy, leptonMinuspz, leptonMinusenergy);
+  //TLorentzVector Ele(leptonPlus->pt(), leptonPlus->eta(), leptonPlus->phi(), leptonPlus->energy());
+  //TLorentzVector Elebar(leptonMinus->pt(), leptonMinus->eta(), leptonMinus->phi(), leptonPlus->energy());
+  TLorentzVector Ele(leptonPluspx, leptonPluspy, leptonPluspz, leptonPlusenergy);
+  TLorentzVector Elebar(leptonMinuspx, leptonMinuspy, leptonMinuspz, leptonMinusenergy);
   
 
   

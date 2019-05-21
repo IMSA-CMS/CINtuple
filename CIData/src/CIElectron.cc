@@ -35,15 +35,15 @@ void CIElectron::fillValues(EcalClusterLazyTools lazyTools_, pat::Electron el,
    //
    //================================================================
    //access new tracker isolation
-   const float trkIso = el.userFloat("trkPtIso");
-   dr03TkSumPt_corrected = trkIso;
+   //const float trkIso = el.userFloat("trkPtIso");
+   //dr03TkSumPt_corrected = trkIso;
    dr03TkSumPt = el.dr03TkSumPt();
    //access # saturated crystals in the 5x5
-   const float nrSatCrysP = el.userInt("nrSatCrys");
-   nrSatCrys = nrSatCrysP;
+   //const float nrSatCrysP = el.userInt("nrSatCrys");
+   //nrSatCrys = nrSatCrysP;
    //access the HEEP ID pass / fail
-   const bool heepID = el.userInt("heepElectronID_HEEPV70");
-   isPassHeepID = heepID;
+   //const bool heepID = el.userInt("heepElectronID_HEEPV70");
+   //isPassHeepID = heepID;
    //================================================================
    //
    // End New piece of code by Sam
