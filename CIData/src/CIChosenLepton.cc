@@ -44,7 +44,7 @@ CIChosenLepton::CIChosenLepton(int bad):
   pt(bad),
   phi(bad),
   eta(bad),
-  charge(bad),
+  charge(-10),
   et(bad),
   en(bad),
   isMuon(false),
