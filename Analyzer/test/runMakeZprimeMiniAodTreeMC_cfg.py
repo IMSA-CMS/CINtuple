@@ -22,6 +22,7 @@ print("Hello")
 #                VarParsing.multiplicity.singleton,
 #                VarParsing.varType.bool,
 #                "add debugging.")
+
 #Register the Lambda and Helicity 
 options.register('isHelicityLR',
                   "false",
@@ -198,7 +199,7 @@ print("We have just started setting up the process")
 #
 #process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
+#process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(500))
 
 #Load info from the text file 
 sourceFiles = FileUtils.loadListFromFile('localRootEM800Files.txt')#JOHN  TURN THIS ONE BACK ON 
@@ -211,10 +212,11 @@ sourceList = ['file:/uscms/physics_grp/lpcci2dileptons/nobackup/CI_study/Samples
 #for line in sourceList:
 #    print(line)
 
+#This should always be on 
 process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring(*sourceList))
 
 #for running on crab HARRY TOLD ME TO LEAVE THIS FOR SOME REASON 
-#process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('file:file.root'))
+process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('file:file.root'))
 
 #For running on a single file 
 #process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring('root://cmsxrootd.fnal.gov///store/mc/RunIISummer16MiniAODv2/CITo2E_M1300_CUETP8M1_Lam10TeVConLL_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/50000/B82FCB94-1ED9-E611-8A29-24BE05CEDC81.root'))
@@ -330,10 +332,11 @@ process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
 
     outputFile = cms.string(outfile),
 
-    #isLRHelicity = cms.bool(options.isHelicityLR), 
-    #lambda_ = cms.int32(options.Lambda)  #This is in eV  
-    isLRHelicity = cms.bool(True),
-    lambda_ = cms.int32(16)                           
+    isLRHelicity = cms.bool(options.isHelicityLR), 
+    lambda_ = cms.int32(options.Lambda)  #This is in eV 
+    #These are for running locally, since we don't have parsing setup with only this python cfg file 
+    #isLRHelicity = cms.bool(True),
+    #lambda_ = cms.int32(16)                             
         
     )
 print("After we define isLR")

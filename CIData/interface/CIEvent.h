@@ -116,6 +116,12 @@ class CIEvent
   //===============================
   bool findIsMuon(const CIMuonVtx & bestMuons,
 		  CIElectron passedElectrons[]);
+
+  CIChosenLepton getLepton1() {return lepton1;}
+  CIChosenLepton getLepton2() {return lepton2;}
+
+  CICalculatedValues getCalculatedValues() {return calcValues;}
+ 
   private:
 
     //This is called twice for both pt cuts by ComputeMuonMassVtx

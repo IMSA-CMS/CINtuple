@@ -32,6 +32,10 @@ class CICalculatedValues
 		     double invMass, bool isLR, int lam);
   
 
+  double getCosThetaGenSim() {return cosThetaGenSim;}
+  bool getIsEmpty() {return isEmpty;}
+  float getCosThetaCS() {return cosThetaCS;}
+
  private:
   //=================================
   //Private Functions
