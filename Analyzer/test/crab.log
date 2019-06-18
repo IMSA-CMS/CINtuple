@@ -1716,3 +1716,125 @@ Traceback (most recent call last):
     raise ConfigurationException(configmsg)
 ConfigurationException: Invalid CRAB configuration: Parameter Data.inputDateset is not known. Maybe you mean Data.inputDataset?
 The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+DEBUG 2019-06-18 12:53:39,888: 	 Executing command: 'submit'
+DEBUG 2019-06-18 12:53:39,894: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2019-06-18 12:53:39,915: 	 Checking credentials
+DEBUG 2019-06-18 12:53:39,916: 	 Found proxy file /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-06-18 12:53:39,916: 	 Getting proxy life time left
+DEBUG 2019-06-18 12:53:40,020: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -timeleft
+ output : 40942
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:53:40,124: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -actimeleft
+ output : 40941
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:53:40,124: 	 Proxy lifetime 40942 secs is different from voms extension lifetime 40941 secs for proxy: /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-06-18 12:53:40,124: 	 Proxy valid for 11:22:21 hours
+INFO 2019-06-18 12:53:40,124: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2019-06-18 12:53:40,125: 	 Loading CRAB configuration file.
+ERROR 2019-06-18 12:53:40,584: 	 Error while loading CRAB configuration:
+name 'inputDataset' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2019-06-18 12:53:40,584: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 161, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 311, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 87, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+name 'inputDataset' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+DEBUG 2019-06-18 12:55:14,988: 	 Executing command: 'submit'
+DEBUG 2019-06-18 12:55:14,988: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2019-06-18 12:55:14,997: 	 Checking credentials
+DEBUG 2019-06-18 12:55:14,997: 	 Found proxy file /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-06-18 12:55:14,998: 	 Getting proxy life time left
+DEBUG 2019-06-18 12:55:15,101: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -timeleft
+ output : 40846
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:55:15,205: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -actimeleft
+ output : 40846
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:55:15,206: 	 Proxy valid for 11:20:46 hours
+INFO 2019-06-18 12:55:15,206: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2019-06-18 12:55:15,206: 	 Loading CRAB configuration file.
+ERROR 2019-06-18 12:55:15,285: 	 Error while loading CRAB configuration:
+name 'findRealInterference' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2019-06-18 12:55:15,286: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 161, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 311, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 87, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+name 'findRealInterference' is not defined
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+DEBUG 2019-06-18 12:55:32,107: 	 Executing command: 'submit'
+DEBUG 2019-06-18 12:55:32,108: 	 Found CRAB cache file /uscms/home/hokinson/.crab3
+DEBUG 2019-06-18 12:55:32,115: 	 Checking credentials
+DEBUG 2019-06-18 12:55:32,116: 	 Found proxy file /uscms/home/hokinson/x509up_u53391
+DEBUG 2019-06-18 12:55:32,116: 	 Getting proxy life time left
+DEBUG 2019-06-18 12:55:32,220: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -timeleft
+ output : 40829
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:55:32,324: 	 Executing : 
+ command : voms-proxy-info -file /uscms/home/hokinson/x509up_u53391 -actimeleft
+ output : 40829
+
+ error: 
+ retcode : 0
+DEBUG 2019-06-18 12:55:32,324: 	 Proxy valid for 11:20:29 hours
+INFO 2019-06-18 12:55:32,325: 	 Will use CRAB configuration file crabConfigNTupler.py
+DEBUG 2019-06-18 12:55:32,325: 	 Loading CRAB configuration file.
+DEBUG 2019-06-18 12:55:32,368: 	 Overriden parameter Data.inputDataset with '/MC17_CITo2E_M800to1300_CP5_Lam16TeVConLRPythia8_v1/RunIIFall17MiniAOD-PU2017_94X_mc2017_realistic_v11-v1/MINIAODSIM'
+ERROR 2019-06-18 12:55:32,368: 	 Invalid CRAB configuration: Parameter General.requestName should not be longer than 100 characters.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2019-06-18 12:55:32,369: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 161, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 311, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1904/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 92, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Invalid CRAB configuration: Parameter General.requestName should not be longer than 100 characters.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile

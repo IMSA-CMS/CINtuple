@@ -125,6 +125,7 @@ private:
 
   bool isLRHelicity;
   int lambda;
+  int interference;
 
   //=============================================================
   TFile*  rootFile_;

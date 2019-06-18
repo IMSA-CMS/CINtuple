@@ -43,10 +43,36 @@ def findLambdaInName(name):
         if name[i] == 'L' and name[i+1] == 'a' and name[i+2] == 'm':
             return lambdaReturnString + name[i+3] + name[i+4] + '000';#putting it in units of eV 
         i += 1
-    return lambdaReturnString + '16000';#This is going to be our default if we have an issue with parsing 
+    return lambdaReturnString + '16000';#This is going to be our default if we have an issue with parsing
+
+def findInterferenceInName(name):
+    interferenceReturnString = 'Interference='
+    
+    i = 0
+    while i < len(name) - 5:
+        if name[i] == 'C' and name[i+1] == 'o' and name[i+2] == 'n':
+            return interferenceReturnString + '1'; 
+        if name[i] == 'D' and name[i+1] == 'e' and name[i+2] == 's':
+            return interferenceReturnString + '-1';
+        i += 1
+    print("We could not find an interference!")
+    return lambdaReturnString + '1';#This is going to be our default if we have an issue with parsing 
+
+def findRealInterference(name):    
+    i = 0
+    while i < len(name) - 5:
+        if name[i] == 'C' and name[i+1] == 'o' and name[i+2] == 'n':
+            return "Con"; 
+        if name[i] == 'D' and name[i+1] == 'e' and name[i+2] == 's':
+            return "Des";
+        i += 1
+    print("We could not find an interference!")
+    return lambdaReturnString + '1';#This is going to be our default if we have an issue with parsing 
+
+inputDataset = sys.argv[4][18:]
 
 config = config()
-config.General.requestName = 'NTupler_M300_L16TeV_LR_Con_' + currTime
+config.General.requestName = 'NTupler_MC17DataSample' + currTime
 workingDir = "NtupleJobs/NTupleJobs" + currTime
 config.General.workArea = workingDir
 config.General.transferOutputs = True
@@ -59,35 +85,31 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'runMakeZprimeMiniAodTreeMC_cfg.py'
 config.JobType.outputFiles = ['test.root']
 
-inputDataset = sys.argv[4][18:]
-
 print("Set the input name: " + inputDataset)
 
 helicityString = findHelicityInName(inputDataset)
 
 print("Helicity String: " + helicityString)
 
-print("We got to here")
-
 lambdaString = findLambdaInName(inputDataset)
 
-print("We got to here2")
+print("Lambda: " + findLambdaInName(inputDataset))
 
-config.JobType.pyCfgParams = [lambdaString,helicityString]
+interferenceString = findInterferenceInName(inputDataset)
 
-print("We got to here3")
+print("Interference: " + findInterferenceInName(inputDataset))
+
+config.JobType.pyCfgParams = [lambdaString,helicityString,interferenceString]
 
 #We should be inputting /MC17_CITo2Mu_M300to800_CP5_Lam16TeVConLRPythia8_v1/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM to test 
 #config.Data.inputDataset should be set automatically if we add the argument in command line Data.inputDataset='Dataset'
 #config.Data.inputDataset = '/MC17_CITo2E_M800to1300_CP5_Lam16TeVConLRPythia8_v1/RunIIFall17MiniAOD-PU2017_94X_mc2017_realistic_v11-v1/MINIAODSIM'
-print("We got to here4")
 
 #config.Data.inputDBS = 'global'
 config.Data.publication = True
 #Get rid of the 000 at the end of the lambda string 
 
-print("We got to here5")
-config.Data.outputDatasetTag = 'CI_M300_Lam' + lambdaString[7] + lambdaString[8] + 'TeV_' + findRealHelicityInName(inputDataset) + '_Con_NTuple_' + currTime
+config.Data.outputDatasetTag = 'CI_M300_Lam' + lambdaString[7] + lambdaString[8] + 'TeV_' + findRealHelicityInName(inputDataset) + '_' + findRealInterference(inputDataset) + '_NTuple_' + currTime
 #config.Data.outputDatasetTag = 'CITo2E_M800_L16TeV_LR_Con_NTuple_' + currTime
 #config.Data.outputPrimaryDataset = 'test'
 config.Data.unitsPerJob = 1

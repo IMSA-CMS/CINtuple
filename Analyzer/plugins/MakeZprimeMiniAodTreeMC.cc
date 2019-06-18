@@ -194,6 +194,7 @@ MakeZprimeMiniAodTreeMC::MakeZprimeMiniAodTreeMC(const edm::ParameterSet& iConfi
   //Added for doing Helicity weighting 
   isLRHelicity = iConfig.getParameter<bool>("isLRHelicity");
   lambda = iConfig.getParameter<int>("lambda_");
+  interference = iConfig.getParameter<int>("interference_");
 }
 
 MakeZprimeMiniAodTreeMC::~MakeZprimeMiniAodTreeMC()
@@ -418,7 +419,7 @@ void MakeZprimeMiniAodTreeMC::analyze(const edm::Event& iEvent, const edm::Event
   //iEvent.getByToken(genEventInfoProductToken_, genEventInfoProductHandle);
   //const GenEventInfoProduct& genEventInfoProduct = *genEventInfoProductHandle;
 
-  event.findChosenLeptons(genEventInfoProduct, getHandle(pruned), isLRHelicity, lambda);
+  event.findChosenLeptons(genEventInfoProduct, getHandle(pruned), isLRHelicity, lambda, interference);
   //==============================================
   //=        End of the main program             =
   //==============================================

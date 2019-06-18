@@ -49,9 +49,10 @@
 
 CICalculatedValues::CICalculatedValues(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & pruned, 
 				       const CIChosenLepton & lep1, const CIChosenLepton & lep2,
-				       double invMass, bool isLR, int lam):
+				       double invMass, bool isLR, int lam, int inter):
   isLRHelicity(isLR),
   lambda(lam),
+  interference(inter),
   invariantMass(invMass),
   isEmpty(false),
   pdfWeight(genEventInfoProduct.weight())
@@ -65,9 +66,9 @@ CICalculatedValues::CICalculatedValues(const GenEventInfoProduct & genEventInfoP
       tanPhi = -1;
       sin2Theta = -1;
 
-      //call the wrighting code 
+      //call the weighting code 
       
-      fillHelicities(genEventInfoProduct, pruned, lambda);
+      fillHelicities(genEventInfoProduct, pruned, lambda, interference);
       std::cout << "Helicities filled\ncosTheta = " << cosThetaCS;
 
       //Set CalculatedValues isEmpty to true, which is only for the values 
@@ -164,8 +165,6 @@ std::cout << "values filled\n";
       
 
   cosThetaCollinsSoper(Ele.Et(), Ele.Eta(), Ele.Phi(), Ele.E(), Elebar.Et(), Elebar.Eta(), Elebar.Phi(), Elebar.E(), charge, invariantMass);
-
-  fillHelicities(genEventInfoProduct, pruned, lambda);
 }
 
 double CICalculatedValues::calculateCosTheta(TLorentzVector Ele, TLorentzVector Elebar)
@@ -279,7 +278,8 @@ void CICalculatedValues::cosThetaCollinsSoper(float Et1,float Eta1,float Phi1,fl
 //If no parameters are given, both weights will be set to 0
 //Checks to see if only one parameter is given, and if so, both 
 //will still be set to one 
-void CICalculatedValues::fillHelicities(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & gen, double lam)
+void CICalculatedValues::fillHelicities(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & gen, double lam,
+					int inter)
 { 
   std::cout << "filling helicities\n";
   weightRL = 1;
@@ -348,7 +348,7 @@ void CICalculatedValues::fillHelicities(const GenEventInfoProduct & genEventInfo
   //double qCLambda2 = pow(fMasterGen->settings.parm("ContactInteractions:Lambd\a"),2);
   double qCLambda=lam;//?
   double qCLambda2=qCLambda*qCLambda;
-  int qCetaLR =-1;
+  int qCetaLR = inter;
 
   // Running coupling constat-> changes event by event and accessible in miniAOD
   double genEventalphaEM =genEventInfoProduct.alphaQED(); //not sure if it's executable here

@@ -106,8 +106,7 @@ class CIEvent
   //================================
   void findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
 			 const edm::View<reco::GenParticle> & pruned,
-			 bool isLR,
-			 int lambda);
+			 bool isLR, int lambda, int interference);
   bool findPassedMuons(CIMuonVtx & bestMuons);
   bool findPassedElectrons(CIElectron passedElectrons[]);
 

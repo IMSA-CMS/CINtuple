@@ -624,7 +624,7 @@ bool CIEvent::findPassedElectrons(CIElectron passedElectrons[])
 }
 
 void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct, const edm::View<reco::GenParticle> & pruned, 
-				bool isLR, int lambda)
+				bool isLR, int lambda, int interference)
 {
 
   //making default bad leptons, if they're good, it will overwrite them; if they're bad, we don't get garbage
@@ -632,7 +632,7 @@ void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
   lepton2 = CIChosenLepton::setBadValues();
 
   calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, 
-				      lepton2, -1, isLR, lambda);//Passing in badValues (-1) for invariantMass
+				  lepton2, -1, isLR, lambda, interference);//Passing in badValues (-1) for invariantMass
 
 
   //Only find the highest 2 pt's for each
@@ -668,7 +668,7 @@ void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
 	  //Pass through 2 leptons, 2 CIMuons, and 1 float for mass 
 	  calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2, 
 				      bestMuons.getMass(),
-				      isLR, lambda);
+					  isLR, lambda, interference);
 	}     
     }
   else if (!isMuon && foundElectrons)
@@ -680,7 +680,7 @@ void CIEvent::findChosenLeptons(const GenEventInfoProduct & genEventInfoProduct,
       //Overload the constructors in CICalculatedValues 
       calcValues = CICalculatedValues(genEventInfoProduct, pruned, lepton1, lepton2,
 				      CIElectron::findInvarientMass(passedElectrons[0],passedElectrons[1]),
-				      isLR, lambda);
+				      isLR, lambda, interference);
     }
 }
 

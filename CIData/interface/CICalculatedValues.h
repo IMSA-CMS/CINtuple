@@ -29,7 +29,7 @@ class CICalculatedValues
   CICalculatedValues(const GenEventInfoProduct & genEventInfoProduct,
 		     const edm::View<reco::GenParticle> & pruned, 
 		     const CIChosenLepton & lep1, const CIChosenLepton & lep2,
-		     double invMass, bool isLR, int lam);
+		     double invMass, bool isLR, int lam, int inter);
   
 
   double getCosThetaGenSim() {return cosThetaGenSim;}
@@ -56,7 +56,7 @@ class CICalculatedValues
 
   void fillHelicities(const GenEventInfoProduct & gProduct, 
 		      const edm::View<reco::GenParticle> & gen, 
-		      double lam);
+		      double lam, int inter);
 
   const reco::Candidate* getBosonMother(const reco::GenParticle & p);
 
@@ -70,6 +70,7 @@ class CICalculatedValues
   //==================================
   bool isLRHelicity;
   int lambda;
+  int interference;
   double invariantMass;
   float cosThetaCS;
   double cosThetaGenSim;

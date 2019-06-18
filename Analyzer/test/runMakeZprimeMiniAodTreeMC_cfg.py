@@ -34,6 +34,11 @@ options.register('Lambda',
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.int,
                   "Lambda Value")
+options.register('Interference',
+                  1,
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.int,
+                  "Interference Value")
 
 options.parseArguments()
 print("We have parsed the arguments")
@@ -333,10 +338,12 @@ process.heepIdExample = cms.EDAnalyzer("MakeZprimeMiniAodTreeMC",
     outputFile = cms.string(outfile),
 
     isLRHelicity = cms.bool(options.isHelicityLR), 
-    lambda_ = cms.int32(options.Lambda)  #This is in eV 
+    lambda_ = cms.int32(options.Lambda),  #This is in eV 
+    interference_ = cms.int32(options.Interference)
     #These are for running locally, since we don't have parsing setup with only this python cfg file 
     #isLRHelicity = cms.bool(True),
-    #lambda_ = cms.int32(16)                             
+    #lambda_ = cms.int32(16), 
+    #interference_ = cms.int32(1)
         
     )
 print("After we define isLR")
